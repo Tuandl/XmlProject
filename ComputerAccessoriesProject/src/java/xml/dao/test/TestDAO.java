@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import xml.dao.IDAO;
 import xml.dao.UserDAO;
 import xml.model.User;
 
@@ -21,14 +22,22 @@ public class TestDAO {
 //        testGetAll();
 //        testGetById();
 //        testInsertUser();
-        testUpdateUser(5);
+//        testUpdateUser(5);
+
+        testInsertUser();
+        System.out.println("");
+        testGetAll();
+        System.out.println("");
+        testDeleteUser();
+        System.out.println("");
+        testGetAll();
     }
     
     public static void testGetAll(){
         UserDAO userDAO = new UserDAO();
         
-        List<User> users = userDAO.getAll("username = ? and password = ?", "tuandapchai 2", "123123");
-//        List<User> users = userDAO.getAll();
+//        List<User> users = userDAO.getAll("username = ? and password = ?", "tuandapchai 2", "123123");
+        List<User> users = userDAO.getAll();
         
         System.out.println("user length = " + users.size());
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -62,9 +71,9 @@ public class TestDAO {
         UserDAO userDAO = new UserDAO();
         
         User user = new User();
-        user.setUsername("Opintuff");
-        user.setPassword("DahPahl9");
-        user.setFullName("Đặng Thúy Hợp");
+        user.setUsername("Feated");
+        user.setPassword("iegh4fah8Bok");
+        user.setFullName("Võ An Văn");
         user.setIsAdmin(false);
         
         boolean isSuccess = userDAO.insert(user);
@@ -95,5 +104,12 @@ public class TestDAO {
         user.setPassword("ue8feighahB");
         
         dao.update(user); 
+    }
+    
+    public static void testDeleteUser() {
+        IDAO dao = new UserDAO();
+        
+        boolean result = dao.delete(3);
+        System.out.println("result = " + result);
     }
 }
