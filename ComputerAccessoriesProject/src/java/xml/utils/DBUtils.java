@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.Date;
 
 /**
@@ -43,10 +44,10 @@ public class DBUtils {
         if(field.getType().equals(String.class)) {
             result = resultSet.getString(fieldName);
         } 
-        else if(field.getType().equals(Integer.TYPE)) {
+        else if(field.getType().equals(Integer.TYPE) || field.getType().equals(Integer.class)) {
             result = resultSet.getInt(fieldName);
         }
-        else if(field.getType().equals(Boolean.TYPE)) {
+        else if(field.getType().equals(Boolean.TYPE) || field.getType().equals(Boolean.class)) {
             result = resultSet.getBoolean(fieldName);
         }
         else if(field.getType().equals(Date.class)){
@@ -69,24 +70,39 @@ public class DBUtils {
     } 
     
     public static void setParameter(PreparedStatement preparedStatement,
-            int index, Object value) throws SQLException{
-        Class valueClass = value.getClass();
+            int index, Object value, Class valueClass) throws SQLException{
         
-        if(valueClass.getTypeName().equals(String.class)){
-            preparedStatement.setString(index, (String)value);
+        if(valueClass.equals(String.class)){
+            if(value != null) {
+                preparedStatement.setString(index, (String)value);
+            } else {
+                preparedStatement.setNull(index, Types.NVARCHAR);
+            }
         } 
-        else if(valueClass.getTypeName().equals(Integer.TYPE)) {
-            preparedStatement.setInt(index, (int)value);
+        else if(valueClass.equals(Integer.TYPE) || valueClass.equals(Integer.class)) {
+            if(value != null){
+                preparedStatement.setInt(index, (int)value);
+            } else {
+                preparedStatement.setNull(index, Types.INTEGER);
+            }
         }
-        else if(valueClass.getTypeName().equals(Boolean.TYPE)){
-            preparedStatement.setBoolean(index, (boolean)value);
+        else if(valueClass.equals(Boolean.TYPE) || valueClass.equals(Boolean.class)){
+            if(value != null){
+                preparedStatement.setBoolean(index, (boolean)value);
+            } else {
+                preparedStatement.setNull(index, Types.BOOLEAN);
+            }
         }
-        else if(valueClass.getTypeName().equals(Date.class)){
-            Timestamp timestamp = new Timestamp(((Date)value).getTime());
-            preparedStatement.setTimestamp(index, timestamp);
-        }
+        else if(valueClass.equals(Date.class)){
+            if(value != null){
+                Timestamp timestamp = new Timestamp(((Date)value).getTime());
+                preparedStatement.setTimestamp(index, timestamp);
+            } else {
+                preparedStatement.setNull(index, Types.DATE);
+            }
+        } 
         else {
-            preparedStatement.setObject(index, value);
+            System.out.println("Exception setParamete " + valueClass.getTypeName());
         }
     }
 }

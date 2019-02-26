@@ -74,4 +74,24 @@ public class ReflectionUtils {
         
         return field;
     }
+    
+    public static Object getFieldValueByName(Object object, String fieldName) {
+        Object result = null;
+        Class objectClass = object.getClass();
+        
+        Field field = getFieldByName(objectClass, fieldName);
+        
+        boolean accessibility = field.isAccessible();
+        
+        field.setAccessible(false);
+        try {
+            result = field.get(object);
+        } catch (IllegalAccessException ex) {
+            ex.printStackTrace();
+        }
+        
+        field.setAccessible(accessibility);
+        
+        return result;
+    }
 }

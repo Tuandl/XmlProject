@@ -7,6 +7,7 @@ package xml.dao.test;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import xml.dao.UserDAO;
 import xml.model.User;
@@ -18,15 +19,16 @@ import xml.model.User;
 public class TestDAO {
     public static void main(String[] args) {
 //        testGetAll();
-        testGetById();
+//        testGetById();
+//        testInsertUser();
+        testUpdateUser(5);
     }
     
     public static void testGetAll(){
         UserDAO userDAO = new UserDAO();
-//        
-//        List<User> users = userDAO.getAll("username = ? and password = ?", 
-//                new Object[] {"tuandapchai 2", "123123"});
-        List<User> users = userDAO.getAll();
+        
+        List<User> users = userDAO.getAll("username = ? and password = ?", "tuandapchai 2", "123123");
+//        List<User> users = userDAO.getAll();
         
         System.out.println("user length = " + users.size());
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -54,5 +56,44 @@ public class TestDAO {
         System.out.println("created = " + dateFormat.format(user.getCreatedAt()));
         System.out.println("deleted = " + user.isDeleted());
         System.out.println("is admin = " + user.isIsAdmin());
+    }
+    
+    public static void testInsertUser() {
+        UserDAO userDAO = new UserDAO();
+        
+        User user = new User();
+        user.setUsername("Opintuff");
+        user.setPassword("DahPahl9");
+        user.setFullName("Đặng Thúy Hợp");
+        user.setIsAdmin(false);
+        
+        boolean isSuccess = userDAO.insert(user);
+        
+        System.out.println("is success = " + isSuccess);
+        System.out.println("user id = " + user.getId());
+    }
+    
+    public static void testUpdateUser() {
+        UserDAO dao = new UserDAO();
+        
+        User user = new User();
+        user.setUsername("Puladogaver1973");
+        user.setPassword("FoT5ooxai");
+        user.setFullName("Trương Quốc Hậu");
+        user.setIsAdmin(false);
+        user.setId(4);
+        
+        dao.update(user);
+    }
+    
+    public static void testUpdateUser(int id){
+        UserDAO dao = new UserDAO();
+        
+        User user = dao.getById(id);
+        user.setFullName("Trịnh Thị Cẩm Giàu");
+        user.setUsername("Adicullece");
+        user.setPassword("ue8feighahB");
+        
+        dao.update(user); 
     }
 }
