@@ -9,10 +9,7 @@ import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import xml.model.ModelBase;
 import xml.utils.DBUtils;
@@ -37,9 +34,15 @@ public abstract class DAOBase<T extends ModelBase> implements IDAO<T>{
     private Connection connection = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
-    
+
     @Override
     public List<T> getAll() {
+        List<T> result = getAll(null, null);
+        return result;
+    }
+    
+    @Override
+    public List<T> getAll(String filterQuery, Object[] parameters) {
         List<T> result = new ArrayList<T>();
         
         try {
@@ -50,19 +53,33 @@ public abstract class DAOBase<T extends ModelBase> implements IDAO<T>{
             Class modelClass = this.getModelClass();
             List<String> objectFields = ReflectionUtils.getAllFieldNames(modelClass);
             for(String field : objectFields){
-                queryBuilder.append(generateSqlName(field));
+                queryBuilder.append(DBUtils.generateSqlName(field));
                 queryBuilder.append(",");
             }
             queryBuilder.deleteCharAt(queryBuilder.length() - 1);
             
             queryBuilder.append(" from ");
-            queryBuilder.append(generateSqlName(modelClass.getSimpleName()));
+            queryBuilder.append(DBUtils.generateSqlName(modelClass.getSimpleName()));
+            
+            if(filterQuery != null && !filterQuery.trim().isEmpty()) {
+                queryBuilder.append(" where ");
+                queryBuilder.append(filterQuery);
+            }
             
             String queryString = queryBuilder.toString();
             
             //Make connection
             connection = DBUtils.makeConnection();
             preparedStatement = connection.prepareCall(queryString);
+            
+            if(parameters != null){
+                for(int index = 0; index < parameters.length; index++) {
+                    Object param = parameters[index];
+                    //index + 1 because of preparedStatement.setParam index from 1
+                    DBUtils.setParameter(preparedStatement, index + 1, param);
+                }
+            }
+            
             resultSet = preparedStatement.executeQuery();
             
             while(resultSet.next()){
@@ -74,7 +91,7 @@ public abstract class DAOBase<T extends ModelBase> implements IDAO<T>{
                     
                     Object value = null;
                     try {
-                        value = getResult(resultSet, field);
+                        value = DBUtils.getResult(resultSet, field);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -98,7 +115,14 @@ public abstract class DAOBase<T extends ModelBase> implements IDAO<T>{
 
     @Override
     public T getById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        T result = null;
+        List<T> entities = getAll("id = ?", new Object[] {id});
+        
+        if(entities != null && entities.size() > 0) {
+            result = entities.get(0);
+        }
+            
+        return result;
     }
 
     @Override
@@ -135,36 +159,5 @@ public abstract class DAOBase<T extends ModelBase> implements IDAO<T>{
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    
-    protected Object getResult(ResultSet resultSet, Field field) throws SQLException{
-        Object result = null;
-        String fieldName = field.getName();
-        if(field.getType().equals(String.class)) {
-            result = resultSet.getString(fieldName);
-        } 
-        else if(field.getType().equals(Integer.TYPE)) {
-            result = resultSet.getInt(fieldName);
-        }
-        else if(field.getType().equals(Boolean.TYPE)) {
-            result = resultSet.getBoolean(fieldName);
-        }
-        else if(field.getType().equals(Date.class)){
-            Timestamp timestamp = resultSet.getTimestamp(fieldName);
-            if(timestamp != null) {
-                result = new Date(timestamp.getTime());
-            }
-        }
-            
-        return result;
-    }
-    
-    protected String generateSqlName(String name){
-        StringBuilder builder = new StringBuilder();
-        builder.append("[");
-        builder.append(name);
-        builder.append("]");
-        
-        return builder.toString();
     }
 }

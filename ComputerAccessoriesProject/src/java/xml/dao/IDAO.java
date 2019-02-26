@@ -14,6 +14,7 @@ import xml.model.ModelBase;
  */
 public interface IDAO <T extends ModelBase>{
     public List<T> getAll();
+    public List<T> getAll(String filterQuery, Object[] parameters);
     public T getById(int id);
     public boolean insert(T entity);
     public boolean update(T entity);

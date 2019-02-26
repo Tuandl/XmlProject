@@ -17,12 +17,15 @@ import xml.model.User;
  */
 public class TestDAO {
     public static void main(String[] args) {
-        testGetAll();
+//        testGetAll();
+        testGetById();
     }
     
     public static void testGetAll(){
         UserDAO userDAO = new UserDAO();
-        
+//        
+//        List<User> users = userDAO.getAll("username = ? and password = ?", 
+//                new Object[] {"tuandapchai 2", "123123"});
         List<User> users = userDAO.getAll();
         
         System.out.println("user length = " + users.size());
@@ -36,5 +39,20 @@ public class TestDAO {
             System.out.println("deleted = " + user.isDeleted());
             System.out.println("is admin = " + user.isIsAdmin());
         }
+    }
+    
+    public static void testGetById(){
+        UserDAO userDAO = new UserDAO();
+
+        User user = userDAO.getById(2);
+        
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        System.out.println("id = " + user.getId());
+        System.out.println("username = " + user.getUsername());
+        System.out.println("password = " + user.getPassword());
+        System.out.println("fullname = " + user.getFullName());
+        System.out.println("created = " + dateFormat.format(user.getCreatedAt()));
+        System.out.println("deleted = " + user.isDeleted());
+        System.out.println("is admin = " + user.isIsAdmin());
     }
 }
