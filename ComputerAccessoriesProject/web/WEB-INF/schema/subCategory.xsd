@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           xmlns="http://xml.schema/subcategory"
+           targetNamespace="http://xml.schema/subcategory"
+           xmlns:product="http://xml.schema/product"
+>
+    <xs:import namespace="http://xml.schema/product" schemaLocation="product.xsd"/>
+    
+    <xs:element name="subCategory" type="SubCategory">
+    </xs:element>
+    
+    <xs:complexType name="SubCategory">
+        <xs:sequence>
+            <xs:element name="id" type="xs:positiveInteger"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="product" type="product:Product" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="masterId" type="xs:positiveInteger"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

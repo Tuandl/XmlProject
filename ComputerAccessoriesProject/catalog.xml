@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/Users/admin/Documents/School/Semester%208/PRX301_XML/FinalProject/ComputerAccessoriesProject/web/WEB-INF/schema/masterCategory.xsd" uri="src/conf/xml-resources/jaxb/test/masterCategory.xsd"/>
+    <system systemId="file:/C:/Users/admin/Documents/School/Semester%208/PRX301_XML/FinalProject/ComputerAccessoriesProject/web/WEB-INF/schema/subCategory.xsd" uri="src/conf/xml-resources/jaxb/subcategory/subCategory.xsd"/>
+    <system systemId="file:/C:/Users/admin/Documents/School/Semester%208/PRX301_XML/FinalProject/ComputerAccessoriesProject/web/WEB-INF/schema/product.xsd" uri="src/conf/xml-resources/jaxb/subcategory/product.xsd"/>
+</catalog>
