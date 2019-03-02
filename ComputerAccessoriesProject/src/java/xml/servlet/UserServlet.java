@@ -12,8 +12,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import xml.dto.UserDTO;
 import xml.model.User;
 import xml.service.UserService;
+import xml.utils.XMLUtils;
 
 /**
  *
@@ -27,6 +29,25 @@ public class UserServlet extends HttpServlet {
     public UserServlet() {
         super();
         userService = new UserService();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try (PrintWriter out = resp.getWriter()) {
+            String username = req.getParameter("username");
+            
+            if(username == null) {
+                //Not support get all username
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                out.append("Bad request.");
+            } else {
+                UserDTO user = userService.getUserByUsername(username);
+                resp.setStatus(HttpServletResponse.SC_OK);
+                out.append(XMLUtils.marshallToString(user));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
     
     //Register

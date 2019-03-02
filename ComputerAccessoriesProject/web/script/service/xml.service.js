@@ -1,0 +1,87 @@
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+
+var XmlService = function() {
+    
+    var parseStringToXml = function(text) {
+        if(window.DOMParser) {
+            var parser = new DOMParser();
+            var xmlDoc = parser.parseFromString(text, 'text/xml')
+            return xmlDoc;
+        } else {
+            var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+            xmlDoc.async = false;
+            xmlDoc.loadXML(text);
+        }
+    }
+    
+    var parseXmlToString = function(xml) {
+        var objectSerializer = new XMLSerializer();
+        var result = objectSerializer.serializeToString(xml);
+        return result;
+    }
+    
+    //Xml Dom 
+    var parseXmlToObject = function(xmlDom) {
+        var isDocumentNode = xmlDom.nodeType == 9;
+        var isTextNode = xmlDom.nodeType == 3;
+        
+        if(isDocumentNode) {
+            //if document node, ignore this node
+            return parseXmlToObject(xmlDom.childNodes[0]);
+        }
+        
+        if(isTextNode) {
+            //if text node, return value for field of object
+            return xmlDom.nodeValue.trim();
+        }
+        
+        var childDatas = [];
+        xmlDom.childNodes.forEach(function(child) {
+            childDatas.push(parseXmlToObject(child));
+        });
+        
+        var data = {};
+        
+        childDatas.forEach(function(child) {
+            if(typeof child != 'string'){
+                var key = Object.keys(child)[0];
+                
+                if(data[key] != undefined) {
+                    //existed -> array
+                    var oldObj = {};
+                    oldObj[key] = data[key];
+                    if(typeof oldObj == 'object') {
+                        data[key] = [
+                            oldObj,
+                            child,
+                        ];
+                    } else {
+                        data[key].push(child);
+                    }
+                } else {
+                    data[key] = child[key];
+                }
+            } else {
+                data = child;
+            }
+        });
+        
+        var result = {};
+        result[xmlDom.nodeName] = data;
+        
+        return result;
+    }
+    
+    var parseObjectToXml = function(object, rootTag) {
+    }
+    
+    this.parseStringToXml = parseStringToXml;
+    this.parseXmlToString = parseXmlToString;
+    this.parseXmlToObject = parseXmlToObject;
+    this.parseObjecttoXml = parseObjectToXml;
+}

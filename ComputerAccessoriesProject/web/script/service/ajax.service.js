@@ -37,7 +37,37 @@ var AjaxService = function() {
             var urlWithParam = url;
             if(params != null && params != undefined && typeof params == 'object') {
                 urlWithParam += '?' + Object.keys(params).map(function(key) {
-                    var value = prams[key];
+                    var value = params[key];
+                    return key + '=' + value;
+                }).join('&');
+            }
+            
+            xhttp.open('GET', urlWithParam, true);
+            xhttp.send();
+        });
+    }
+    
+    this.getXml = function(url, params) {
+        return new Promise(function(resolve, reject) {
+            var xhttp = getXmlHttpObject();
+            xhttp.onreadystatechange = function() {
+                if(this.readyState == 4) {
+                    if(this.status == 200) {
+                        resolve(xhttp.response);
+                    }
+                    else {
+                        reject({
+                            status: this.status,
+                            message: xhttp.responseXML,
+                        });
+                    }
+                }
+            }
+            
+            var urlWithParam = url;
+            if(params != null && params != undefined && typeof params == 'object') {
+                urlWithParam += '?' + Object.keys(params).map(function(key) {
+                    var value = params[key];
                     return key + '=' + value;
                 }).join('&');
             }

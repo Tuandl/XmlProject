@@ -10,12 +10,15 @@ var StateService = function() {
         user: 'USER_DATA',
     };
     
-    this.getCurrentUser = function(){
+    var getCurrentUser = function(){
         var user = localStorage.getItem(stateConst.user);
         return user;
     }
     
-    this.setCurrentUser = function(user) {
+    var setCurrentUser = function(user) {
         localStorage.setItem(stateConst.user, user);
     }
+    
+    this.getCurrentUser = getCurrentUser;
+    this.setCurrentUser = setCurrentUser;
 }

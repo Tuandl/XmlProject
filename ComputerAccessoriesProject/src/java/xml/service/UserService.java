@@ -7,6 +7,7 @@ package xml.service;
 
 import java.util.List;
 import xml.dao.UserDAO;
+import xml.dto.UserDTO;
 import xml.model.User;
 
 /**
@@ -42,5 +43,20 @@ public class UserService {
         }
         
         return "";
+    }
+    
+    public UserDTO getUserByUsername(String username) {
+        UserDTO result = null;
+        List<User> users = userDao.getAll("username = ?", username);
+        
+        if(users != null && users.size() > 0) {
+            User user = users.get(0);
+            result = new UserDTO();
+            result.setUsername(user.getUsername());
+            result.setFullname(user.getFullName());
+            result.setIsAdmin(user.isIsAdmin());
+        }
+        
+        return result;
     }
 }

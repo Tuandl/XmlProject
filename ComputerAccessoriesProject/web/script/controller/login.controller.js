@@ -5,7 +5,7 @@
  */
 
 
-var LoginController = function (app, stateService, ajaxService) {
+var LoginController = function (app, stateService, ajaxService, xmlService) {
     //Declaration...
     var viewIds = {
         input: {
@@ -38,13 +38,24 @@ var LoginController = function (app, stateService, ajaxService) {
             password: txtPassword.value,
         };
         
-        var loginUrl = app.url.login;
-        
-//        console.log('data login', data);
-//        console.log('loginUrl', loginUrl);
-        
-        ajaxService.post(loginUrl, data).then(function(response){
-            console.log('success', response); 
+        ajaxService.post(app.url.api.login, data).then(function(response){
+            var data = {
+                username: txtUsername.value,
+            };
+            
+            ajaxService.get(app.url.api.user, data).then(function(response) {
+                console.log('user data', response);
+                var xmlDoc = xmlService.parseStringToXml(response);
+                console.log('user xml', xmlDoc);
+                var userTmp = xmlService.parseXmlToObject(xmlDoc);
+                console.log('user', userTmp);
+                
+                var xmlStr = xmlService.parseXmlToString(xmlDoc.children[0]);
+                console.log('user str', xmlStr);
+                
+            }).catch(function(error) {
+                console.error('user error', error);
+            });
         }).catch(function(error) {
             console.log('error', error);
             var errorElement = document.getElementById(viewIds.error.loginFailed);
