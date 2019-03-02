@@ -39,7 +39,7 @@ public abstract class DAOBase<T extends ModelBase> implements IDAO<T> {
 
     @Override
     public List<T> getAll() {
-        List<T> result = getAll(null, null);
+        List<T> result = getAll(null, (Object) null);
         return result;
     }
 
