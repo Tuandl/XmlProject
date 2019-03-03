@@ -41,6 +41,21 @@ public class XMLFormater {
         EMPTY_TAG
     }
     
+    public static String removeMiscellaneousTags(String src) {
+        String result = src;
+        
+        String expression = "<script.*?</script>";
+        result = result.replaceAll(expression, "");
+        
+        expression = "<!--.*?-->";
+        result = result.replaceAll(expression, "");
+        
+        expression = "&nbsp;?";
+        result = result.replaceAll(expression, "");
+        
+        return result;
+    }
+    
     public static String generateXMLWellForm(String htmlString){
         StringBuilder resultBuilder = new StringBuilder();
         ArrayList<String> tagQueue = new ArrayList<>();

@@ -5,11 +5,17 @@
  */
 package xml.utils;
 
+import com.sun.xml.bind.StringInputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathFactory;
+import org.w3c.dom.Document;
 
 /**
  *
@@ -55,5 +61,25 @@ public class XMLUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public static Document parseDomFromString(String xmlContent) {
+        try {
+            DocumentBuilderFactory domBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder domBuilder = domBuilderFactory.newDocumentBuilder();
+            StringInputStream inputStream = new StringInputStream(xmlContent);
+            Document result = domBuilder.parse(inputStream);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public static XPath createXPath() {
+        XPathFactory xPathFactory = XPathFactory.newInstance();
+        XPath xpath = xPathFactory.newXPath();
+        
+        return xpath;
     }
 }

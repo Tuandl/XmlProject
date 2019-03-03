@@ -45,7 +45,7 @@ var LoginController = function (app, stateService, ajaxService, xmlService) {
             
             ajaxService.get(app.url.api.user, data).then(function(response) {
                 stateService.setCurrentUser(response);
-                window.location.replace(app.url.page.admin.adminDashBoard);
+                window.location.replace(app.url.page.adminDashBoard);
 //                console.log('user data', response);
 //                var xmlDoc = xmlService.parseStringToXml(response);
 //                console.log('user xml', xmlDoc);

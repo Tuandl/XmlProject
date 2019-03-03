@@ -51,7 +51,7 @@ public class SyntaxChecker {
     }
     
     static boolean isSpaceChar(char c){
-        return Character.isSpaceChar(c);
+        return Character.isWhitespace(c);
     }
     
     static final List<String> INLINE_TAG = Arrays.asList(

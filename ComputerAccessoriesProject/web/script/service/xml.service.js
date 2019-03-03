@@ -33,7 +33,7 @@ var XmlService = function() {
         
         if(isDocumentNode) {
             //if document node, ignore this node
-            return parseXmlToObject(xmlDom.childNodes[0]);
+            return unmarshalling(xmlDom.childNodes[0]);
         }
         
         if(isTextNode) {
@@ -43,7 +43,7 @@ var XmlService = function() {
         
         var childDatas = [];
         xmlDom.childNodes.forEach(function(child) {
-            childDatas.push(parseXmlToObject(child));
+            childDatas.push(unmarshalling(child));
         });
         
         var data = {};
@@ -118,8 +118,18 @@ var XmlService = function() {
         }
     }
     
+    var transformToDocument = function(xmlDom, xslString) {
+        var xsltProcessor = new XSLTProcessor();
+        var xslDom = parseStringToXml(xslString)
+        xsltProcessor.importStylesheet(xslDom);
+        var result = xsltProcessor.transformToFragment(xmlDom, document);
+        
+        return result;
+    }
+    
     this.parseStringToXml = parseStringToXml;
     this.parseXmlToString = parseXmlToString;
     this.unmarshalling = unmarshalling;
     this.marshalling = marshalling;
+    this.transformToDocument = transformToDocument;
 }

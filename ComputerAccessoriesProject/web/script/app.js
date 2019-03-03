@@ -15,6 +15,9 @@ var App = function () {
             login: 'view/login.jsp',
             register: 'view/register.jsp',
             adminDashBoard: 'view/admin/dashboard.jsp',
+        },
+        xsl: {
+            user: 'xsl/user.xsl',
         }
     };
     
@@ -22,16 +25,23 @@ var App = function () {
         return rootUrl + url;
     };
     
+    //format url for API
     Object.keys(url.api).forEach(function(key) {
        var value = url.api[key];
        url.api[key] = getRealUrl(value);
     });
     
+    //format URL for page
     Object.keys(url.page).forEach(function(key) {
        var value = url.page[key];
        url.page[key] = getRealUrl(value);
     });
     
+    //format URL for XSL file
+    Object.keys(url.xsl).forEach(function(key) {
+       var value = url.xsl[key];
+       url.xsl[key] = getRealUrl(value);
+    });
     
     var toggleClass = function(id, className) {
         var element = document.getElementById(id);
