@@ -27,7 +27,7 @@ var XmlService = function() {
     }
     
     //Xml Dom 
-    var parseXmlToObject = function(xmlDom) {
+    var unmarshalling = function(xmlDom) {
         var isDocumentNode = xmlDom.nodeType == 9;
         var isTextNode = xmlDom.nodeType == 3;
         
@@ -56,7 +56,7 @@ var XmlService = function() {
                     //existed -> array
                     var oldObj = {};
                     oldObj[key] = data[key];
-                    if(typeof oldObj == 'object') {
+                    if(!Array.isArray(data[key])) {
                         data[key] = [
                             oldObj,
                             child,
@@ -78,7 +78,7 @@ var XmlService = function() {
         return result;
     }
     
-    var parseObjectToXml = function(object, rootTag) {
+    var marshalling = function(object, rootTag) {
         var xmlDoc = createXmlDocument();
         var piNode = xmlDoc.createProcessingInstruction('xml', 'version="1.0" encoding="UTF-8" standalone="yes"');
         xmlDoc.appendChild(piNode);
@@ -103,11 +103,11 @@ var XmlService = function() {
         else {
             Object.keys(object).forEach(function(key) {
                var value = object[key];
-               if(typeof value == 'array') {
+               if(Array.isArray(value)) {
                    value.forEach(function(subObject) {
-                        var newNode = xmlDoc.createElement(key);
-                        createSubTree(xmlDoc, newNode, subObject);
-                        node.appendNode(newNode);
+//                        var newNode = xmlDoc.createElement(key);
+                        createSubTree(xmlDoc, node, subObject);
+//                        node.appendChild(newNode);
                    });
                } else {
                    var newNode = xmlDoc.createElement(key);
@@ -120,6 +120,6 @@ var XmlService = function() {
     
     this.parseStringToXml = parseStringToXml;
     this.parseXmlToString = parseXmlToString;
-    this.parseXmlToObject = parseXmlToObject;
-    this.parseObjectToXml = parseObjectToXml;
+    this.unmarshalling = unmarshalling;
+    this.marshalling = marshalling;
 }

@@ -14,6 +14,7 @@ var App = function () {
         page: {
             login: 'view/login.jsp',
             register: 'view/register.jsp',
+            adminDashBoard: 'view/admin/dashboard.jsp',
         }
     };
     

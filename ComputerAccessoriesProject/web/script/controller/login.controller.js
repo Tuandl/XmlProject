@@ -21,7 +21,7 @@ var LoginController = function (app, stateService, ajaxService, xmlService) {
         }
     };
     
-    //Running Flow
+    //Running Flow  
     var btnLogin = document.getElementById(viewIds.button.login);
     btnLogin.addEventListener('click', onBtnLoginClicked);
     var btnRegister = document.getElementById(viewIds.button.register);
@@ -44,21 +44,23 @@ var LoginController = function (app, stateService, ajaxService, xmlService) {
             };
             
             ajaxService.get(app.url.api.user, data).then(function(response) {
-                console.log('user data', response);
-                var xmlDoc = xmlService.parseStringToXml(response);
-                console.log('user xml', xmlDoc);
-                var userTmp = xmlService.parseXmlToObject(xmlDoc);
-                console.log('user', userTmp);
-                
-                var rootTag = Object.keys(userTmp)[0];
-                var obj = userTmp[rootTag];
-                var userXml = xmlService.parseObjectToXml(obj, rootTag);
-                console.log('user xml', userXml);
-                
-                var xmlStr = xmlService.parseXmlToString(xmlDoc);
-                console.log('user str', xmlStr);
-                var userXmlStr = xmlService.parseXmlToString(userXml);
-                console.log('user xml Str', userXmlStr);
+                stateService.setCurrentUser(response);
+                window.location.replace(app.url.page.admin.adminDashBoard);
+//                console.log('user data', response);
+//                var xmlDoc = xmlService.parseStringToXml(response);
+//                console.log('user xml', xmlDoc);
+//                var userTmp = xmlService.parseXmlToObject(xmlDoc);
+//                console.log('user', userTmp);
+//                
+//                var rootTag = Object.keys(userTmp)[0];
+//                var obj = userTmp[rootTag];
+//                var userXml = xmlService.parseObjectToXml(obj, rootTag);
+//                console.log('user xml', userXml);
+//                
+//                var xmlStr = xmlService.parseXmlToString(xmlDoc);
+//                console.log('user str', xmlStr);
+//                var userXmlStr = xmlService.parseXmlToString(userXml);
+//                console.log('user xml Str', userXmlStr);
             }).catch(function(error) {
                 console.error('user error', error);
             });

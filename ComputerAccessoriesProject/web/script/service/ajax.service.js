@@ -53,12 +53,12 @@ var AjaxService = function() {
             xhttp.onreadystatechange = function() {
                 if(this.readyState == 4) {
                     if(this.status == 200) {
-                        resolve(xhttp.response);
+                        resolve(xhttp.responseXML);
                     }
                     else {
                         reject({
                             status: this.status,
-                            message: xhttp.responseXML,
+                            message: xhttp.response,
                         });
                     }
                 }
