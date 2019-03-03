@@ -20,6 +20,7 @@ var XmlService = function() {
     }
     
     var parseXmlToString = function(xml) {
+        var processingInstruction = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
         var objectSerializer = new XMLSerializer();
         var result = objectSerializer.serializeToString(xml);
         return result;
@@ -78,10 +79,47 @@ var XmlService = function() {
     }
     
     var parseObjectToXml = function(object, rootTag) {
+        var xmlDoc = createXmlDocument();
+        var piNode = xmlDoc.createProcessingInstruction('xml', 'version="1.0" encoding="UTF-8" standalone="yes"');
+        xmlDoc.appendChild(piNode);
+        
+        var rootNode = xmlDoc.createElement(rootTag);
+        createSubTree(xmlDoc, rootNode, object);
+        xmlDoc.appendChild(rootNode);
+        return xmlDoc;
+    }
+    
+    var createXmlDocument = function() {
+        var xmlDoc = document.implementation.createDocument(null, null);
+        return xmlDoc;
+    }
+    
+    var createSubTree = function(xmlDoc, node, object) {
+        if(typeof object == 'string') {
+            var textNode = xmlDoc.createTextNode(object);
+            node.appendChild(textNode);
+            return;
+        } 
+        else {
+            Object.keys(object).forEach(function(key) {
+               var value = object[key];
+               if(typeof value == 'array') {
+                   value.forEach(function(subObject) {
+                        var newNode = xmlDoc.createElement(key);
+                        createSubTree(xmlDoc, newNode, subObject);
+                        node.appendNode(newNode);
+                   });
+               } else {
+                   var newNode = xmlDoc.createElement(key);
+                   createSubTree(xmlDoc, newNode, value);
+                   node.appendChild(newNode);
+               }
+            });
+        }
     }
     
     this.parseStringToXml = parseStringToXml;
     this.parseXmlToString = parseXmlToString;
     this.parseXmlToObject = parseXmlToObject;
-    this.parseObjecttoXml = parseObjectToXml;
+    this.parseObjectToXml = parseObjectToXml;
 }

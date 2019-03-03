@@ -50,9 +50,15 @@ var LoginController = function (app, stateService, ajaxService, xmlService) {
                 var userTmp = xmlService.parseXmlToObject(xmlDoc);
                 console.log('user', userTmp);
                 
-                var xmlStr = xmlService.parseXmlToString(xmlDoc.children[0]);
-                console.log('user str', xmlStr);
+                var rootTag = Object.keys(userTmp)[0];
+                var obj = userTmp[rootTag];
+                var userXml = xmlService.parseObjectToXml(obj, rootTag);
+                console.log('user xml', userXml);
                 
+                var xmlStr = xmlService.parseXmlToString(xmlDoc);
+                console.log('user str', xmlStr);
+                var userXmlStr = xmlService.parseXmlToString(userXml);
+                console.log('user xml Str', userXmlStr);
             }).catch(function(error) {
                 console.error('user error', error);
             });
