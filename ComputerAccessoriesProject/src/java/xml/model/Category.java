@@ -9,9 +9,8 @@ package xml.model;
  *
  * @author admin
  */
-public class SubCategory extends ModelBase{
+public class Category extends ModelBase{
     private String name;
-    private int masterCategoryId;
 
     public String getName() {
         return name;
@@ -19,14 +18,6 @@ public class SubCategory extends ModelBase{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getMasterCategoryId() {
-        return masterCategoryId;
-    }
-
-    public void setMasterCategoryId(int masterCategoryId) {
-        this.masterCategoryId = masterCategoryId;
     }
     
     

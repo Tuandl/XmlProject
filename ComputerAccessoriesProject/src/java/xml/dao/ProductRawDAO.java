@@ -5,17 +5,17 @@
  */
 package xml.dao;
 
-import xml.model.MasterCategory;
+import xml.model.ProductRaw;
 
 /**
  *
  * @author admin
  */
-public class MasterCategoryDAO extends DAOBase<MasterCategory>
-        implements IDAO<MasterCategory>{
+public class ProductRawDAO extends DAOBase<ProductRaw> 
+        implements IDAO<ProductRaw>{
     
-    public MasterCategoryDAO() {
-        super(MasterCategory.class);
+    public ProductRawDAO() {
+        super(ProductRaw.class);
     }
     
 }

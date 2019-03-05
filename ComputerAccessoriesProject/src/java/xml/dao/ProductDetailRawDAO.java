@@ -5,17 +5,17 @@
  */
 package xml.dao;
 
-import xml.model.SubCategory;
+import xml.model.ProductDetailRaw;
 
 /**
  *
  * @author admin
  */
-public class SubCategoryDAO extends DAOBase<SubCategory>
-        implements IDAO<SubCategory>{
+public class ProductDetailRawDAO extends DAOBase<ProductDetailRaw> 
+        implements IDAO<ProductDetailRaw>{
     
-    public SubCategoryDAO() {
-        super(SubCategory.class);
+    public ProductDetailRawDAO() {
+        super(ProductDetailRaw.class);
     }
     
 }

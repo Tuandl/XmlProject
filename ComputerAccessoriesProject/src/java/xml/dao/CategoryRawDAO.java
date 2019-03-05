@@ -3,22 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xml.model;
+package xml.dao;
+
+import xml.model.CategoryRaw;
 
 /**
  *
  * @author admin
  */
-public class MasterCategory extends ModelBase{
-    private String name;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+public class CategoryRawDAO extends DAOBase<CategoryRaw> 
+        implements IDAO<CategoryRaw>{
     
+    public CategoryRawDAO() {
+        super(CategoryRaw.class);
+    }
     
 }

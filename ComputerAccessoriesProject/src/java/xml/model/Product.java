@@ -12,7 +12,7 @@ package xml.model;
 public class Product extends ModelBase{
     
     private String name;
-    private int subCategoryId;
+    private int categoryId;
     private String description;
     private String imageUrl;
     private int price;
@@ -25,12 +25,12 @@ public class Product extends ModelBase{
         this.name = name;
     }
 
-    public int getSubCategoryId() {
-        return subCategoryId;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setSubCategoryId(int subCategoryId) {
-        this.subCategoryId = subCategoryId;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getDescription() {
@@ -56,6 +56,6 @@ public class Product extends ModelBase{
     public void setPrice(int price) {
         this.price = price;
     }
-    
+
     
 }
