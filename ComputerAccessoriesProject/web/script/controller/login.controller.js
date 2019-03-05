@@ -44,8 +44,11 @@ var LoginController = function (app, stateService, ajaxService, xmlService) {
             };
             
             ajaxService.get(app.url.api.user, data).then(function(response) {
+                
+                console.log(response);
+                
                 stateService.setCurrentUser(response);
-                window.location.replace(app.url.page.adminDashBoard);
+                window.location.href = app.url.page.adminDashBoard;
 //                console.log('user data', response);
 //                var xmlDoc = xmlService.parseStringToXml(response);
 //                console.log('user xml', xmlDoc);
@@ -72,6 +75,6 @@ var LoginController = function (app, stateService, ajaxService, xmlService) {
     }
     
     function onBtnRegisterClicked() {
-        window.location.replace(app.url.page.register);
+        window.location.href = app.url.page.register;
     }
 }

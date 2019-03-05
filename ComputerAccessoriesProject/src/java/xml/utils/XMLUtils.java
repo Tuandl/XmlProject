@@ -37,7 +37,7 @@ public class XMLUtils {
         try {
             JAXBContext context = JAXBContext.newInstance(object.getClass());
             Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, "ISO-8859-1");
 //            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             StringWriter stringWriter = new StringWriter();
             marshaller.marshal(object, stringWriter);

@@ -37,7 +37,7 @@ var RegisterController = function (app, ajaxService) {
     
     //Handler methods
     function onBtnLoginClicked() {
-        window.location.replace(app.url.page.login);
+        window.location.href = app.url.page.login;
     }
     
     function onBtnRegisterClicked() {
