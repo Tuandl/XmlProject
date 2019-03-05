@@ -47,6 +47,7 @@ create table CrawlDataMappingConfiguration (
 	domainId int references CrawlDomainConfiguration(id),
 	dataId int references CrawlDataConfiguration(id),
 	xPathQuery nvarchar(max),
+	isNodeResult bit,
 )
 
 go
@@ -230,59 +231,59 @@ set identity_insert CrawlDataMappingConfiguration on
 ------------------------------------------------------------------------------------------------------------
 
 --insert data for dalatlaptop
-insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
-values (1, 1, 1, N'//nav[@class="primary-nav"]//li[count(./*) = 1]', getdate(), 0)
-insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
-values (2, 1, 2, N'//a/@href', getdate(), 0)
-insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
-values (3, 1, 3, N'//a', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, isNodeResult, xPathQuery, createdAt, deleted)
+values (1, 1, 1, 0, N'//nav[@class="primary-nav"]//li[count(./*) = 1]', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, isNodeResult, xPathQuery, createdAt, deleted)
+values (2, 1, 2, 0, N'//a/@href', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, isNodeResult, xPathQuery, createdAt, deleted)
+values (3, 1, 3, 0, N'//a', getdate(), 0)
 
 --insert productRaw
-insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
-values (4, 1, 4, N'//div[@class="col-xs-6 col-md-3 product sale sb-theme-product"]', getdate(), 0)
-insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
-values (5, 1, 5, N'//h2/a', getdate(), 0)
-insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
-values (6, 1, 6, N'//img/@src', getdate(), 0)
-insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
-values (7, 1, 7, N'//ins/span', getdate(), 0)
-insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
-values (8, 1, 8, N'//h2/a/@href', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, isNodeResult, xPathQuery, createdAt, deleted)
+values (4, 1, 4, 0, N'//div[@class="col-xs-6 col-md-3 product sale sb-theme-product"]', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, isNodeResult, xPathQuery, createdAt, deleted)
+values (5, 1, 5, 0, N'//h2/a', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, isNodeResult, xPathQuery, createdAt, deleted)
+values (6, 1, 6, 0, N'//img/@src', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, isNodeResult, xPathQuery, createdAt, deleted)
+values (7, 1, 7, 0, N'//ins/span', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, isNodeResult, xPathQuery, createdAt, deleted)
+values (8, 1, 8, 0, N'//h2/a/@href', getdate(), 0)
 
 --insert ProductDetailRaw
-insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
-values (9, 1, 9, N'//div[@class="woocommerce-Tabs-panel woocommerce-Tabs-panel--description panel entry-content wc-tab"]', getdate(), 0)
-insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
-values (10, 1, 10, N'/div/*[not(local-name(.) = "h2" and string(.) = "Mô tả sản phẩm")]', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, isNodeResult, xPathQuery, createdAt, deleted)
+values (9, 1, 9, 0, N'//div[@class="woocommerce-Tabs-panel woocommerce-Tabs-panel--description panel entry-content wc-tab"]', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, isNodeResult, xPathQuery, createdAt, deleted)
+values (10, 1, 10, 1, N'/*[not(local-name(.) = "h2" and string(.) = "Mô tả sản phẩm")]', getdate(), 0)
 
 --------------------------------------------------------------------------------------------------------
 
 
 --insert data for namTruongThinh
-insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
-values (11, 1, 1, N'//div[@id="t3-off-canvas" and @class="t3-off-canvas "]//ul[@class="dropdown-menu"]/li[not(contains(@class,"dropdown-submenu"))]', getdate(), 0)
-insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
-values (12, 1, 2, N'//a/@href', getdate(), 0)
-insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
-values (13, 1, 3, N'//a', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, isNodeResult, xPathQuery, createdAt, deleted)
+values (11, 2, 1, 0, N'//div[@id="t3-off-canvas" and @class="t3-off-canvas "]//ul[@class="dropdown-menu"]/li[not(contains(@class,"dropdown-submenu"))]', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, isNodeResult, xPathQuery, createdAt, deleted)
+values (12, 2, 2, 0, N'//a/@href', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, isNodeResult, xPathQuery, createdAt, deleted)
+values (13, 2, 3, 0, N'//a', getdate(), 0)
 
 --insert productRaw
-insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
-values (14, 1, 4, N'//div[@class="col-xs-12 col-sm-4 col-md-2 block_product"]', getdate(), 0)
-insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
-values (15, 1, 5, N'//div[@class="name"]/a', getdate(), 0)
-insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
-values (16, 1, 6, N'//img[@class="jshop_img img-responsive"]/@src', getdate(), 0)
-insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
-values (17, 1, 7, N'//div[@class="jshop_price"]/span', getdate(), 0)
-insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
-values (18, 1, 8, N'//div[@class="name"]/a/@href', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, isNodeResult, xPathQuery, createdAt, deleted)
+values (14, 2, 4, 0, N'//div[@class="col-xs-12 col-sm-4 col-md-2 block_product"]', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, isNodeResult, xPathQuery, createdAt, deleted)
+values (15, 2, 5, 0, N'//div[@class="name"]/a', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, isNodeResult, xPathQuery, createdAt, deleted)
+values (16, 2, 6, 0, N'//img[@class="jshop_img img-responsive"]/@src', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, isNodeResult, xPathQuery, createdAt, deleted)
+values (17, 2, 7, 0, N'//div[@class="jshop_price"]/span', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, isNodeResult, xPathQuery, createdAt, deleted)
+values (18, 2, 8, 0, N'//div[@class="name"]/a/@href', getdate(), 0)
 
 --insert ProductDetailRaw
-insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
-values (19, 1, 9, N'//div[@class="tab-content"]', getdate(), 0)
-insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
-values (20, 1, 10, N'/div/div/*', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, isNodeResult, xPathQuery, createdAt, deleted)
+values (19, 2, 9, 0, N'//div[@class="tab-content"]', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, isNodeResult, xPathQuery, createdAt, deleted)
+values (20, 2, 10, 1, N'/div/*', getdate(), 0)
 
 
 set identity_insert CrawlDataMappingConfiguration off

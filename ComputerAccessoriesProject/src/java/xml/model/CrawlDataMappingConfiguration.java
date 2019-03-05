@@ -13,6 +13,7 @@ public class CrawlDataMappingConfiguration extends ModelBase{
     private int domainId;
     private int dataId;
     private String xPathQuery;
+    private boolean isNodeResult;
 
     public int getDomainId() {
         return domainId;
@@ -37,4 +38,14 @@ public class CrawlDataMappingConfiguration extends ModelBase{
     public void setxPathQuery(String xPathQuery) {
         this.xPathQuery = xPathQuery;
     }
+
+    public boolean isIsNodeResult() {
+        return isNodeResult;
+    }
+
+    public void setIsNodeResult(boolean isNodeResult) {
+        this.isNodeResult = isNodeResult;
+    }
+    
+    
 }

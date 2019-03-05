@@ -127,6 +127,18 @@ public abstract class DAOBase<T extends ModelBase> implements IDAO<T> {
     }
 
     @Override
+    public T getSingle(String filterQuery, Object... parameters) {
+        T result = null;
+        List<T> entities = getAll(filterQuery, parameters);
+        
+        if(entities != null && entities.size() > 0) {
+            result = entities.get(0);
+        }
+        
+        return result;
+    }
+    
+    @Override
     public boolean insert(T entity) {
         if (entity == null) {
             return false;

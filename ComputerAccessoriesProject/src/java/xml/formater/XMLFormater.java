@@ -62,6 +62,41 @@ public class XMLFormater {
         return result;
     }
     
+    public static String removeInvalidXmlChars(String in) {
+//        String result = src;
+//        
+//        String expression = "[\\u0010]";
+//        result = result.replaceAll(expression, "");
+//        
+//        return result;
+
+        StringBuffer out = new StringBuffer(); // Used to hold the output.
+        char current; // Used to reference the current character.
+
+        if (in == null || ("".equals(in))) return ""; // vacancy test.
+        for (int i = 0; i < in.length(); i++) {
+            current = in.charAt(i); // NOTE: No IndexOutOfBoundsException caught here; it should not happen.
+            if ((current == 0x9) ||
+                (current == 0xA) ||
+                (current == 0xD) ||
+                ((current >= 0x20) && (current <= 0xD7FF)) ||
+                ((current >= 0xE000) && (current <= 0xFFFD)) ||
+                ((current >= 0x10000) && (current <= 0x10FFFF)))
+                out.append(current);
+            
+            if(current == 0x10) {
+                System.out.println("Found 0x10 here at " + i);
+            }
+        }
+        return out.toString();
+    }
+    
+    public static String parsePrice(String src) {
+        String expression = "[^0-9]";
+        String result = src.replaceAll(expression, "");
+        return result;
+    }
+    
     public static String generateXMLWellForm(String htmlString){
         StringBuilder resultBuilder = new StringBuilder();
         ArrayList<String> tagQueue = new ArrayList<>();
