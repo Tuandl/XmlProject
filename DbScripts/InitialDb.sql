@@ -1,3 +1,4 @@
+﻿
 --create database XmlDb
 
 --go
@@ -50,31 +51,16 @@ create table CrawlDataMappingConfiguration (
 
 go
 
-IF OBJECT_ID(N'dbo.MasterCategory', N'U') IS NOT NULL
+IF OBJECT_ID(N'dbo.Category', N'U') IS NOT NULL
 BEGIN
-    drop table MasterCategory
+    drop table Category
 END
-create table MasterCategory (
+create table Category (
 	id int identity(1,1) primary key,
 	deleted bit,
 	createdAt datetime,
 	updatedAt datetime,
 	name nvarchar(100),
-)
-
-go
-
-IF OBJECT_ID(N'dbo.SubCategory', N'U') IS NOT NULL
-BEGIN
-    drop table SubCategory
-END
-create table SubCategory (
-	id int identity(1,1) primary key,
-	deleted bit,
-	createdAt datetime,
-	updatedAt datetime,
-	name nvarchar(100),
-	masterCategoryId int references MasterCategory(id),
 )
 
 go
@@ -89,7 +75,7 @@ create table Product (
 	createdAt datetime,
 	updatedAt datetime,
 	name nvarchar(100),
-	subCategoryId int references SubCategory(id),
+	categoryId int references Category(id),
 	description nvarchar(max),
 	imageUrl nvarchar(200),
 	price int,
@@ -148,3 +134,155 @@ create table OrderDetail (
 
 go
 
+IF OBJECT_ID(N'dbo.CategoryRaw', N'U') IS NOT NULL
+BEGIN
+    drop table CategoryRaw
+END
+create table CategoryRaw (
+	id int identity(1,1) primary key,
+	deleted bit,
+	createdAt datetime,
+	updatedAt datetime,
+	[name] nvarchar(200),
+	[url] nvarchar(200),
+	domainId int,
+)
+
+go
+
+IF OBJECT_ID(N'dbo.ProductRaw', N'U') IS NOT NULL
+BEGIN
+    drop table ProductRaw
+END
+create table ProductRaw (
+	id int identity(1,1) primary key,
+	deleted bit,
+	createdAt datetime,
+	updatedAt datetime,
+	[name] nvarchar(200),
+	imgUrl nvarchar(max),
+	price int,
+	detailUrl nvarchar(max),
+	categoryRawId int,
+	hashCode int,
+)
+
+go
+
+IF OBJECT_ID(N'dbo.ProductDetailRaw', N'U') IS NOT NULL
+BEGIN
+    drop table ProductDetailRaw
+END
+create table ProductDetailRaw (
+	id int identity(1,1) primary key,
+	deleted bit,
+	createdAt datetime,
+	updatedAt datetime,
+	[description] nvarchar(max),
+	productRawId int,
+)
+
+go
+
+--insert xpath expression
+insert into [User](username, password, fullName, isAdmin, createdAt, deleted) 
+values ('admin', '123123', N'Dương Anh Tuấn', 1, GETDATE(), 0)
+
+go
+set identity_insert CrawlDomainConfiguration on
+insert into CrawlDomainConfiguration(id, domainName, initUrl, pagingXPathQuery, createdAt, deleted)
+values (1, N'Đà Lạt laptop', 'https://dalatlaptop.com/', N'//a[@rel="next"]/@href', GETDATE(), 0)
+insert into CrawlDomainConfiguration(id, domainName, initUrl, pagingXPathQuery, createdAt, deleted)
+values (2, N'Nam Trường Thịnh ', 'http://namtruongthinhdalat.vn/', N'//a[@title="Trang sau"]/@href', GETDATE(), 0)
+set identity_insert CrawlDomainConfiguration off
+
+go 
+
+set identity_insert CrawlDataConfiguration on
+insert into CrawlDataConfiguration(id, name, className, propertyName, createdAt, deleted)
+values (1, N'Category Block', 'CategoryRaw', null, GETDATE(), 0)
+insert into CrawlDataConfiguration(id, name, className, propertyName, createdAt, deleted)
+values (2, N'Category Url', 'CategoryRaw', 'url', GETDATE(), 0)
+insert into CrawlDataConfiguration(id, name, className, propertyName, createdAt, deleted)
+values (3, N'Category Name', 'CategoryRaw', 'name', GETDATE(), 0)
+
+insert into CrawlDataConfiguration(id, name, className, propertyName, createdAt, deleted)
+values (4, N'Product Block', 'ProductRaw', null, GETDATE(), 0)
+insert into CrawlDataConfiguration(id, name, className, propertyName, createdAt, deleted)
+values (5, N'Product Name', 'ProductRaw', 'name', GETDATE(), 0)
+insert into CrawlDataConfiguration(id, name, className, propertyName, createdAt, deleted)
+values (6, N'Product Image URL', 'ProductRaw', 'imgUrl', GETDATE(), 0)
+insert into CrawlDataConfiguration(id, name, className, propertyName, createdAt, deleted)
+values (7, N'Product Price', 'ProductRaw', 'price', GETDATE(), 0)
+insert into CrawlDataConfiguration(id, name, className, propertyName, createdAt, deleted)
+values (8, N'Product detail Url', 'ProductRaw', 'detailUrl', GETDATE(), 0)
+
+insert into CrawlDataConfiguration(id, name, className, propertyName, createdAt, deleted)
+values (9, N'Product detail Block', 'ProductDetailRaw', null, GETDATE(), 0)
+insert into CrawlDataConfiguration(id, name, className, propertyName, createdAt, deleted)
+values (10, N'Product detail Description', 'ProductDetailRaw', 'description', GETDATE(), 0)
+set identity_insert CrawlDataConfiguration off
+
+go
+
+set identity_insert CrawlDataMappingConfiguration on
+
+------------------------------------------------------------------------------------------------------------
+
+--insert data for dalatlaptop
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
+values (1, 1, 1, N'//nav[@class="primary-nav"]//li[count(./*) = 1]', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
+values (2, 1, 2, N'//a/@href', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
+values (3, 1, 3, N'//a', getdate(), 0)
+
+--insert productRaw
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
+values (4, 1, 4, N'//div[@class="col-xs-6 col-md-3 product sale sb-theme-product"]', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
+values (5, 1, 5, N'//h2/a', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
+values (6, 1, 6, N'//img/@src', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
+values (7, 1, 7, N'//ins/span', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
+values (8, 1, 8, N'//h2/a/@href', getdate(), 0)
+
+--insert ProductDetailRaw
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
+values (9, 1, 9, N'//div[@class="woocommerce-Tabs-panel woocommerce-Tabs-panel--description panel entry-content wc-tab"]', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
+values (10, 1, 10, N'/div/*[not(local-name(.) = "h2" and string(.) = "Mô tả sản phẩm")]', getdate(), 0)
+
+--------------------------------------------------------------------------------------------------------
+
+
+--insert data for namTruongThinh
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
+values (11, 1, 1, N'//div[@id="t3-off-canvas" and @class="t3-off-canvas "]//ul[@class="dropdown-menu"]/li[not(contains(@class,"dropdown-submenu"))]', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
+values (12, 1, 2, N'//a/@href', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
+values (13, 1, 3, N'//a', getdate(), 0)
+
+--insert productRaw
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
+values (14, 1, 4, N'//div[@class="col-xs-12 col-sm-4 col-md-2 block_product"]', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
+values (15, 1, 5, N'//div[@class="name"]/a', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
+values (16, 1, 6, N'//img[@class="jshop_img img-responsive"]/@src', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
+values (17, 1, 7, N'//div[@class="jshop_price"]/span', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
+values (18, 1, 8, N'//div[@class="name"]/a/@href', getdate(), 0)
+
+--insert ProductDetailRaw
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
+values (19, 1, 9, N'//div[@class="tab-content"]', getdate(), 0)
+insert into CrawlDataMappingConfiguration(id, domainId, dataId, xPathQuery, createdAt, deleted)
+values (20, 1, 10, N'/div/div/*', getdate(), 0)
+
+
+set identity_insert CrawlDataMappingConfiguration off

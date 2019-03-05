@@ -53,6 +53,12 @@ public class XMLFormater {
         expression = "&nbsp;?";
         result = result.replaceAll(expression, "");
         
+        expression = "<fb:like.*?</fb:like>";
+        result = result.replaceAll(expression, "");
+        
+        expression = "<fb:share-button.*?</fb:share-button>";
+        result = result.replaceAll(expression, "");
+        
         return result;
     }
     

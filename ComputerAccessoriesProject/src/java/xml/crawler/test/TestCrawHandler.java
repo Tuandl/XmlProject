@@ -15,8 +15,11 @@ import xml.utils.FileUtils;
  */
 public class TestCrawHandler {
     public static void main(String[] args) {
-        String url = "https://dalatlaptop.com/";
+//        String url = "https://dalatlaptop.com/";
+//        String url = "http://namtruongthinhdalat.vn/";
+        String url = "http://namtruongthinhdalat.vn/san-pham-chi-tiet/camera-ip-megapixel-dahua-2mp-ipc-hfw4239tp-ase";
         String htmlData = CrawlHandler.getDataFromHtml(url);
+        htmlData = XMLFormater.removeMiscellaneousTags(htmlData);
         String test = XMLFormater.generateXMLWellForm(htmlData);
         
         FileUtils.saveIntoFile("testdata.xml", test);
