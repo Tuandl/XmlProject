@@ -95,6 +95,8 @@ create table CategoryRaw (
 	[name] nvarchar(200),
 	[url] nvarchar(200),
 	domainId int,
+	crawl bit,
+	hashCode int,
 )
 
 go
