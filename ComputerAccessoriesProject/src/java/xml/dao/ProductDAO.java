@@ -18,4 +18,8 @@ public class ProductDAO extends DAOBase<Product>
         super(Product.class);
     }
     
+    public Product getProductByProductRawId(int productRawId) {
+        Product result = this.getSingle("productRawId = ?", productRawId);
+        return result;
+    }
 }

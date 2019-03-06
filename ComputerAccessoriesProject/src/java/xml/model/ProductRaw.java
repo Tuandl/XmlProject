@@ -16,6 +16,8 @@ public class ProductRaw extends ModelBase {
     private String detailUrl;
     private int categoryRawId;
     private int hashCode;
+    private boolean isNew;
+    private int categoryId;
 
     public String getName() {
         return name;
@@ -63,6 +65,22 @@ public class ProductRaw extends ModelBase {
 
     public void setHashCode(int hashCode) {
         this.hashCode = hashCode;
+    }
+
+    public boolean isIsNew() {
+        return isNew;
+    }
+
+    public void setIsNew(boolean isNew) {
+        this.isNew = isNew;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
     
     

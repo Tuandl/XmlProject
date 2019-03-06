@@ -5,6 +5,7 @@
  */
 package xml.dao;
 
+import java.util.List;
 import xml.model.ProductRaw;
 
 /**
@@ -18,4 +19,14 @@ public class ProductRawDAO extends DAOBase<ProductRaw>
         super(ProductRaw.class);
     }
     
+    public ProductRaw getProductRawByDetailUrl(String detailUrl) {
+        ProductRaw productRaw = this.getSingle("detailUrl = ?", detailUrl);
+        return productRaw;
+    }
+    
+    public List<ProductRaw> getNewProductRawsByCategoryRawId(int categoryRawId) {
+        List<ProductRaw> productRaws = this.getAll(
+                "categoryRawId = ? and isNew = ?", categoryRawId, true);
+        return productRaws;
+    }
 }

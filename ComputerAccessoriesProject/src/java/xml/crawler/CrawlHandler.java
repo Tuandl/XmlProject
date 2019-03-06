@@ -83,7 +83,7 @@ public class CrawlHandler {
         return result;
     }
     
-    public static List<Object> ExtractData(int domainId, Class ObjClass, 
+    public static List<Object> extractData(int domainId, Class ObjClass, 
             String htmlFormated) {
         List<Object> results = new ArrayList<>();
         
@@ -220,5 +220,23 @@ public class CrawlHandler {
         }
         
         return results;
+    }
+    
+    public static String extractString(String xmlString, String expression) {
+        String result = null;
+        try {
+            Document document = XMLUtils.parseDomFromString(xmlString);
+            if(document == null) {
+                System.out.println("Cannot create dom");
+                return result;
+            }
+            
+            XPath xpath = XMLUtils.createXPath();
+            result = (String) xpath.evaluate(expression, document, XPathConstants.STRING);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return result;
     }
 }

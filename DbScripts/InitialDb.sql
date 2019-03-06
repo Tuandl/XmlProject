@@ -114,7 +114,9 @@ create table ProductRaw (
 	price int,
 	detailUrl nvarchar(max),
 	categoryRawId int,
+	categoryId int references Category(id),
 	hashCode int,
+	isNew bit,
 )
 
 go

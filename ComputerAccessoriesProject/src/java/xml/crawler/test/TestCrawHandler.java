@@ -45,7 +45,7 @@ public class TestCrawHandler {
         System.out.println("done save file");
         
         List<CategoryRaw> datas = 
-                CrawlHandler.ExtractData(1, CategoryRaw.class, test)
+                CrawlHandler.extractData(1, CategoryRaw.class, test)
                     .stream()
                     .map((x) -> (CategoryRaw)x)
                     .collect(Collectors.toList());
@@ -68,7 +68,7 @@ public class TestCrawHandler {
         System.out.println("done save file");
         
         List<CategoryRaw> datas = 
-                CrawlHandler.ExtractData(1, CategoryRaw.class, test)
+                CrawlHandler.extractData(1, CategoryRaw.class, test)
                     .stream()
                     .map((x) -> (CategoryRaw)x)
                     .collect(Collectors.toList());
@@ -91,7 +91,7 @@ public class TestCrawHandler {
         System.out.println("done save file");
         
         List<ProductRaw> datas = 
-                CrawlHandler.ExtractData(1, ProductRaw.class, test)
+                CrawlHandler.extractData(1, ProductRaw.class, test)
                     .stream()
                     .map((x) -> (ProductRaw)x)
                     .collect(Collectors.toList());
@@ -117,7 +117,7 @@ public class TestCrawHandler {
         System.out.println("done save file");
         
         List<ProductRaw> datas = 
-                CrawlHandler.ExtractData(2, ProductRaw.class, test)
+                CrawlHandler.extractData(2, ProductRaw.class, test)
                     .stream()
                     .map((x) -> (ProductRaw)x)
                     .collect(Collectors.toList());
@@ -143,7 +143,7 @@ public class TestCrawHandler {
         System.out.println("done save file");
         
         List<ProductDetailRaw> datas = 
-                CrawlHandler.ExtractData(1, ProductDetailRaw.class, test)
+                CrawlHandler.extractData(1, ProductDetailRaw.class, test)
                     .stream()
                     .map((x) -> (ProductDetailRaw)x)
                     .collect(Collectors.toList());
@@ -166,7 +166,7 @@ public class TestCrawHandler {
         System.out.println("done save file");
         
         List<ProductDetailRaw> datas = 
-                CrawlHandler.ExtractData(2, ProductDetailRaw.class, test)
+                CrawlHandler.extractData(2, ProductDetailRaw.class, test)
                     .stream()
                     .map((x) -> (ProductDetailRaw)x)
                     .collect(Collectors.toList());
