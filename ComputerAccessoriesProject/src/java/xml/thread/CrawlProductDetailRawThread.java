@@ -18,6 +18,7 @@ public class CrawlProductDetailRawThread extends Thread {
     public CrawlProductDetailRawThread(int productRawId) {
         crawlService = new CrawlService();
         this.productRawId = productRawId;
+        
     }
 
     @Override

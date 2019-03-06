@@ -10,6 +10,7 @@ var App = function () {
         api: {
             login: 'LoginServlet',
             user: 'UserServlet',
+            category: 'CategoryServlet',
         },
         page: {
             login: 'view/login.jsp',

@@ -15,6 +15,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -54,7 +55,7 @@ public class XMLUtils {
         try {
             JAXBContext context = JAXBContext.newInstance(object.getClass());
             Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, "UTF-8");
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
 //            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(object, writer);
         } catch (Exception e) {
@@ -66,12 +67,25 @@ public class XMLUtils {
         try {
             JAXBContext context = JAXBContext.newInstance(object.getClass());
             Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, "UTF-8");
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
 //            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(object, outputStream);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public static Object unmarshallFromString(Class objectClass, String xmlData) {
+        Object result = null;
+        try {
+            JAXBContext context = JAXBContext.newInstance(objectClass);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            InputSource is = new InputSource(new StringReader(xmlData));
+            result = unmarshaller.unmarshal(is);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
     
     public static Document parseDomFromString(String xmlContent) {
