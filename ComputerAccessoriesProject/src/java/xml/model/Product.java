@@ -16,6 +16,7 @@ public class Product extends ModelBase{
     private String description;
     private String imageUrl;
     private int price;
+    private int productRawId;
 
     public String getName() {
         return name;
@@ -55,6 +56,14 @@ public class Product extends ModelBase{
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getProductRawId() {
+        return productRawId;
+    }
+
+    public void setProductRawId(int productRawId) {
+        this.productRawId = productRawId;
     }
 
     

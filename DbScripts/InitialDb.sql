@@ -66,24 +66,6 @@ create table Category (
 
 go
 
-IF OBJECT_ID(N'dbo.Product', N'U') IS NOT NULL
-BEGIN
-    drop table Product
-END
-create table Product (
-	id int identity(1,1) primary key,
-	deleted bit,
-	createdAt datetime,
-	updatedAt datetime,
-	name nvarchar(100),
-	categoryId int references Category(id),
-	description nvarchar(max),
-	imageUrl nvarchar(200),
-	price int,
-)
-
-go
-
 IF OBJECT_ID(N'dbo.User', N'U') IS NOT NULL
 BEGIN
     drop table [User]
@@ -97,40 +79,6 @@ create table [User] (
 	password varchar(100),
 	fullName nvarchar(200),
 	isAdmin bit,
-)
-
-go
-
-IF OBJECT_ID(N'dbo.Order', N'U') IS NOT NULL
-BEGIN
-    drop table [Order]
-END
-create table [Order] (
-	id int identity(1,1) primary key,
-	deleted bit,
-	createdAt datetime,
-	updatedAt datetime,
-	orderCode nvarchar(100),
-	amount int,
-	customerId int references [User](id)
-)
-
-go
-
-IF OBJECT_ID(N'dbo.OrderDetail', N'U') IS NOT NULL
-BEGIN
-    drop table OrderDetail
-END
-create table OrderDetail (
-	id int identity(1,1) primary key,
-	deleted bit,
-	createdAt datetime,
-	updatedAt datetime,
-	productName nvarchar(100),
-	orderId int references [Order](id),
-	productId int references Product(id),
-	price int,
-	quantity int,
 )
 
 go
@@ -181,6 +129,59 @@ create table ProductDetailRaw (
 	updatedAt datetime,
 	[description] nvarchar(max),
 	productRawId int,
+)
+
+go
+
+IF OBJECT_ID(N'dbo.Product', N'U') IS NOT NULL
+BEGIN
+    drop table Product
+END
+create table Product (
+	id int identity(1,1) primary key,
+	deleted bit,
+	createdAt datetime,
+	updatedAt datetime,
+	name nvarchar(100),
+	categoryId int references Category(id),
+	description nvarchar(max),
+	imageUrl nvarchar(200),
+	price int,
+	productRawId int references ProductRaw(id),
+)
+
+go
+
+IF OBJECT_ID(N'dbo.Order', N'U') IS NOT NULL
+BEGIN
+    drop table [Order]
+END
+create table [Order] (
+	id int identity(1,1) primary key,
+	deleted bit,
+	createdAt datetime,
+	updatedAt datetime,
+	orderCode nvarchar(100),
+	amount int,
+	customerId int references [User](id)
+)
+
+go
+
+IF OBJECT_ID(N'dbo.OrderDetail', N'U') IS NOT NULL
+BEGIN
+    drop table OrderDetail
+END
+create table OrderDetail (
+	id int identity(1,1) primary key,
+	deleted bit,
+	createdAt datetime,
+	updatedAt datetime,
+	productName nvarchar(100),
+	orderId int references [Order](id),
+	productId int references Product(id),
+	price int,
+	quantity int,
 )
 
 go
