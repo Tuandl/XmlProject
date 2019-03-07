@@ -6,7 +6,6 @@
 package xml.service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import xml.crawler.CrawlHandler;
@@ -22,7 +21,6 @@ import xml.formater.XMLFormater;
 import xml.model.Category;
 import xml.model.CategoryRaw;
 import xml.model.CrawlDomainConfiguration;
-import xml.model.Product;
 import xml.model.ProductDetailRaw;
 import xml.model.ProductRaw;
 import xml.thread.CrawlProductDetailRawThread;
@@ -75,6 +73,9 @@ public class CrawlService {
             //Enrich data
             rawCategories.forEach((rawCategory) -> {
                 rawCategory.setDomainId(domain.getId());
+                //categoryId = 0 means not bound to a category yet.
+                rawCategory.setCategoryId(0);
+                
                 String url = rawCategory.getUrl();
                 url = StringUtils.concatUrl(domain.getInitUrl(), url);
                 rawCategory.setUrl(url);
@@ -98,7 +99,8 @@ public class CrawlService {
     }
     
     private boolean isCategoryRawExisted(CategoryRaw categoryRaw) {
-        CategoryRaw entity = categoryRawDao.getSingle("url = ", categoryRaw.getUrl());
+        CategoryRaw entity = categoryRawDao.getSingle(
+                "url = ? and deleted = ?", categoryRaw.getUrl(), false);
         
         if(entity == null) {
             return false;
@@ -141,11 +143,9 @@ public class CrawlService {
             //enrich data
             productRaws.forEach((productRaw) -> {
                 productRaw.setCategoryRawId(categoryRawId);
-                productRaw.setCategoryId(categoryId);
                 productRaw.setIsNew(true);
                 
                 String hashContent =
-                        productRaw.getCategoryId() +
                         productRaw.getName() + 
                         productRaw.getPrice() + 
                         productRaw.getImgUrl();
@@ -211,7 +211,7 @@ public class CrawlService {
         }
         
         //update categoryRaw status
-        categoryRaw.setCrawl(true);
+        categoryRaw.setCategoryId(categoryId);
         categoryRawDao.update(categoryRaw);
         
         return newProducts;
@@ -262,54 +262,5 @@ public class CrawlService {
                 }
             }
         }
-    }
-    
-    public boolean updateNewProducts(int categoryRawId) {
-        List<ProductRaw> newProductRaws = productRawDao.getNewProductRawsByCategoryRawId(categoryRawId);
-        
-        if(newProductRaws == null || newProductRaws.size() == 0) {
-            return true;
-        }
-        
-        for(ProductRaw productRaw : newProductRaws) {
-            ProductDetailRaw productDetailRaw = 
-                    productDetailRawDao.getByProductRawId(productRaw.getId());
-            Product oldEntity = productDao.getProductByProductRawId(productRaw.getId());
-            
-            if(oldEntity == null) {
-                //insert
-                Product newProduct = new Product();
-                newProduct.setCategoryId(productRaw.getCategoryId());
-                newProduct.setImageUrl(productRaw.getImgUrl());
-                newProduct.setName(productRaw.getName());
-                newProduct.setPrice(productRaw.getPrice());
-                newProduct.setProductRawId(productRaw.getId());
-                if(productDetailRaw != null) {
-                    newProduct.setDescription(productDetailRaw.getDescription());
-                }
-                
-                boolean inserted = productDao.insert(newProduct);
-                if(!inserted) {
-                    System.out.println("ERROR!! Cannot insert new product");
-                }
-            }
-            else {
-                //update
-                oldEntity.setImageUrl(productRaw.getImgUrl());
-                oldEntity.setName(productRaw.getName());
-                oldEntity.setPrice(productRaw.getPrice());
-                if(productDetailRaw != null) {
-                    oldEntity.setDescription(productDetailRaw.getDescription());
-                }
-                
-                boolean updated = productDao.update(oldEntity);
-                if(!updated) {
-                    System.out.println("ERROR!! Cannot update old product");
-                }
-            }
-            
-        }
-        
-        return true;
     }
 }

@@ -16,9 +16,9 @@ var App = function () {
             login: 'view/login.jsp',
             register: 'view/register.jsp',
             adminDashBoard: 'view/admin/dashboard.jsp',
-            categoryList: 'view/admin/categories.jsp',
-            categoryInsert: 'view/admin/category.add.jsp',
-            categoryUpdate: 'view/admin/category.edit.jsp',
+            categoryList: 'view/admin/category/categories.jsp',
+            categoryInsert: 'view/admin/category/category.add.jsp',
+            categoryUpdate: 'view/admin/category/category.edit.jsp',
         },
         xsl: {
             user: 'xsl/user.xsl',

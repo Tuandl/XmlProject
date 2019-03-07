@@ -95,7 +95,7 @@ create table CategoryRaw (
 	[name] nvarchar(200),
 	[url] nvarchar(200),
 	domainId int,
-	crawl bit,
+	categoryId int,
 )
 
 go
@@ -114,7 +114,6 @@ create table ProductRaw (
 	price int,
 	detailUrl nvarchar(max),
 	categoryRawId int,
-	categoryId int references Category(id),
 	hashCode int,
 	isNew bit,
 )

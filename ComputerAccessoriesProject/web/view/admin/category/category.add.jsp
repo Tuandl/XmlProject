@@ -1,6 +1,6 @@
 <%-- 
-    Document   : categories
-    Created on : Mar 7, 2019, 7:05:29 AM
+    Document   : category.add
+    Created on : Mar 7, 2019, 7:42:59 AM
     Author     : admin
 --%>
 
@@ -21,15 +21,16 @@
         <script src="${contextPath}/script/app.js"></script>
         <script src="${contextPath}/script/service/ajax.service.js"></script>
         <script src="${contextPath}/script/service/xml.service.js"></script>
-        <script src="${contextPath}/script/controller/admin/categories.controller.js"></script>
+        <script src="${contextPath}/script/controller/admin/category/category.add.controller.js"></script>
     </head>
-    <body onload="new CategoriesController(new App(), new AjaxService(), new XmlService())">
-        <h1>Category</h1>
-        
-        <button id="btnInsert">Add</button>
-        
-        <div id="listCategories"> 
-            
-        </div>
+    <body onload="new CategoryAddController(new App(), new AjaxService, new XmlService())">
+        <h1>Insert category</h1>
+        <form>
+            <input type="text" id="txtName"/>
+            <span id="error-name-required" class="error hidden">Please input name</span>
+            <br/>
+            <button type="button" id="btnInsert">Add</button>
+            <span id="error-server" class="error hidden"></span>
+        </form>
     </body>
 </html>

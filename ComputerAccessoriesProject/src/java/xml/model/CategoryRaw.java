@@ -13,7 +13,7 @@ public class CategoryRaw extends ModelBase {
     private String name;
     private String url;
     private int domainId;
-    private boolean crawl;
+    private int categoryId;
 
     public String getName() {
         return name;
@@ -39,11 +39,13 @@ public class CategoryRaw extends ModelBase {
         this.domainId = domainId;
     }
 
-    public boolean isCrawl() {
-        return crawl;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setCrawl(boolean crawl) {
-        this.crawl = crawl;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
+    
+    
 }

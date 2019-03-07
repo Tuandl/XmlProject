@@ -8,6 +8,7 @@ package xml.dto;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import xml.model.Category;
 
 /**
  *
@@ -18,6 +19,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class CategoryDTO {
     private int id;
     private String name;
+    
+    public CategoryDTO() {}
+    
+    public CategoryDTO(Category category) {
+        id = category.getId();
+        name = category.getName();
+    }
 
     public String getName() {
         return name;

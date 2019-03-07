@@ -48,7 +48,8 @@ public class UserServlet extends HttpServlet {
                 XMLUtils.marshallToOutputStream(user, resp.getOutputStream());
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            ex.printStackTrace();            
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
     
@@ -76,7 +77,7 @@ public class UserServlet extends HttpServlet {
             }
             
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace();            
         }
     }
 

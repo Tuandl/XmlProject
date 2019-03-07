@@ -20,13 +20,14 @@ public class ProductRawDAO extends DAOBase<ProductRaw>
     }
     
     public ProductRaw getProductRawByDetailUrl(String detailUrl) {
-        ProductRaw productRaw = this.getSingle("detailUrl = ?", detailUrl);
+        ProductRaw productRaw = this.getSingle(
+                "detailUrl = ? and deleted = ?", detailUrl, false);
         return productRaw;
     }
     
     public List<ProductRaw> getNewProductRawsByCategoryRawId(int categoryRawId) {
         List<ProductRaw> productRaws = this.getAll(
-                "categoryRawId = ? and isNew = ?", categoryRawId, true);
+                "categoryRawId = ? and isNew = ? and deleted = ?", categoryRawId, true, false);
         return productRaws;
     }
 }

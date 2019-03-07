@@ -73,7 +73,8 @@ public class CategoryServlet extends HttpServlet {
                 XMLUtils.marshallToOutputStream(result, resp.getOutputStream());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace();            
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -98,7 +99,8 @@ public class CategoryServlet extends HttpServlet {
             }
             
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace();            
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -123,7 +125,8 @@ public class CategoryServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace();            
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -149,7 +152,8 @@ public class CategoryServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace();            
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
     

@@ -92,4 +92,16 @@ public class StringUtils {
         
         return result;
     }
+    
+    public static Integer parseStringToInt(String in) {
+        Integer result = null;
+        
+        try {
+            result = Integer.parseInt(in);
+        } catch (Exception e) {
+            //cannot parse;
+        }
+        
+        return result;
+    }
 }

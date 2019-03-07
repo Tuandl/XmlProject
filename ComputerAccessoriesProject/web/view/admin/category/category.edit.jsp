@@ -21,7 +21,7 @@
         <script src="${contextPath}/script/app.js"></script>
         <script src="${contextPath}/script/service/ajax.service.js"></script>
         <script src="${contextPath}/script/service/xml.service.js"></script>
-        <script src="${contextPath}/script/controller/admin/category.edit.controller.js"></script>
+        <script src="${contextPath}/script/controller/admin/category/category.edit.controller.js"></script>
     </head>
     <body onload="new CategoryEditController(new App(), new AjaxService, new XmlService())">
         <h1>Update category</h1>
