@@ -18,6 +18,7 @@ import xml.dto.CategoriesDTO;
 import xml.dto.CategoryDTO;
 import xml.model.Category;
 import xml.service.CategoryService;
+import xml.utils.StringUtils;
 import xml.utils.XMLUtils;
 
 /**
@@ -64,6 +65,12 @@ public class CategoryServlet extends HttpServlet {
                 XMLUtils.marshallToOutputStream(result, resp.getOutputStream());
             } else {
                 //TODO: get by id
+                Category category = categoryService.getById(categoryId);
+                CategoryDTO result = new CategoryDTO();
+                result.setId(category.getId());
+                result.setName(category.getName());
+                
+                XMLUtils.marshallToOutputStream(result, resp.getOutputStream());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -123,7 +130,8 @@ public class CategoryServlet extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            String data = req.getParameter("data");
+            String data = StringUtils.readInputStringStream(req.getInputStream());
+            
             CategoryDTO dto = (CategoryDTO) XMLUtils.unmarshallFromString(CategoryDTO.class, data);
             if(dto == null) {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);

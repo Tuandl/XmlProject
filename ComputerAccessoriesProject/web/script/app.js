@@ -16,9 +16,13 @@ var App = function () {
             login: 'view/login.jsp',
             register: 'view/register.jsp',
             adminDashBoard: 'view/admin/dashboard.jsp',
+            categoryList: 'view/admin/categories.jsp',
+            categoryInsert: 'view/admin/category.add.jsp',
+            categoryUpdate: 'view/admin/category.edit.jsp',
         },
         xsl: {
             user: 'xsl/user.xsl',
+            categoryTable: 'xsl/categories.table.xsl',
         }
     };
     
@@ -76,9 +80,44 @@ var App = function () {
         }
     }
     
+    var getAttributeValue = function(node, attName) {
+        var attributes = node.attributes;
+        for(var i = 0; i < attributes.length; i++) {
+            var att = attributes.item(i);
+            if(att.name == attName) {
+                return att.value;
+            }
+        }
+    }
+    
+    var getIdInDataId = function (node) {
+        var result = getAttributeValue(node, 'data-id');
+        return result;
+    }
+    
+    var getRequestParam = function(paramName) {
+        var url = new URL(window.location.href);
+        var param = url.searchParams.get(paramName);
+        return param;
+    }
+    
+    var makeUrlWithParam = function(url, params) {
+        var urlWithParam = url;
+        if(params != null && params != undefined && typeof params == 'object') {
+            urlWithParam += '?' + Object.keys(params).map(function(key) {
+                var value = params[key];
+                return key + '=' + value;
+            }).join('&');
+        }
+        return urlWithParam;
+    }
+    
     this.url = url;
     this.toggleClass = toggleClass;
     this.addClass = addClass;
     this.removeClass = removeClass;
     this.resetForm = resetForm;
+    this.getIdInDataId = getIdInDataId;
+    this.getRequestParam = getRequestParam;
+    this.makeUrlWithParam = makeUrlWithParam;
 };

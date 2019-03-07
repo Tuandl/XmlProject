@@ -27,8 +27,10 @@
     <body onload="new DashBoardController(new App(), new StateService(), new AjaxService(), new XmlService())">
         <h1>DashBoard</h1>
         <h3>Welcome <span id="adminName"></span></h3>
+        
+        <button id="btnInsert">Insert</button>
         <ul>
-            <li><a href="">Config data</a></li>
+            <li><a href="${contextPath}/view/admin/categories.jsp">Config category</a></li>
         </ul>
         
         <button id="btnTriggerCrawl">Crawl</button>

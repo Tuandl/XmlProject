@@ -5,7 +5,11 @@
  */
 package xml.utils;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
+import java.util.Arrays;
 
 /**
  *
@@ -44,5 +48,48 @@ public class StringUtils {
         }
         
         return hasValue;
+    }
+    
+    public static String readInputStringStream(InputStream is) {
+        StringBuilder builder = new StringBuilder();
+        
+        try {
+            InputStreamReader isReader = new InputStreamReader(is, "UTF-8");
+            BufferedReader bufferedReader = new BufferedReader(isReader);
+            String line = null;
+        
+            while((line = bufferedReader.readLine()) != null) {
+                builder.append(line);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        String result = builder.toString();
+        return result;
+    }
+    
+    public static String getParamFromInputStream(InputStream is, String paramName){
+        String result = null;
+        String datas = readInputStringStream(is);
+        
+        result = Arrays.stream(datas.split("&"))
+                .filter((data) -> {
+                    String[] fragments = data.split("=");
+                    if(fragments.length == 2){
+                        if(fragments[0].equals(paramName)) {
+                            return true;
+                        }
+                    }
+                    return false;
+                })
+                .map((data) -> {
+                    String[] fragments = data.split("=");
+                    return fragments[1];
+                })
+                .findAny()
+                .get();
+        
+        return result;
     }
 }

@@ -108,7 +108,7 @@ var AjaxService = function() {
         });
     }
     
-    this.put = function(url, params) {
+    this.put = function(url, paramString) {
         return new Promise(function(resolve, reject) {
             var xhttp = getXmlHttpObject();
             xhttp.onreadystatechange = function() {
@@ -125,17 +125,17 @@ var AjaxService = function() {
                 }
             }
             
-            var paramsString = '';
-            if(params != null && params != undefined && typeof params == 'object') {
-                paramsString = Object.keys(params).map(function(key) {
-                    var value = params[key];
-                    return key + '=' + value;
-                }).join('&');
-            }
+//            var paramsString = '';
+//            if(params != null && params != undefined && typeof params == 'object') {
+//                paramsString = Object.keys(params).map(function(key) {
+//                    var value = params[key];
+//                    return key + '=' + value;
+//                }).join('&');
+//            }
             
             xhttp.open('PUT', url, true);
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhttp.send(paramsString);
+            xhttp.send(paramString);
         });
     }
     

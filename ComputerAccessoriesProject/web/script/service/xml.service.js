@@ -49,7 +49,7 @@ var XmlService = function() {
         var data = {};
         
         childDatas.forEach(function(child) {
-            if(typeof child != 'string'){
+            if(typeof child != 'string' && typeof child != 'number'){
                 var key = Object.keys(child)[0];
                 
                 if(data[key] != undefined) {
@@ -95,7 +95,7 @@ var XmlService = function() {
     }
     
     var createSubTree = function(xmlDoc, node, object) {
-        if(typeof object == 'string') {
+        if(typeof object == 'string' || typeof object == 'number') {
             var textNode = xmlDoc.createTextNode(object);
             node.appendChild(textNode);
             return;
@@ -127,9 +127,16 @@ var XmlService = function() {
         return result;
     }
     
+    var removeAllChild = function(node) {
+        while(node.firstChild) {
+            node.removeChild(node.firstChild);
+        }
+    }
+    
     this.parseStringToXml = parseStringToXml;
     this.parseXmlToString = parseXmlToString;
     this.unmarshalling = unmarshalling;
     this.marshalling = marshalling;
     this.transformToDocument = transformToDocument;
+    this.removeAllChild = removeAllChild;
 }
