@@ -22,4 +22,9 @@ public class ProductDAO extends DAOBase<Product>
         Product result = this.getSingle("productRawId = ?", productRawId);
         return result;
     }
+    
+    public boolean existedProductBoundToProductRaw(int productRawId) {
+        int result = this.count("productRawId = ?", productRawId);
+        return result > 0;
+    }
 }

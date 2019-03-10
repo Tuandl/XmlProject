@@ -44,7 +44,7 @@ public class CrawlHandler {
         try {
             url = new URL(urlString);
             inputStream = url.openStream();
-            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
             while ((line = bufferedReader.readLine()) != null) {
                 if(foundBody){
                     builder.append(line);
@@ -180,7 +180,8 @@ public class CrawlHandler {
                     if(!propMapping.isIsNodeResult()) {
                         //query for string or integer
                         value = xpath.evaluate(expression, node, XPathConstants.STRING);
-                    
+                        value = ((String) value).trim();
+                        
                         //Validate data
                         //validate int
                         if(field.getType().equals(int.class) || field.getType().equals(Integer.TYPE)) {

@@ -243,9 +243,12 @@ public class XMLFormater {
                     break;
                 case ATTRIBUTE_VALUE:
                     if(currentChar == quot){
+//                        attributes.put(
+//                                currentAttribute.toString(),  
+//                                removePredefinedEntities(currentValue));
                         attributes.put(
                                 currentAttribute.toString(),  
-                                removePredefinedEntities(currentValue));
+                                currentValue.toString());
                         currentAttribute.setLength(0);
                         currentValue.setLength(0);
                         currentState = RunningState.INNER_TAG;
@@ -256,26 +259,35 @@ public class XMLFormater {
                     break;
                 case ATTRIBUTE_VALUE_NO_QUOTE:
                     if(isSpaceChar(currentChar)){
+//                        attributes.put(
+//                                currentAttribute.toString(),  
+//                                removePredefinedEntities(currentValue));
                         attributes.put(
                                 currentAttribute.toString(),  
-                                removePredefinedEntities(currentValue));
+                                currentValue.toString());
                         currentAttribute.setLength(0);
                         currentValue.setLength(0);
                         currentState = RunningState.INNER_TAG;
                     }
                     else if(currentChar == SLASH) {
                         tagType = TagType.EMPTY_TAG;
+//                        attributes.put(
+//                                currentAttribute.toString(), 
+//                                removePredefinedEntities(currentValue));
                         attributes.put(
                                 currentAttribute.toString(), 
-                                removePredefinedEntities(currentValue));
+                                currentValue.toString());
                         currentAttribute.setLength(0);
                         currentValue.setLength(0);
                         currentState = RunningState.SLASH_EMPTY_TAG;
                     }
                     else if(currentChar == CLOSE_BRACKET_CHAR){
+//                        attributes.put(
+//                                currentAttribute.toString(), 
+//                                removePredefinedEntities(currentValue));
                         attributes.put(
                                 currentAttribute.toString(), 
-                                removePredefinedEntities(currentValue));
+                                currentValue.toString());
                         currentAttribute.setLength(0);
                         currentValue.setLength(0);
                         currentState = RunningState.CLOSE_BRACKET;
@@ -394,6 +406,7 @@ public class XMLFormater {
         for (Map.Entry<String, String> attributeString : attributeStrings.entrySet()) {
             String key = attributeString.getKey();
             String value = removePredefinedEntities(attributeString.getValue());
+//            String value = attributeString.getValue();
             
             builder.append(key)
                     .append(EQUAL)

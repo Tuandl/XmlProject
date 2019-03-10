@@ -60,9 +60,14 @@ public class SyntaxChecker {
             "link", "meta", "param", "source", 
             "track", "wbr");
     
-    static final String removePredefinedEntities(String str){
+    public static final String removePredefinedEntities(String str){
         
         String result = str.replace("&", "&amp;")
+            .replace("&amp;amp;", "&amp;")
+            .replace("&amp;quot;", "&quot;")
+            .replace("&amp;apos;", "&apos;")
+            .replace("&amp;lt;", "&lt;")
+            .replace("&amp;gt;", "&gt;")
             .replace("\"", "&quot;")
             .replace("\'", "&apos;")
             .replace("<", "&lt;")

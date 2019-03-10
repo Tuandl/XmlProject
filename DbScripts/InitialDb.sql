@@ -109,7 +109,7 @@ create table ProductRaw (
 	deleted bit,
 	createdAt datetime,
 	updatedAt datetime,
-	[name] nvarchar(200),
+	[name] nvarchar(max),
 	imgUrl nvarchar(max),
 	price int,
 	detailUrl nvarchar(max),
@@ -144,10 +144,10 @@ create table Product (
 	deleted bit,
 	createdAt datetime,
 	updatedAt datetime,
-	name nvarchar(100),
+	name nvarchar(max),
 	categoryId int references Category(id),
 	description nvarchar(max),
-	imageUrl nvarchar(200),
+	imageUrl nvarchar(max),
 	price int,
 	productRawId int references ProductRaw(id),
 )
@@ -163,7 +163,7 @@ create table [Order] (
 	deleted bit,
 	createdAt datetime,
 	updatedAt datetime,
-	orderCode nvarchar(100),
+	orderCode char(14),
 	amount int,
 	customerId int references [User](id)
 )

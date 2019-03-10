@@ -334,6 +334,52 @@ public abstract class DAOBase<T extends ModelBase> implements IDAO<T> {
         return isDeleteSuccess;
     }
 
+    @Override
+    public int count(String filterQuery, Object... parameters) {
+        int result = 0;
+
+        try {
+            //Make query string
+            StringBuilder queryBuilder = new StringBuilder();
+            queryBuilder.append("select count(*) as 'total' from ");
+
+            Class modelClass = this.getModelClass();
+            queryBuilder.append(DBUtils.generateSqlName(modelClass.getSimpleName()));
+
+            if (filterQuery != null && !filterQuery.trim().isEmpty()) {
+                queryBuilder.append(" where ");
+                queryBuilder.append(filterQuery);
+            }
+
+            String queryString = queryBuilder.toString();
+
+            //Make connection
+            connection = DBUtils.makeConnection();
+            preparedStatement = connection.prepareCall(queryString);
+
+            if (parameters != null) {
+                for (int index = 0; index < parameters.length; index++) {
+                    Object param = parameters[index];
+                    //index + 1 because of preparedStatement.setParam index from 1
+                    DBUtils.setParameter(preparedStatement, index + 1, param, param.getClass());
+                }
+            }
+
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                result = resultSet.getInt("total");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+
+        return result;
+    }
+    
     protected void closeConnection() {
         try {
             if (resultSet != null) {

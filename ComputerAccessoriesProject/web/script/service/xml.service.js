@@ -55,14 +55,14 @@ var XmlService = function() {
                 if(data[key] != undefined) {
                     //existed -> array
                     var oldObj = {};
-                    oldObj[key] = data[key];
+                    oldObj = data[key];
                     if(!Array.isArray(data[key])) {
                         data[key] = [
                             oldObj,
-                            child,
+                            child[key],
                         ];
                     } else {
-                        data[key].push(child);
+                        data[key].push(child[key]);
                     }
                 } else {
                     data[key] = child[key];
@@ -105,9 +105,9 @@ var XmlService = function() {
                var value = object[key];
                if(Array.isArray(value)) {
                    value.forEach(function(subObject) {
-//                        var newNode = xmlDoc.createElement(key);
-                        createSubTree(xmlDoc, node, subObject);
-//                        node.appendChild(newNode);
+                        var newNode = xmlDoc.createElement(key);
+                        createSubTree(xmlDoc, newNode, subObject);
+                        node.appendChild(newNode);
                    });
                } else {
                    var newNode = xmlDoc.createElement(key);
@@ -131,12 +131,25 @@ var XmlService = function() {
         while(node.firstChild) {
             node.removeChild(node.firstChild);
         }
+    } 
+    
+    var queryStringXpath = function(xmlDom, query) {
+        var xpathResult = document.evaluate(query, xmlDom, null, XPathResult.STRING_TYPE, null);
+        return xpathResult.stringValue;
+    }
+    
+    var marshallingAuto = function(object) {
+        var rootTag = Object.keys(object)[0];
+        var result = marshalling(object[rootTag], rootTag);
+        return result;
     }
     
     this.parseStringToXml = parseStringToXml;
     this.parseXmlToString = parseXmlToString;
     this.unmarshalling = unmarshalling;
     this.marshalling = marshalling;
+    this.marshallingAuto = marshallingAuto;
     this.transformToDocument = transformToDocument;
     this.removeAllChild = removeAllChild;
+    this.queryStringXpath = queryStringXpath;
 }

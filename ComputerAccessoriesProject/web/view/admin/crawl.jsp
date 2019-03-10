@@ -27,6 +27,12 @@
     <body onload="new CrawlController(new App(), new AjaxService(), new XmlService())">
         <h1>Crawl page</h1>
         <button id="btnCrawlCategory">Crawl Category</button>
+        <button id="btnSyncAll">Sync All</button>
+        <button id="btnBack">Back</button>
+        <br/>
+        <div id="divTotalProduct"></div>
+        <div id="divTotalNotSync"></div>
+        <br/>
         <div id="divCategoryRaws">
             
         </div>

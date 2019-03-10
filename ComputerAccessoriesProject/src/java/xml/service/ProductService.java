@@ -78,6 +78,8 @@ public class ProductService {
                 }
             }
             
+            productRaw.setIsNew(false);
+            productRawDao.update(productRaw);
         }
         
         return true;

@@ -38,17 +38,19 @@ public class CategoryRawService {
      */
     public int countNewProductInCategoryRaw(int categoryRawId) {
         int counter = 0;
+        System.out.println("productRawDAO " + productRawDao.hashCode());
         List<ProductRaw> productRaws = productRawDao.getAll(
-                "isNew = ? and deleted = ?", true, false);
+                "isNew = ? and deleted = ? and categoryRawId = ?", true, false, categoryRawId);
         
         for(ProductRaw productRaw : productRaws) {
             if(productRaw.isIsNew()) {
-                Product product = productDao.getProductByProductRawId(productRaw.getId());
-                if(product == null) {
+                boolean existed = productDao.existedProductBoundToProductRaw(productRaw.getId());
+                if(!existed) {
                     counter++;
                 }
             }
         }
+        System.out.println("is New Counter = " + counter);
         
         return counter;
     }
@@ -59,12 +61,12 @@ public class CategoryRawService {
     public int countEditedProductInCategoryRaw(int categoryRawId) {
         int counter = 0;
         List<ProductRaw> productRaws = productRawDao.getAll(
-                "isNew = ? and deleted = ?", true, false);
+                "isNew = ? and deleted = ? and categoryRawId = ?", true, false, categoryRawId);
         
         for(ProductRaw productRaw : productRaws) {
             if(productRaw.isIsNew()) {
-                Product product = productDao.getProductByProductRawId(productRaw.getId());
-                if(product != null) {
+                boolean existed = productDao.existedProductBoundToProductRaw(productRaw.getId());
+                if(existed) {
                     counter++;
                 }
             }
@@ -74,10 +76,8 @@ public class CategoryRawService {
     }
     
     public int countProductRawInCategoryRaw(int categoryRawId) {
-        int counter = 0;
-        List<ProductRaw> productRaws = productRawDao.getAll(
-                "deleted = ?", false);
-        counter = productRaws.size();
+        int counter = productRawDao.count(
+                "deleted = ? and categoryRawId = ?", false, categoryRawId);
         
         return counter;
     }

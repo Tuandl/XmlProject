@@ -30,6 +30,7 @@
             <span id="error-name-required" class="error hidden">Please input name</span>
             <br/>
             <button type="button" id="btnUpdate">Update</button>
+            <button type="button" id="btnBack">Back</button>
             <span id="error-server" class="error hidden"></span>
         </form>
     </body>

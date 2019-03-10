@@ -6,6 +6,8 @@
 package xml.utils.test;
 
 import xml.dto.UserDTO;
+import xml.formater.SyntaxChecker;
+import xml.formater.XMLFormater;
 import xml.utils.StringUtils;
 import xml.utils.XMLUtils;
 
@@ -15,7 +17,8 @@ import xml.utils.XMLUtils;
  */
 public class TestUtils {
     public static void main(String[] args) {
-        testUnmarshaller();
+//        testUnmarshaller();
+        testRemovePredefined();
     }
     
     public static void testUnmarshaller() {
@@ -39,5 +42,11 @@ public class TestUtils {
         String concated = StringUtils.concatUrl(url_1, url_2);
         System.out.println("concated = " + concated);
         
+    }
+    
+    public static void testRemovePredefined() {
+        String data = "\"&quot;&media<>&gt;&lt;'&apos;";
+        
+        System.out.println(SyntaxChecker.removePredefinedEntities(data));
     }
 }

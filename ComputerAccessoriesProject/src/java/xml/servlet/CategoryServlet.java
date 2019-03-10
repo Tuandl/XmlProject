@@ -28,15 +28,10 @@ import xml.utils.XMLUtils;
 @WebServlet(name = "CategoryServlet", urlPatterns = {"/CategoryServlet"})
 public class CategoryServlet extends HttpServlet {
 
-    private CategoryService categoryService;
-
-    public CategoryServlet() {
-        categoryService = new CategoryService();
-    }
-    
-    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        CategoryService categoryService = new CategoryService();
+        
         try {
             String categoryIdStr = req.getParameter("id");
             int categoryId = -1;
@@ -80,6 +75,8 @@ public class CategoryServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        CategoryService categoryService = new CategoryService();
+
         try {
             String data = req.getParameter("data");
             CategoryDTO dto = (CategoryDTO) XMLUtils.unmarshallFromString(CategoryDTO.class, data);
@@ -106,6 +103,7 @@ public class CategoryServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        CategoryService categoryService = new CategoryService();
         try {
             String categoryIdStr = req.getParameter("id");
             int categoryId = -1;
@@ -132,6 +130,8 @@ public class CategoryServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        CategoryService categoryService = new CategoryService();
+
         try {
             String data = StringUtils.readInputStringStream(req.getInputStream());
             

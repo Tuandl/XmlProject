@@ -24,12 +24,6 @@ import xml.service.CrawlService;
  */
 @WebServlet(name = "CrawlCategory", urlPatterns = {"/Crawl/Category"})
 public class CrawlCategory extends HttpServlet {
-    
-    private final CrawlService crawlService;
-    
-    public CrawlCategory() {
-        crawlService = new CrawlService();
-    }
 
     /**
      * Crawl category in all domain and return number of new categories
@@ -40,12 +34,13 @@ public class CrawlCategory extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        CrawlService crawlService = new CrawlService();
         try (PrintWriter out = resp.getWriter()){
             List<CategoryRaw> newCategoryRaws = crawlService.crawlAllCategories();
             out.append(newCategoryRaws.size() + "");
             resp.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception e) {
-            e.printStackTrace();            
+            e.printStackTrace();
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }

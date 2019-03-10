@@ -13,6 +13,7 @@ var CategoryAddController = function(app, ajaxService, xmlService) {
         },
         button: {
             insert: 'btnInsert',
+            back: 'btnBack',
         },
         error: {
             nameRequired: 'error-name-required',
@@ -23,6 +24,9 @@ var CategoryAddController = function(app, ajaxService, xmlService) {
     //running flow
     var btnInsert = document.getElementById(viewIds.button.insert);
     btnInsert.addEventListener('click', onBtnInsertClicked);
+    
+    var btnBack = document.getElementById(viewIds.button.back);
+    btnBack.addEventListener('click', onBtnBackClicked);
     
     //handler methods
     function onBtnInsertClicked() {
@@ -55,6 +59,10 @@ var CategoryAddController = function(app, ajaxService, xmlService) {
     }
     
     function redirectAfterInserted() {
+        window.location.href = app.url.page.categoryList;
+    }
+    
+    function onBtnBackClicked() {
         window.location.href = app.url.page.categoryList;
     }
 }

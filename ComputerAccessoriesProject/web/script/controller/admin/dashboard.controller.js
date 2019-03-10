@@ -23,10 +23,7 @@ var DashBoardController = function (app, stateService, ajaxService, xmlService) 
     
     //Running Flow  
     setCurrentUserName();
-    var btnTriggerCrawl = document.getElementById(viewIds.button.triggerCrawl);
-    btnTriggerCrawl.addEventListener('click', onBtnTriggerCrawlClicked);
-    
-    testTransform();
+//    testTransform();
     
     //Handler methods
     function setCurrentUserName() {
@@ -42,25 +39,21 @@ var DashBoardController = function (app, stateService, ajaxService, xmlService) 
         }
     }
     
-    function onBtnTriggerCrawlClicked () {
-        console.log('not support crawl yet!');
-    }
-    
-    function testTransform() {
-        ajaxService.get(app.url.xsl.user).then(function(response) {
-            console.log('xsl response', response);
-            var xslFile = response;
-            
-            var currentUserXmlText = stateService.getCurrentUser();
-            var currentUserXml = xmlService.parseStringToXml(currentUserXmlText);
-            var transformResult = xmlService.transformToDocument(currentUserXml, xslFile);
-            console.log(transformResult);
-            
-            var div = document.getElementById(viewIds.text.test);
-            div.appendChild(transformResult);
-
-        }).catch(function(error) {
-            console.error(error);
-        });
-    }
+//    function testTransform() {
+//        ajaxService.get(app.url.xsl.user).then(function(response) {
+//            console.log('xsl response', response);
+//            var xslFile = response;
+//            
+//            var currentUserXmlText = stateService.getCurrentUser();
+//            var currentUserXml = xmlService.parseStringToXml(currentUserXmlText);
+//            var transformResult = xmlService.transformToDocument(currentUserXml, xslFile);
+//            console.log(transformResult);
+//            
+//            var div = document.getElementById(viewIds.text.test);
+//            div.appendChild(transformResult);
+//
+//        }).catch(function(error) {
+//            console.error(error);
+//        });
+//    }
 }

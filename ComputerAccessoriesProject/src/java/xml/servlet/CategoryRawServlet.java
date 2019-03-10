@@ -6,9 +6,8 @@
 package xml.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,51 +32,39 @@ import xml.utils.XMLUtils;
 @WebServlet(name = "CategoryRawServlet", urlPatterns = {"/CategoryRawServlet"})
 public class CategoryRawServlet extends HttpServlet {
 
-    private final CategoryRawService categoryRawService;
-    private final DomainService domainService;
-    private final CategoryService categoryService;
-    
-    public CategoryRawServlet() {
-        categoryRawService = new CategoryRawService();
-        domainService = new DomainService();
-        categoryService = new CategoryService();
-    }
-    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        CategoryRawService categoryRawService = new CategoryRawService();
+        DomainService domainService = new DomainService();
+        CategoryService categoryService = new CategoryService();
         try {
             List<CategoryRaw> categoryRaws = categoryRawService.getAllCategoryRaw();
+            List<CrawlDomainConfiguration> domains = 
+                    domainService.getAllDomains();
+            List<Category> categories = categoryService.getAvailableCategories();
             
-            List<CategoryRawDTO> categoryRawDtos = categoryRaws.stream()
-                    .map((categoryRaw) -> {
-                        CategoryRawDTO dto = new CategoryRawDTO(categoryRaw);
+            List<CategoryRawDTO> categoryRawDtos = new ArrayList<CategoryRawDTO>();
+            for(CategoryRaw categoryRaw : categoryRaws){
+                CategoryRawDTO dto = new CategoryRawDTO(categoryRaw);
                         
-                        CrawlDomainConfiguration domain = domainService
-                                .getDomainById(categoryRaw.getDomainId());
-                        DomainDTO domainDto = new DomainDTO(domain);
-                        dto.setDomain(domainDto);
-                        
-                        if(categoryRaw.getCategoryId() > 0) {
-                            Category category = categoryService
-                                    .getById(categoryRaw.getCategoryId());
-                            CategoryDTO categoryDto = new CategoryDTO(category);
-                            dto.setCategory(categoryDto);
-                        }
-                        
-                        int newProductRaws = categoryRawService
-                                .countNewProductInCategoryRaw(categoryRaw.getId());
-                        int editedProductRaws = categoryRawService
-                                .countEditedProductInCategoryRaw(categoryRaw.getId());
-                        int totalProductRaw = categoryRawService
-                                .countProductRawInCategoryRaw(categoryRaw.getId());
-                        
-                        dto.setNewProductRawQuantity(newProductRaws);
-                        dto.setEditedProductRawQuantity(editedProductRaws);
-                        dto.setTotalProductRaw(totalProductRaw);
-                                
-                        return dto;
-                    })
-                    .collect(Collectors.toList());
+                CrawlDomainConfiguration domain = domains.stream()
+                        .filter((x) -> x.getId() == categoryRaw.getDomainId())
+                        .findAny()
+                        .get();
+                DomainDTO domainDto = new DomainDTO(domain);
+                dto.setDomain(domainDto);
+
+                if(categoryRaw.getCategoryId() > 0) {
+                    Category category = categories.stream()
+                            .filter((x) -> x.getId() == categoryRaw.getCategoryId())
+                            .findAny()
+                            .get();
+                    CategoryDTO categoryDto = new CategoryDTO(category);
+                    dto.setCategory(categoryDto);
+                }
+                
+                categoryRawDtos.add(dto);
+            }
             
             CategoryRawsDTO dto = new CategoryRawsDTO();
             dto.setCategoryRaws(categoryRawDtos);
@@ -93,6 +80,7 @@ public class CategoryRawServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        CategoryRawService categoryRawService = new CategoryRawService();
         try {
             String idStr = req.getParameter("id");
             int id = -1;

@@ -63,6 +63,8 @@ public class CrawlService {
             htmlStr = XMLFormater.removeMiscellaneousTags(htmlStr);
             String xmlStr = XMLFormater.generateXMLWellForm(htmlStr);
             
+            if(xmlStr.isEmpty()) continue;
+            
             //Extract data
             List<CategoryRaw> rawCategories = CrawlHandler
                     .extractData(domain.getId(), CategoryRaw.class, xmlStr)
@@ -129,9 +131,12 @@ public class CrawlService {
         
         while(continueCrawling) {
             //crawl page
+            System.out.println("Crawl productRaw: " + currentUrl);
             String htmlStr = CrawlHandler.getDataFromHtml(currentUrl);
             htmlStr = XMLFormater.removeMiscellaneousTags(htmlStr);
             String xmlStr = XMLFormater.generateXMLWellForm(htmlStr);
+            
+            if(xmlStr.isEmpty()) break;
             
             //extract data
             List<ProductRaw> productRaws = CrawlHandler
@@ -185,6 +190,7 @@ public class CrawlService {
                 else {
                     if(oldEntity.getHashCode() != productRaw.getHashCode()) {
                         productRaw.setId(oldEntity.getId());
+                        productRaw.setCreatedAt(oldEntity.getCreatedAt());
                         boolean updated = productRawDao.update(productRaw);
                         if(updated) {
                             newProducts.add(productRaw);
@@ -207,6 +213,8 @@ public class CrawlService {
             currentUrl = CrawlHandler.extractString(xmlStr, domain.getPagingXPathQuery());
             if(currentUrl == null || currentUrl.isEmpty()) {
                 continueCrawling = false;
+            } else {
+                currentUrl = StringUtils.concatUrl(domain.getInitUrl(), currentUrl);
             }
         }
         
@@ -228,9 +236,14 @@ public class CrawlService {
         if(domain == null) return;
         
         //Get Html Data
+        System.out.println("crawl ProductDetailRaw: " + productRaw.getDetailUrl());
         String htmlStr = CrawlHandler.getDataFromHtml(productRaw.getDetailUrl());
         htmlStr = XMLFormater.removeMiscellaneousTags(htmlStr);
         String xmlStr = XMLFormater.generateXMLWellForm(htmlStr);
+        
+        if(xmlStr.isEmpty()) {
+            System.out.println("ERROR!! Cannot get html ProductDetailRaw");
+        }
                 
         //Extract data
         List<ProductDetailRaw> productDetailRaws = CrawlHandler

@@ -11,6 +11,13 @@ var App = function () {
             login: 'LoginServlet',
             user: 'UserServlet',
             category: 'CategoryServlet',
+            categoryRaw: 'CategoryRawServlet',
+            categoryRawCountNewProduct: 'CategoryRaw/NewProduct',
+            categoryRawCountEditedProduct: 'CategoryRaw/EditedProduct',
+            categoryRawCountTotalProduct: 'CategoryRaw/TotalProduct',
+            crawlCategory: 'Crawl/Category',
+            crawlProduct: 'Crawl/Product',
+            product: 'Product',
         },
         page: {
             login: 'view/login.jsp',
@@ -19,10 +26,13 @@ var App = function () {
             categoryList: 'view/admin/category/categories.jsp',
             categoryInsert: 'view/admin/category/category.add.jsp',
             categoryUpdate: 'view/admin/category/category.edit.jsp',
+            crawl: 'view/admin/crawl.jsp',
         },
         xsl: {
             user: 'xsl/user.xsl',
             categoryTable: 'xsl/categories.table.xsl',
+            categorySelect: 'xsl/categories.select.xsl',
+            categoryRawTable: 'xsl/category-raw.table.xsl',
         }
     };
     

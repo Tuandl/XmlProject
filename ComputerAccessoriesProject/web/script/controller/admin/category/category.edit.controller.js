@@ -13,6 +13,7 @@ var CategoryEditController = function(app, ajaxService, xmlService) {
         },
         button: {
             update: 'btnUpdate',
+            back: 'btnBack',
         },
         error: {
             nameRequired: 'error-name-required',
@@ -30,6 +31,9 @@ var CategoryEditController = function(app, ajaxService, xmlService) {
     getData();
     var btnUpdate = document.getElementById(viewIds.button.update);
     btnUpdate.addEventListener('click', onBtnUpdateClicked);
+    
+    var btnBack = document.getElementById(viewIds.button.back);
+    btnBack.addEventListener('click', onBtnBackClicked);
     
     //handler methods
     function onBtnUpdateClicked() {
@@ -76,5 +80,9 @@ var CategoryEditController = function(app, ajaxService, xmlService) {
         }).catch(function(error) {
            console.log(error); 
         });
+    }
+    
+    function onBtnBackClicked() {
+        window.location.href = app.url.page.categoryList;
     }
 }

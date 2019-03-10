@@ -7,63 +7,42 @@ package xml.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import xml.model.ProductRaw;
-import xml.service.CrawlService;
+import xml.service.CategoryRawService;
 import xml.utils.StringUtils;
-import xml.utils.XMLUtils;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "CrawlProduct", urlPatterns = {"/Crawl/Product"})
-public class CrawlProduct extends HttpServlet {
+@WebServlet(name = "CategoryRawEditedProduct", urlPatterns = {"/CategoryRaw/EditedProduct"})
+public class CategoryRawEditedProduct extends HttpServlet {
 
-    /**
-     * Crawl product base on categoryRawId and bind that categoryRaw to categoryId
-     * @param req
-     * @param resp
-     * @throws ServletException
-     * @throws IOException 
-     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CrawlService crawlService = new CrawlService();
+        CategoryRawService categoryRawService = new CategoryRawService();
         try (PrintWriter out = resp.getWriter()) {
             String categoryRawIdStr = req.getParameter("categoryRawId");
-            String categoryIdStr = req.getParameter("categoryId");
             Integer categoryRawId = StringUtils.parseStringToInt(categoryRawIdStr);
-            Integer categoryId = StringUtils.parseStringToInt(categoryIdStr);
             
-            if(categoryRawId == null || categoryId == null) {
+            if(categoryRawId == null) {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            } else {
-                List<ProductRaw> productRaws =  crawlService.crawlProductRaw(categoryRawId, categoryId);
-                out.append(productRaws.size() + "");
+            } 
+            else {
+                int editedProductQuantity = categoryRawService
+                        .countEditedProductInCategoryRaw(categoryRawId);
+                
+                out.append(editedProductQuantity + "");
                 resp.setStatus(HttpServletResponse.SC_OK);
             }
-            
         } catch (Exception e) {
             e.printStackTrace();
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+        
     }
-
-    
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

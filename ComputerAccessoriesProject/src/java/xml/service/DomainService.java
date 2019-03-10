@@ -5,6 +5,7 @@
  */
 package xml.service;
 
+import java.util.List;
 import xml.dao.CrawlDomainConfigurationDAO;
 import xml.model.CrawlDomainConfiguration;
 
@@ -24,5 +25,8 @@ public class DomainService {
         return domain;
     }
     
-    
+    public List<CrawlDomainConfiguration> getAllDomains() {
+        List<CrawlDomainConfiguration> domains = domainDao.getAll("deleted = ?", false);
+        return domains;
+    }
 }

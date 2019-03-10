@@ -22,15 +22,9 @@ import xml.service.UserService;
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
 
-    private final UserService userService;
-    
-    public LoginServlet() {
-        super();
-        userService = new UserService();
-    }
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        UserService userService = new UserService();
         try (PrintWriter out = response.getWriter()){
             String username = request.getParameter("username");
             String password = request.getParameter("password");

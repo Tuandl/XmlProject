@@ -30,10 +30,7 @@
         
         <ul>
             <li><a href="${contextPath}/view/admin/category/categories.jsp">Config category</a></li>
+            <li><a href="${contextPath}/view/admin/crawl.jsp">Crawler</a></li>
         </ul>
-        
-        <button id="btnTriggerCrawl">Crawl</button>
-        
-        <div id="testSection"></div>
     </body>
 </html>

@@ -26,7 +26,8 @@
     <body onload="new CategoriesController(new App(), new AjaxService(), new XmlService())">
         <h1>Category</h1>
         
-        <button id="btnInsert">Add</button>
+        <button id="btnInsert">Add</button> 
+        <button id="btnBack">Back</button>
         
         <div id="listCategories"> 
             

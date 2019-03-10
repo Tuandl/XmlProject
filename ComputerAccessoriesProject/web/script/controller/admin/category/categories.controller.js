@@ -15,6 +15,7 @@ var CategoriesController = function(app, ajaxService, xmlService) {
         },
         button: {
             insert: 'btnInsert',
+            back: 'btnBack',
         },
         error: {
             
@@ -32,6 +33,9 @@ var CategoriesController = function(app, ajaxService, xmlService) {
     var categoriesDom = null;
     var xsl = null;
     initData();
+    
+    var btnBack = document.getElementById(viewIds.button.back);
+    btnBack.addEventListener('click', onBtnBackClicked);
     
     //handling methods
     function initData() {
@@ -97,5 +101,9 @@ var CategoriesController = function(app, ajaxService, xmlService) {
     
     function onBtnInsertClicked() {
         window.location.href = app.url.page.categoryInsert;
+    }
+    
+    function onBtnBackClicked() {
+        window.location.href = app.url.page.adminDashBoard;
     }
 }
