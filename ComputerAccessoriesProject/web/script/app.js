@@ -27,12 +27,14 @@ var App = function () {
             categoryInsert: 'view/admin/category/category.add.jsp',
             categoryUpdate: 'view/admin/category/category.edit.jsp',
             crawl: 'view/admin/crawl.jsp',
+            home: 'view/index.jsp',
         },
         xsl: {
             user: 'xsl/user.xsl',
             categoryTable: 'xsl/categories.table.xsl',
             categorySelect: 'xsl/categories.select.xsl',
             categoryRawTable: 'xsl/category-raw.table.xsl',
+            categoryNavBar: 'xsl/categories.navbar.xsl',
         }
     };
     

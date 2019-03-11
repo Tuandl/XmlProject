@@ -5,15 +5,21 @@
  */
 package xml.service;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import xml.dao.CategoryRawDAO;
 import xml.dao.ProductDAO;
 import xml.dao.ProductDetailRawDAO;
 import xml.dao.ProductRawDAO;
+import xml.dto.ProductDTO;
+import xml.dto.ProductDataTable;
 import xml.model.CategoryRaw;
 import xml.model.Product;
 import xml.model.ProductDetailRaw;
 import xml.model.ProductRaw;
+import xml.utils.ReflectionUtils;
 
 /**
  *
@@ -83,5 +89,47 @@ public class ProductService {
         }
         
         return true;
+    }
+    
+    public Product getProductDetail(int productId) {
+        Product product = productDao.getById(productId);
+        return product;
+    }
+    
+    public List<Product> getTopProducts() {
+        List<Product> products = productDao.getTopProduct();
+        return products;
+    }
+    
+    public ProductDataTable getDataTable(int page, int pageSize, Integer categoryId, String searchValue) {
+        StringBuilder filter = new StringBuilder();
+        List<Object> params = new ArrayList<>();
+        
+        if(categoryId != null) {
+            filter.append(" categoryId = ? ");
+            params.add(categoryId);
+        }
+        
+        if(searchValue != null && !searchValue.isEmpty()) {
+            filter.append(" name like ? ");
+            params.add("%" + searchValue + "%");
+        }
+        
+        Field productId = ReflectionUtils.getFieldByName(Product.class, "id");
+        
+        List<Product> products = productDao.getAll((page - 1) * pageSize,
+                pageSize, productId, true, filter.toString(), params.toArray());
+        int total = productDao.count(filter.toString(), params.toArray());
+        
+        ProductDataTable result = new ProductDataTable();
+        
+        List<ProductDTO> productDto = products.stream()
+                .map((x) -> new ProductDTO(x))
+                .collect(Collectors.toList());
+        
+        result.setData(productDto);
+        result.setTotal(total);
+        
+        return result;
     }
 }

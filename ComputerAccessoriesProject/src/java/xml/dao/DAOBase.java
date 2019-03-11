@@ -115,6 +115,99 @@ public abstract class DAOBase<T extends ModelBase> implements IDAO<T> {
     }
 
     @Override
+    public List<T> getAll(int skip, int take, Field orderBy, boolean isReverse, String filterQuery, Object... parameters) {
+        List<T> result = new ArrayList<T>();
+
+        try {
+            //Make query string
+            StringBuilder queryBuilder = new StringBuilder();
+            queryBuilder.append("select ");
+
+            Class modelClass = this.getModelClass();
+            List<String> objectFields = ReflectionUtils.getAllFieldNames(modelClass);
+            for (String field : objectFields) {
+                queryBuilder.append(DBUtils.generateSqlName(field));
+                queryBuilder.append(",");
+            }
+            queryBuilder.deleteCharAt(queryBuilder.length() - 1);
+
+            queryBuilder.append(" from ");
+            queryBuilder.append(DBUtils.generateSqlName(modelClass.getSimpleName()));
+
+            if (filterQuery != null && !filterQuery.trim().isEmpty()) {
+                queryBuilder.append(" where ");
+                queryBuilder.append(filterQuery);
+            }
+            
+            queryBuilder.append(" order by ");
+            
+            if(orderBy != null) {
+                queryBuilder.append(DBUtils.generateSqlName(orderBy.getName()));
+                if(isReverse) {
+                    queryBuilder.append(" desc ");
+                }
+            } else {
+                queryBuilder.append(" CURRENT_TIMESTAMP ");
+            }
+            
+            if(skip < 0 || take <= 0) {
+                return result;
+            }
+            
+            queryBuilder.append(" OFFSET ");
+            queryBuilder.append(skip);
+            queryBuilder.append(" rows ");
+            queryBuilder.append(" fetch next ");
+            queryBuilder.append(take);
+            queryBuilder.append(" rows only");
+
+            String queryString = queryBuilder.toString();
+
+            //Make connection
+            connection = DBUtils.makeConnection();
+            preparedStatement = connection.prepareCall(queryString);
+
+            if (parameters != null) {
+                for (int index = 0; index < parameters.length; index++) {
+                    Object param = parameters[index];
+                    //index + 1 because of preparedStatement.setParam index from 1
+                    DBUtils.setParameter(preparedStatement, index + 1, param, param.getClass());
+                }
+            }
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                T entity = (T) modelClass.newInstance();
+                Class objectClass = entity.getClass();
+
+                for (String fieldName : objectFields) {
+                    Field field = ReflectionUtils.getFieldByName(objectClass, fieldName);
+
+                    Object value = null;
+                    try {
+                        value = DBUtils.getResult(resultSet, field);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    if (value != null) {
+                        ReflectionUtils.setFieldValue(entity, field, value);
+                    }
+                }
+                result.add(entity);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+
+        return result;
+    }
+    
+    @Override
     public T getById(int id) {
         T result = null;
         List<T> entities = getAll("id = ?", id);
@@ -369,6 +462,58 @@ public abstract class DAOBase<T extends ModelBase> implements IDAO<T> {
 
             if (resultSet.next()) {
                 result = resultSet.getInt("total");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+
+        return result;
+    }
+    
+    protected List<T> getAllCustom(String queryString, Object... parameters) {
+        List<T> result = new ArrayList<T>();
+
+        try {
+            //Make query string
+            Class modelClass = this.getModelClass();
+            List<String> objectFields = ReflectionUtils.getAllFieldNames(modelClass);
+
+            //Make connection
+            connection = DBUtils.makeConnection();
+            preparedStatement = connection.prepareCall(queryString);
+
+            if (parameters != null) {
+                for (int index = 0; index < parameters.length; index++) {
+                    Object param = parameters[index];
+                    //index + 1 because of preparedStatement.setParam index from 1
+                    DBUtils.setParameter(preparedStatement, index + 1, param, param.getClass());
+                }
+            }
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                T entity = (T) modelClass.newInstance();
+                Class objectClass = entity.getClass();
+
+                for (String fieldName : objectFields) {
+                    Field field = ReflectionUtils.getFieldByName(objectClass, fieldName);
+
+                    Object value = null;
+                    try {
+                        value = DBUtils.getResult(resultSet, field);
+                    } catch (Exception e) {
+//                        e.printStackTrace();
+                    }
+
+                    if (value != null) {
+                        ReflectionUtils.setFieldValue(entity, field, value);
+                    }
+                }
+                result.add(entity);
             }
 
         } catch (Exception e) {

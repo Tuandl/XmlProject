@@ -10,7 +10,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import xml.dao.IDAO;
+import xml.dao.ProductDAO;
 import xml.dao.UserDAO;
+import xml.model.Product;
 import xml.model.User;
 
 /**
@@ -24,13 +26,32 @@ public class TestDAO {
 //        testInsertUser();
 //        testUpdateUser(5);
 
-        testInsertUser();
-        System.out.println("");
-        testGetAll();
-        System.out.println("");
-        testDeleteUser();
-        System.out.println("");
-        testGetAll();
+//        testInsertUser();
+//        System.out.println("");
+//        testGetAll();
+//        System.out.println("");
+//        testDeleteUser();
+//        System.out.println("");
+//        testGetAll();
+        
+//        testGetTopProduct();
+        testGetPaging();
+    }
+    
+    public static void testGetPaging() {
+        try {
+            ProductDAO productDao = new ProductDAO();
+            List<Product> products = productDao.getAll(10, 10, 
+                    Product.class.getDeclaredField("price"), false,
+                    " name like ?", "%i5%");
+            
+            System.out.println("Size = " + products.size());
+            for(Product product : products) {
+                System.out.println("id = " + product.getId() + "; name = " + product.getName() + " price = " + product.getPrice());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     public static void testGetAll(){
@@ -111,5 +132,14 @@ public class TestDAO {
         
         boolean result = dao.delete(3);
         System.out.println("result = " + result);
+    }
+    
+    public static void testGetTopProduct() {
+        ProductDAO dao = new ProductDAO();
+        List<Product> products = dao.getTopProduct();
+        System.out.println("size = " + products.size());
+        for(Product product : products) {
+            System.out.println("id = " + product.getId() + " name = " + product.getName() + " price = " + product.getPrice());
+        }
     }
 }
