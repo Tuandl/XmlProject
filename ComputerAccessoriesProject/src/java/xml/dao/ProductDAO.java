@@ -32,12 +32,26 @@ public class ProductDAO extends DAOBase<Product>
     public List<Product> getTopProduct() {
         String queryString = "select top(5)\n" +
                 "P.id, P.deleted, P.createdAt, P.updatedAt, P.name, P.categoryId, P.description, P.imageUrl, P.price\n" +
-            "from Product P\n" +
-            "left join OrderDetail OD on P.id = OD.productId and OD.deleted = 0\n" +
-            "group by P.id, P.deleted, P.createdAt, P.updatedAt, P.name, P.categoryId, P.description, P.imageUrl, P.price\n" +
-            "order by SUM(OD.quantity) desc";
+                "from Product P\n" +
+                "left join OrderDetail OD on P.id = OD.productId and OD.deleted = 0\n" +
+                "group by P.id, P.deleted, P.createdAt, P.updatedAt, P.name, P.categoryId, P.description, P.imageUrl, P.price\n" +
+                "order by SUM(OD.quantity) desc";
         
         List<Product> result = getAllCustom(queryString);
+        
+        return result;
+    }
+    
+    public List<Product> getTopProductByCategory(int categoryId) {
+        String queryString = "select top(5)\n" +
+                "P.id, P.deleted, P.createdAt, P.updatedAt, P.name, P.categoryId, P.description, P.imageUrl, P.price\n" +
+                "from Product P\n" +
+                "left join OrderDetail OD on P.id = OD.productId and OD.deleted = 0\n" +
+                "where P.categoryId = ?\n" +
+                "group by P.id, P.deleted, P.createdAt, P.updatedAt, P.name, P.categoryId, P.description, P.imageUrl, P.price\n" +
+                "order by SUM(OD.quantity) desc";
+        
+        List<Product> result = getAllCustom(queryString, categoryId);
         
         return result;
     }

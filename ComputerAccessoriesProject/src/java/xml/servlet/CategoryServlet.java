@@ -59,7 +59,7 @@ public class CategoryServlet extends HttpServlet {
 
                 XMLUtils.marshallToOutputStream(result, resp.getOutputStream());
             } else {
-                //TODO: get by id
+                //get by id
                 Category category = categoryService.getById(categoryId);
                 CategoryDTO result = new CategoryDTO();
                 result.setId(category.getId());

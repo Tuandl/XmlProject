@@ -61,16 +61,28 @@ public class ProductServlet extends HttpServlet {
             } 
             else if(param.getGetTopProduct() == true) {
                 //get top product list
-                List<Product> products = productService.getTopProducts();
-                List<ProductDTO> productDtos = products.stream()
-                        .map((x) -> new ProductDTO(x))
-                        .collect(Collectors.toList());
+                if(param.getCategoryId() != null && param.getCategoryId() > 0) {
+                    //get by category
+                    ProductsDTO dto = productService.getTopProductsByCategoryId(
+                            param.getCategoryId());
+                    
+                    resp.setStatus(HttpServletResponse.SC_OK);
+                    XMLUtils.marshallToOutputStream(dto, resp.getOutputStream());
+                }
+                else {
+                    //get top all category
+                    List<Product> products = productService.getTopProducts();
+                    List<ProductDTO> productDtos = products.stream()
+                            .map((x) -> new ProductDTO(x))
+                            .collect(Collectors.toList());
+
+                    ProductsDTO dto = new ProductsDTO();
+                    dto.setProducts(productDtos);
+
+                    XMLUtils.marshallToOutputStream(dto, resp.getOutputStream());
+                    resp.setStatus(HttpServletResponse.SC_OK);
+                }
                 
-                ProductsDTO dto = new ProductsDTO();
-                dto.setProducts(productDtos);
-                
-                XMLUtils.marshallToOutputStream(dto, resp.getOutputStream());
-                resp.setStatus(HttpServletResponse.SC_OK);
             }
             else if(param.getCategoryId() == null || param.getCategoryId() > 0) {
                 //check paging params

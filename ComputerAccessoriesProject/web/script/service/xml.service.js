@@ -95,7 +95,10 @@ var XmlService = function() {
     }
     
     var createSubTree = function(xmlDoc, node, object) {
-        if(typeof object == 'string' || typeof object == 'number') {
+        if(object == null || object == undefined) {
+            return;
+        } 
+        else if(typeof object == 'string' || typeof object == 'number') {
             var textNode = xmlDoc.createTextNode(object);
             node.appendChild(textNode);
             return;

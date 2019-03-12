@@ -25,7 +25,7 @@ and open the template in the editor.
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #765d69;
+    background-color: #2b7a77;
 }
 
 .navbar li {
@@ -41,7 +41,7 @@ and open the template in the editor.
 }
 
 .navbar li a:hover, .dropdown:hover .dropbtn {
-    background-color: #263844;
+    background-color: #17242a;
 }
 
 .navbar li.dropdown {
@@ -74,3 +74,38 @@ and open the template in the editor.
 .text-capitalize {
     text-transform: capitalize;
 }
+
+.product-container {
+    margin: 30px;
+    padding: 30px;
+}
+
+.product-item {
+    display: inline-block;
+    width: 325px;
+}
+
+.product-link {
+    
+}
+
+.product-img-wrapper {
+    width: 275px;
+    height: 275px;
+    overflow: hidden;
+}
+
+.product-img {
+    width: 100%;
+}
+
+.product-title {
+    
+}
+
+.product-price {
+    
+}
+
+
+

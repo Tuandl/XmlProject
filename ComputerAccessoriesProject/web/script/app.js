@@ -11,6 +11,7 @@ var App = function () {
             login: 'LoginServlet',
             user: 'UserServlet',
             category: 'CategoryServlet',
+            categoryTop: 'Category/Top',
             categoryRaw: 'CategoryRawServlet',
             categoryRawCountNewProduct: 'CategoryRaw/NewProduct',
             categoryRawCountEditedProduct: 'CategoryRaw/EditedProduct',
@@ -33,8 +34,10 @@ var App = function () {
             user: 'xsl/user.xsl',
             categoryTable: 'xsl/categories.table.xsl',
             categorySelect: 'xsl/categories.select.xsl',
+            categoryTop: 'xsl/categories.top.xsl',
             categoryRawTable: 'xsl/category-raw.table.xsl',
             categoryNavBar: 'xsl/categories.navbar.xsl',
+            productTop: 'xsl/products.top.xsl',
         }
     };
     

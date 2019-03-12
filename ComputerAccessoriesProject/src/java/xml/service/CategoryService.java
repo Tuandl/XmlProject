@@ -6,7 +6,10 @@
 package xml.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import xml.dao.CategoryDAO;
+import xml.dto.CategoriesDTO;
+import xml.dto.CategoryDTO;
 import xml.model.Category;
 
 /**
@@ -52,6 +55,18 @@ public class CategoryService {
     
     public boolean updateCategory(Category category) {
         boolean result = categoryDAO.update(category);
+        return result;
+    }
+    
+    public CategoriesDTO getTopCategories() {
+        List<Category> categories = categoryDAO.getTopCategories();
+        
+        List<CategoryDTO> categoriesDto = categories.stream()
+                .map((x) -> new CategoryDTO(x))
+                .collect(Collectors.toList());
+        
+        CategoriesDTO result = new CategoriesDTO();
+        result.setCategoryDTOs(categoriesDto);
         return result;
     }
 }

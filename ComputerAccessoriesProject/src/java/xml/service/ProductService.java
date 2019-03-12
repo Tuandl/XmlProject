@@ -15,6 +15,7 @@ import xml.dao.ProductDetailRawDAO;
 import xml.dao.ProductRawDAO;
 import xml.dto.ProductDTO;
 import xml.dto.ProductDataTable;
+import xml.dto.ProductsDTO;
 import xml.model.CategoryRaw;
 import xml.model.Product;
 import xml.model.ProductDetailRaw;
@@ -99,6 +100,19 @@ public class ProductService {
     public List<Product> getTopProducts() {
         List<Product> products = productDao.getTopProduct();
         return products;
+    }
+    
+    public ProductsDTO getTopProductsByCategoryId(int categoryId) {
+        List<Product> products = productDao.getTopProductByCategory(categoryId);
+        
+        List<ProductDTO> dto = products.stream()
+                .map((x) -> new ProductDTO(x))
+                .collect(Collectors.toList());
+        
+        ProductsDTO result = new ProductsDTO();
+        result.setProducts(dto);
+        
+        return result;
     }
     
     public ProductDataTable getDataTable(int page, int pageSize, Integer categoryId, String searchValue) {
