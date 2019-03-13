@@ -143,3 +143,24 @@ and open the template in the editor.
     text-align: center;
 }
 
+.product-detail-container {
+    margin: 50px;
+    padding: 70px;
+}
+
+.product-detail-left {
+    width: 40%;
+    display: inline-block;
+    margin-right: 75px;
+}
+
+.product-detail-right {
+    margin-left: 75px;
+    width: 40%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.product-detail-description {
+    margin: 50px;
+}

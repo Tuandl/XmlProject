@@ -30,6 +30,7 @@ var App = function () {
             categoryUpdate: 'view/admin/category/category.edit.jsp',
             crawl: 'view/admin/crawl.jsp',
             home: 'view/index.jsp',
+            product: 'view/product-detail.jsp',
         },
         xsl: {
             user: 'xsl/user.xsl',
@@ -39,6 +40,7 @@ var App = function () {
             categoryRawTable: 'xsl/category-raw.table.xsl',
             categoryNavBar: 'xsl/categories.navbar.xsl',
             productSquare: 'xsl/products.square.xsl',
+            productDetail: 'xsl/product.detail.xsl',
             paging: 'xsl/paging.xsl',
         }
     };
