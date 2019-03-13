@@ -20,7 +20,7 @@
                 <xsl:for-each select="categories/category">
                     <xsl:if test="position() &lt; 15">
                         <li>
-                            <a href="/view/category?categoryId={id}" class="text-capitalize">
+                            <a href="/ComputerAccessoriesProject/view/category.jsp?id={id}" class="text-capitalize">
                                 <!--<xsl:value-of select="position()"/>-->
                                 <xsl:value-of select="name"/>
                             </a>
@@ -34,7 +34,7 @@
                         <div class="dropdown-content">
                             <xsl:for-each select="categories/category">
                                 <xsl:if test="position() &gt;= 15">
-                                    <a href="/view/category?categoryId={id}" class="text-capitalize">
+                                    <a href="/ComputerAccessoriesProject/view/category.jsp?id={id}" class="text-capitalize">
                                         <xsl:value-of select="name"/>
                                     </a>
                                 </xsl:if>

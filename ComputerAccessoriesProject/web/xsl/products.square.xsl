@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-    Document   : products.top.xsl
+    Document   : products.square.xsl
     Created on : March 12, 2019, 8:41 AM
     Author     : admin
     Description:
@@ -18,7 +18,7 @@
         <div class="product-container">
             <xsl:for-each select="products/product">
                 <div class="product-item">
-                    <a class="product-link" href="/view/product-detail.jsp?id={id}">
+                    <a class="product-link" href="/ComputerAccessoriesProject/view/product-detail.jsp?id={id}">
                         <div class="product-img-wrapper"> 
                             <img src="{imageUrl}" alt="{name}" class="product-img"/>
                         </div>

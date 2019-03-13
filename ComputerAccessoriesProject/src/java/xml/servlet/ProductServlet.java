@@ -59,7 +59,7 @@ public class ProductServlet extends HttpServlet {
                 }
                 return;
             } 
-            else if(param.getGetTopProduct() == true) {
+            else if(param.getGetTopProduct() != null && param.getGetTopProduct() == true) {
                 //get top product list
                 if(param.getCategoryId() != null && param.getCategoryId() > 0) {
                     //get by category

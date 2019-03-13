@@ -111,7 +111,7 @@ var IndexController = function(app, xmlService, ajaxService, stateService) {
     }
     
     function getTopProductsXsl() {
-        ajaxService.get(app.url.xsl.productTop).then(function(response) {
+        ajaxService.get(app.url.xsl.productSquare).then(function(response) {
             topProductsXsl = response;
             renderTopProduct();
         }).catch(function(error) {

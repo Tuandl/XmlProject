@@ -24,6 +24,7 @@ var App = function () {
             login: 'view/login.jsp',
             register: 'view/register.jsp',
             adminDashBoard: 'view/admin/dashboard.jsp',
+            category: 'view/category.jsp',
             categoryList: 'view/admin/category/categories.jsp',
             categoryInsert: 'view/admin/category/category.add.jsp',
             categoryUpdate: 'view/admin/category/category.edit.jsp',
@@ -37,7 +38,8 @@ var App = function () {
             categoryTop: 'xsl/categories.top.xsl',
             categoryRawTable: 'xsl/category-raw.table.xsl',
             categoryNavBar: 'xsl/categories.navbar.xsl',
-            productTop: 'xsl/products.top.xsl',
+            productSquare: 'xsl/products.square.xsl',
+            paging: 'xsl/paging.xsl',
         }
     };
     
@@ -127,6 +129,13 @@ var App = function () {
         return urlWithParam;
     }
     
+    var getParameter = function(name) {
+        var currentUrlStr = window.location.href;
+        var url = new URL(currentUrlStr);
+        var result = url.searchParams.get(name);
+        return result;
+    }
+    
     this.url = url;
     this.toggleClass = toggleClass;
     this.addClass = addClass;
@@ -135,4 +144,5 @@ var App = function () {
     this.getIdInDataId = getIdInDataId;
     this.getRequestParam = getRequestParam;
     this.makeUrlWithParam = makeUrlWithParam;
+    this.getParameter = getParameter;
 };

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Index
-    Created on : Mar 11, 2019, 8:55:14 AM
+    Document   : category
+    Created on : Mar 13, 2019, 12:27:46 AM
     Author     : admin
 --%>
 
@@ -22,27 +22,18 @@
         <script src="${contextPath}/script/service/state.service.js"></script>
         <script src="${contextPath}/script/service/ajax.service.js"></script>
         <script src="${contextPath}/script/service/xml.service.js"></script>
-        <script src="${contextPath}/script/controller/index.controller.js"></script>
+        <script src="${contextPath}/script/controller/category.controller.js"></script>
     </head>
-    <body onload="new IndexController(new App(), new XmlService(), new AjaxService(), new StateService())">
-        <div>
-            <h1>Computer Accessories</h1>
-            <div class="hidden" id="divLogedIn">
-                <div>Welcome <span id="userFullName"></span></div>
-                <button id="btnLogout">Logout</button>
-            </div>
-            <div class="hidden" id="divAnnonymous">
-                <button id="btnLogin">Login</button>
-                <button id="btnRegister">Register</button>
-            </div>
-        </div>
-        <div id="divNavbar">
+    <body onload="new CategoryController(new App(), new AjaxService(), new XmlService(), new StateService())">
+        <h1>Computer Accessories</h1>
+        <div id="navbar">
             
         </div>
-        <div id="divTopProducts">
+        <h1 class="text-capitalize" id="categoryName"></h1>
+        <div id="divProducts">
             
         </div>
-        <div id="divTopCategories">
+        <div id="pagination" class="center">
             
         </div>
     </body>

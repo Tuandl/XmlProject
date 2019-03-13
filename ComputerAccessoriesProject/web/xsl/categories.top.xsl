@@ -23,7 +23,7 @@
                 <div class="top-category-product-container">
                     <xsl:for-each select="product">
                         <div class="product-item">
-                            <a class="product-link" href="/view/product-detail.jsp?id={id}">
+                            <a class="product-link" href="/ComputerAccessoriesProject/view/product-detail.jsp?id={id}">
                                 <div class="product-img-wrapper"> 
                                     <img src="{imageUrl}" alt="{name}" class="product-img"/>
                                 </div>
