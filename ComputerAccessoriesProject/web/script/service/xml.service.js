@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 
-
+/**
+ * For Common Usage of Xml
+ * @returns {XmlService}
+ */
 var XmlService = function() {
     
     var parseStringToXml = function(text) {
@@ -26,7 +29,11 @@ var XmlService = function() {
         return result;
     }
     
-    //Xml Dom 
+    /**
+     * Convert xmlDom into Object like JAXB
+     * @param {type} xmlDom
+     * @returns {unresolved}
+     */
     var unmarshalling = function(xmlDom) {
         var isDocumentNode = xmlDom.nodeType == 9;
         var isTextNode = xmlDom.nodeType == 3;
@@ -78,6 +85,12 @@ var XmlService = function() {
         return result;
     }
     
+    /**
+     * Marshalling Object to xmlDom like JAXB
+     * @param {type} object
+     * @param {type} rootTag
+     * @returns {Document|XmlService.marshalling.xmlDoc}
+     */
     var marshalling = function(object, rootTag) {
         var xmlDoc = createXmlDocument();
         var piNode = xmlDoc.createProcessingInstruction('xml', 'version="1.0" encoding="UTF-8" standalone="yes"');
@@ -121,6 +134,12 @@ var XmlService = function() {
         }
     }
     
+    /**
+     * Transform XMLDom with XSL to create new XMLDom
+     * @param {type} xmlDom
+     * @param {type} xslString
+     * @returns {unresolved}
+     */
     var transformToDocument = function(xmlDom, xslString) {
         var xsltProcessor = new XSLTProcessor();
         var xslDom = parseStringToXml(xslString)
@@ -141,6 +160,11 @@ var XmlService = function() {
         return xpathResult.stringValue;
     }
     
+    /**
+     * Auto Detech root tag and call marshalling()
+     * @param {type} object
+     * @returns {Document|XmlService.marshalling.xmlDoc|Node}
+     */
     var marshallingAuto = function(object) {
         var rootTag = Object.keys(object)[0];
         var result = marshalling(object[rootTag], rootTag);

@@ -7,12 +7,12 @@
 
 require('AjaxService');
 require('XmlService');
-require('StateService');
+require('NavService');
 
 var CategoryController = function() {
     var ajaxService = new AjaxService();
     var xmlService = new XmlService();
-    var stateService = new StateService();
+    var navService = new NavService();
     
     var viewIds = {
         div: {
@@ -33,14 +33,9 @@ var CategoryController = function() {
     var pagingXsl = null;
     
     //Running
-    renderNavbar();
+    navService.renderNavBarCategories(viewIds.div.navbar);
     getCategoryDetail();
     getProducts();
-    
-    function renderNavbar() {
-        //TODO: check cache
-        //Not have cache -> get category
-    }
     
     function getCategoryDetail() {
         var data = {

@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 
-
+/**
+ * XHttp Request Service
+ * @returns {AjaxService}
+ */
 var AjaxService = function() {
     
     var getXmlHttpObject = function() {
@@ -17,6 +20,12 @@ var AjaxService = function() {
         }
     }
     
+    /**
+     * Create Get XHttp Request
+     * @param {type} url
+     * @param {type} params
+     * @returns {Promise}
+     */
     this.get = function(url, params) {
         return new Promise(function(resolve, reject) {
             var xhttp = getXmlHttpObject();
@@ -47,6 +56,12 @@ var AjaxService = function() {
         });
     }
     
+    /**
+     * Create Get Xml XHttp Request
+     * @param {type} url
+     * @param {type} params
+     * @returns {Promise}
+     */
     this.getXml = function(url, params) {
         return new Promise(function(resolve, reject) {
             var xhttp = getXmlHttpObject();
@@ -77,6 +92,12 @@ var AjaxService = function() {
         });
     }
     
+    /**
+     * Create Post XHttp Request
+     * @param {type} url
+     * @param {type} params
+     * @returns {Promise}
+     */
     this.post = function(url, params) {
         return new Promise(function(resolve, reject) {
             var xhttp = getXmlHttpObject();
@@ -108,6 +129,12 @@ var AjaxService = function() {
         });
     }
     
+    /**
+     * Create PUT XHttp request
+     * @param {type} url
+     * @param {type} paramString
+     * @returns {Promise}
+     */
     this.put = function(url, paramString) {
         return new Promise(function(resolve, reject) {
             var xhttp = getXmlHttpObject();
@@ -125,20 +152,18 @@ var AjaxService = function() {
                 }
             }
             
-//            var paramsString = '';
-//            if(params != null && params != undefined && typeof params == 'object') {
-//                paramsString = Object.keys(params).map(function(key) {
-//                    var value = params[key];
-//                    return key + '=' + value;
-//                }).join('&');
-//            }
-            
             xhttp.open('PUT', url, true);
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhttp.send(paramString);
         });
     }
     
+    /**
+     * Create Delete XHttp Request
+     * @param {type} url
+     * @param {type} params
+     * @returns {Promise}
+     */
     this.delete = function(url, params) {
         return new Promise(function(resolve, reject) {
             var xhttp = getXmlHttpObject();

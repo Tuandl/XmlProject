@@ -6,12 +6,12 @@
 
 require('AjaxService');
 require('XmlService');
-require('StateService');
+require('NavService');
 
 var ProductDetailController = function() {
     var ajaxService = new AjaxService();
     var xmlService = new XmlService();
-    var stateService = new StateService();
+    var navService = new NavService();
     
     var viewIds = {
         button: {
@@ -29,7 +29,7 @@ var ProductDetailController = function() {
     var productXml = null;
     var productXsl = null;
     
-    renderNavBar();
+    navService.renderNavBarCategories(viewIds.div.navbar);
     getProduct();
     
     function getProduct() {
@@ -72,7 +72,4 @@ var ProductDetailController = function() {
         div.appendChild(productHtml);
     }
     
-    function renderNavBar() {
-        
-    }
 }

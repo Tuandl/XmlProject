@@ -7,12 +7,14 @@
 require('XmlService');
 require('AjaxService');
 require('StateService');
+require('NavService');
 
 var IndexController = function() {
     //inject param
     var xmlService = new XmlService();
     var ajaxService = new AjaxService();
     var stateService = new StateService();
+    var navService = new NavService();
     
     //declaration
     var viewIds = {
@@ -31,8 +33,6 @@ var IndexController = function() {
         },
     };
     
-    var categories = null;
-    var categoriesXml = null
     var topProducts = null;
     var topProductsXml = null;
     var topCategories = null;
@@ -41,22 +41,13 @@ var IndexController = function() {
     var topProductsXsl = null;
     var topCategoriesXsl = null;
     
-    getCategories();
+    navService.renderNavBarCategories(viewIds.div.navBar);
     getTopProduct();
     getTopCategories();
     getTopCategoriesXsl();
-    
+
+
     //Handler method
-    function getCategories() {
-        ajaxService.getXml(app.url.api.category).then(function(response) {
-            categoriesXml = response;
-            categories = xmlService.unmarshalling(response);
-            getNavBarXsl();
-        }).catch(function(error) {
-            console.log(error);
-        });
-    }
-    
     function getTopProduct() {
         var params = {
             getTopProduct: 'true',
@@ -98,9 +89,9 @@ var IndexController = function() {
             param: paramsStr,
         };
         ajaxService.getXml(app.url.api.product, data).then(function(response) {
-            console.log('response top product in category', 
-                    xmlService.parseXmlToString(response))
-            
+//            console.log('response top product in category', 
+//                    xmlService.parseXmlToString(response))
+//            
             var obj = xmlService.unmarshalling(response);
             category.product = obj.products.product;
             renderTopCategories();
@@ -108,15 +99,6 @@ var IndexController = function() {
             console.log(error);
         });
     } 
-    
-    function getNavBarXsl() {
-        ajaxService.get(app.url.xsl.categoryNavBar).then(function(response) {
-            navBarXsl = response;
-            renderNavBar();
-        }).catch(function(error) {
-            console.log(error);
-        });
-    }
     
     function getTopProductsXsl() {
         ajaxService.get(app.url.xsl.productSquare).then(function(response) {
@@ -135,13 +117,6 @@ var IndexController = function() {
         });
     }
     
-    function renderNavBar() {
-        var navBar = xmlService.transformToDocument(categoriesXml, navBarXsl);
-        var div = document.getElementById(viewIds.div.navBar);
-        xmlService.removeAllChild(div);
-        div.appendChild(navBar);
-    }
-    
     function renderTopProduct() {
         var topProductHtml = xmlService.transformToDocument(topProductsXml, topProductsXsl);
         var div = document.getElementById(viewIds.div.topProducts);
@@ -152,7 +127,6 @@ var IndexController = function() {
     function renderTopCategories() {
         topCategoriesXml = xmlService.marshallingAuto(topCategories);
         
-//        console.log('render top category', topCategories, xmlService.parseXmlToString(topCategoriesXml));
         var topCategoriesHtml = xmlService.transformToDocument(topCategoriesXml, topCategoriesXsl);
         var div = document.getElementById(viewIds.div.topCategories);
         xmlService.removeAllChild(div);
