@@ -4,8 +4,16 @@
  * and open the template in the editor.
  */
 
+require('XmlService');
+require('AjaxService');
+require('StateService');
 
-var IndexController = function(app, xmlService, ajaxService, stateService) {
+var IndexController = function() {
+    //inject param
+    var xmlService = new XmlService();
+    var ajaxService = new AjaxService();
+    var stateService = new StateService();
+    
     //declaration
     var viewIds = {
         div: {

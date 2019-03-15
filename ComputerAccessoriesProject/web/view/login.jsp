@@ -19,12 +19,9 @@
         <script src="${contextPath}/script/common.enum.js"></script>
         
         <script src="${contextPath}/script/app.js"></script>
-        <script src="${contextPath}/script/service/state.service.js"></script>
-        <script src="${contextPath}/script/service/ajax.service.js"></script>
-        <script src="${contextPath}/script/service/xml.service.js"></script>
         <script src="${contextPath}/script/controller/login.controller.js"></script>
     </head>
-    <body onload="new LoginController(new App(), new StateService(), new AjaxService(), new XmlService())">
+    <body onload="new LoginController()">
         <h1>Login</h1>
         <form name="formLogin">
             <input type="text" id="txtUsername" name="txtUsername" value="" /> <br/>

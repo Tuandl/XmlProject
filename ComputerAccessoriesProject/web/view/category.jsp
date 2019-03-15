@@ -19,12 +19,9 @@
         <script src="${contextPath}/script/common.enum.js"></script>
         
         <script src="${contextPath}/script/app.js"></script>
-        <script src="${contextPath}/script/service/state.service.js"></script>
-        <script src="${contextPath}/script/service/ajax.service.js"></script>
-        <script src="${contextPath}/script/service/xml.service.js"></script>
         <script src="${contextPath}/script/controller/category.controller.js"></script>
     </head>
-    <body onload="new CategoryController(new App(), new AjaxService(), new XmlService(), new StateService())">
+    <body onload="new CategoryController()">
         <h1>Computer Accessories</h1>
         <div id="navbar">
             

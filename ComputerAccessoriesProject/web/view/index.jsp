@@ -19,12 +19,9 @@
         <script src="${contextPath}/script/common.enum.js"></script>
         
         <script src="${contextPath}/script/app.js"></script>
-        <script src="${contextPath}/script/service/state.service.js"></script>
-        <script src="${contextPath}/script/service/ajax.service.js"></script>
-        <script src="${contextPath}/script/service/xml.service.js"></script>
         <script src="${contextPath}/script/controller/index.controller.js"></script>
     </head>
-    <body onload="new IndexController(new App(), new XmlService(), new AjaxService(), new StateService())">
+    <body onload="new IndexController()">
         <div>
             <h1>Computer Accessories</h1>
             <div class="hidden" id="divLogedIn">

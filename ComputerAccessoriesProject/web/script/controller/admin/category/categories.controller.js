@@ -4,8 +4,13 @@
  * and open the template in the editor.
  */
 
+require('AjaxService');
+require('XmlService');
 
-var CategoriesController = function(app, ajaxService, xmlService) {
+var CategoriesController = function() {
+    var ajaxService = new AjaxService();
+    var xmlService = new XmlService();
+    
     //Declaration
     var viewIds = {
         input: {

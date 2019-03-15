@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+require('AjaxService');
 
-var RegisterController = function (app, ajaxService) {
+var RegisterController = function () {
+    var ajaxService = new AjaxService();
+    
     //Declaration...
     var viewIds = {
         input: {

@@ -4,8 +4,15 @@
  * and open the template in the editor.
  */
 
+require('StateService');
+require('AjaxService');
+require('XmlService');
 
-var DashBoardController = function (app, stateService, ajaxService, xmlService) {
+var DashBoardController = function () {
+    var stateService = new StateService();
+    var ajaxService = new AjaxService();
+    var xmlService = new XmlService();
+    
     //Declaration...
     var viewIds = {
         input: {

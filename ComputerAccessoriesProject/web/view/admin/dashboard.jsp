@@ -19,12 +19,9 @@
         <script src="${contextPath}/script/common.enum.js"></script>
         
         <script src="${contextPath}/script/app.js"></script>
-        <script src="${contextPath}/script/service/state.service.js"></script>
-        <script src="${contextPath}/script/service/ajax.service.js"></script>
-        <script src="${contextPath}/script/service/xml.service.js"></script>
         <script src="${contextPath}/script/controller/admin/dashboard.controller.js"></script>
     </head>
-    <body onload="new DashBoardController(new App(), new StateService(), new AjaxService(), new XmlService())">
+    <body onload="new DashBoardController()">
         <h1>DashBoard</h1>
         <h3>Welcome <span id="adminName"></span></h3>
         

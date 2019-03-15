@@ -5,7 +5,15 @@
  */
 
 
-var CategoryController = function(app, ajaxService, xmlService, stateService) {
+require('AjaxService');
+require('XmlService');
+require('StateService');
+
+var CategoryController = function() {
+    var ajaxService = new AjaxService();
+    var xmlService = new XmlService();
+    var stateService = new StateService();
+    
     var viewIds = {
         div: {
             navbar: 'navbar',

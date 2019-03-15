@@ -19,11 +19,9 @@
         <script src="${contextPath}/script/common.enum.js"></script>
         
         <script src="${contextPath}/script/app.js"></script>
-        <script src="${contextPath}/script/service/ajax.service.js"></script>
-        <script src="${contextPath}/script/service/xml.service.js"></script>
         <script src="${contextPath}/script/controller/admin/category/categories.controller.js"></script>
     </head>
-    <body onload="new CategoriesController(new App(), new AjaxService(), new XmlService())">
+    <body onload="new CategoriesController()">
         <h1>Category</h1>
         
         <button id="btnInsert">Add</button> 

@@ -19,10 +19,9 @@
         <script src="${contextPath}/script/common.enum.js"></script>
         
         <script src="${contextPath}/script/app.js"></script>
-        <script src="${contextPath}/script/service/ajax.service.js"></script>
         <script src="${contextPath}/script/controller/register.controller.js"></script>
     </head>
-    <body onload="new RegisterController(new App(), new AjaxService())">
+    <body onload="new RegisterController()">
         <h1>Register</h1>
         <form name="formLogin">
             <input type="text" id="txtUsername" name="txtUsername" value="" />

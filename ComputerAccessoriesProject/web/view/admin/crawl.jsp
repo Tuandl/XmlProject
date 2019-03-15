@@ -19,12 +19,9 @@
         <script src="${contextPath}/script/common.enum.js"></script>
         
         <script src="${contextPath}/script/app.js"></script>
-        <script src="${contextPath}/script/service/state.service.js"></script>
-        <script src="${contextPath}/script/service/ajax.service.js"></script>
-        <script src="${contextPath}/script/service/xml.service.js"></script>
         <script src="${contextPath}/script/controller/admin/crawl.controller.js"></script>
     </head>
-    <body onload="new CrawlController(new App(), new AjaxService(), new XmlService())">
+    <body onload="new CrawlController()">
         <h1>Crawl page</h1>
         <button id="btnCrawlCategory">Crawl Category</button>
         <button id="btnSyncAll">Sync All</button>

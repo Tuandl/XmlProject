@@ -4,8 +4,15 @@
  * and open the template in the editor.
  */
 
+require('AjaxService');
+require('XmlService');
+require('StateService');
 
-var ProductDetailController = function(app, ajaxService, xmlService, stateService) {
+var ProductDetailController = function() {
+    var ajaxService = new AjaxService();
+    var xmlService = new XmlService();
+    var stateService = new StateService();
+    
     var viewIds = {
         button: {
             addToCart: 'btnAddCart',
@@ -36,11 +43,16 @@ var ProductDetailController = function(app, ajaxService, xmlService, stateServic
         };
         ajaxService.getXml(app.url.api.product, data).then(function(response) {
             productXml = response;
-            product = xmlService.unmarshalling(response).product;
+            product = xmlService.unmarshalling(response);
+            convertInvalidEntities();
             getProductXsl();
         }).catch(function(error) {
             console.log(error);
         });
+    }
+    
+    function convertInvalidEntities() {
+        product.product.description = product.product.description
     }
     
     function getProductXsl() {
@@ -53,6 +65,7 @@ var ProductDetailController = function(app, ajaxService, xmlService, stateServic
     }
     
     function renderProductDetail() {
+        productXml = xmlService.marshallingAuto(product);
         var productHtml = xmlService.transformToDocument(productXml, productXsl);
         var div = document.getElementById(viewIds.div.productDetail);
         xmlService.removeAllChild(div);

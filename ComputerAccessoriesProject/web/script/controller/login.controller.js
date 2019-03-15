@@ -4,8 +4,15 @@
  * and open the template in the editor.
  */
 
+require('StateService');
+require('AjaxService');
+require('XmlService');
 
-var LoginController = function (app, stateService, ajaxService, xmlService) {
+var LoginController = function () {
+    var stateService = new StateService();
+    var ajaxService = new AjaxService();
+    var xmlService = new XmlService();
+    
     //Declaration...
     var viewIds = {
         input: {
