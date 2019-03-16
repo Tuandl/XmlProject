@@ -15,6 +15,12 @@ var StateService = function() {
         user: 'USER_DATA',
         categoriesXml: 'CATEGORIES_XML',
         navBarCategoriesXsl: 'NAVBAR_CATEGORIES_XSL',
+        topProductXml: 'TOP_PRODUCT_XML',
+        productListXsl: 'PRODUCT_LIST_XSL',
+        productDetailXsl: 'PRODUCT_DETAIL_XSL',
+        topCategoriesXml: 'TOP_CATEGORIES_XML',
+        topCategoriesXsl: 'TOP_CATEGORIES_XSL',
+        pagingXsl: 'PAGING_XSL',
     };
     
     /**
@@ -37,6 +43,10 @@ var StateService = function() {
      * @returns {undefined}
      */
     function save(key, value, expired) {
+        if(value == null || value == undefined) {
+            return;
+        }
+        
         if(expired == null || expired == undefined) {
             //default is a day
             expired = 24 * 60 * 60;

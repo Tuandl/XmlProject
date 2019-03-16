@@ -164,3 +164,7 @@ and open the template in the editor.
 .product-detail-description {
     margin: 50px;
 }
+
+.product-detail-img {
+    width: 100%;
+}

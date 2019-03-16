@@ -74,6 +74,22 @@ var App = function () {
             name: 'NavService',
             url: 'script/service/nav.service.js',
         },
+        {
+            name: 'ProductService',
+            url: 'script/service/product.service.js',
+        },
+        {
+            name: 'CategoryService',
+            url: 'script/service/category.service.js',
+        }, 
+        {
+            name: 'PagingService',
+            url: 'script/service/paging.service.js',
+        },
+        {
+            name: 'HtmlService',
+            url: 'script/service/html.service.js',
+        },
     ];
     
     function getRealUrl(url) {
