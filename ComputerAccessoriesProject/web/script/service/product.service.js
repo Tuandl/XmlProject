@@ -8,6 +8,7 @@ require('StateService');
 require('XmlService');
 require('PagingService');
 require('HtmlService');
+require('CartService');
 
 /**
  * Provide service for process product
@@ -19,6 +20,7 @@ var ProductService = function() {
     var xmlService = new XmlService();
     var pagingService = new PagingService();
     var htmlService = new HtmlService();
+    var cartService = new CartService();
     
     function getTopProductXml() {
         return new Promise(function(resolve, reject){
@@ -172,7 +174,7 @@ var ProductService = function() {
         });
     }
     
-    function getProductDetail(productId) {
+    function getProductDetailXmlStr(productId) {
         return new Promise(function(resolve, reject) {
             var params = {
                 productId: productId,
@@ -187,6 +189,19 @@ var ProductService = function() {
             }).catch(function(error) {
                 console.log(error);
                 reject(error);
+            });
+        });
+    }
+    
+    function getProductDetailObj(productId) {
+        return new Promise(function(resolve, reject) {
+            getProductDetailXmlStr(productId).then(function(productXmlStr){
+                var productXml = xmlService.parseStringToXml(productXmlStr);
+                var product = xmlService.unmarshalling(productXml);
+                resolve(product.product);
+            }).catch(function(error) {
+                console.log(error);
+                resolve(error);
             });
         });
     }
@@ -222,7 +237,9 @@ var ProductService = function() {
             return;
         }
         
-        getProductDetail(productId).then(function(productXmlStr){
+        var btnAddToCartId = 'btnAddCart';
+        
+        getProductDetailXmlStr(productId).then(function(productXmlStr){
             getProductDetailXsl().then(function(xsl) {
                 var productXml = xmlService.parseStringToXml(productXmlStr);
                 //decode
@@ -234,7 +251,19 @@ var ProductService = function() {
                 
                 xmlService.removeAllChild(div);
                 div.appendChild(html);
+                
+                var btnAddToCart = document.getElementById(btnAddToCartId);
+                btnAddToCart.addEventListener('click', onBtnAddToCartClicked);
             });
+        });
+    }
+    
+    function onBtnAddToCartClicked(event) {
+        var btn = event.srcElement;
+        var id = app.getIdInDataId(btn);
+        getProductDetailObj(id).then(function(productDetail) {
+            cartService.addToCart(productDetail);
+            alert('Add to cart successful!');
         });
     }
     

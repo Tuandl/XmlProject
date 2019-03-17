@@ -13,6 +13,8 @@ var StateService = function() {
     
     var stateConst = {
         user: 'USER_DATA',
+        userTopBarAnonymousXsl: 'USER_TOP_BAR_ANONYMOUS_XSL',
+        userTopBarAuthorizedXsl: 'USER_TOP_BAR_AUTHORIZED_XSL',
         categoriesXml: 'CATEGORIES_XML',
         navBarCategoriesXsl: 'NAVBAR_CATEGORIES_XSL',
         topProductXml: 'TOP_PRODUCT_XML',
@@ -21,6 +23,8 @@ var StateService = function() {
         topCategoriesXml: 'TOP_CATEGORIES_XML',
         topCategoriesXsl: 'TOP_CATEGORIES_XSL',
         pagingXsl: 'PAGING_XSL',
+        cartXml: 'CART_XML',
+        cartTableXsl: 'CART_TABLE_XSL',
     };
     
     /**
@@ -81,17 +85,18 @@ var StateService = function() {
     }
     
     var getCurrentUser = function(){
-        var user = localStorage.getItem(stateConst.user);
+        var user = get(stateConst.user);
         return user;
     }
     
     var setCurrentUser = function(user) {
-        localStorage.setItem(stateConst.user, user);
+        save(stateConst.user, user);
     }
     
     this.getCurrentUser = getCurrentUser;
     this.setCurrentUser = setCurrentUser;
     this.getItem = get;
     this.setItem = save;
+    this.removeItem = remove;
     this.stateConst = stateConst;
 }

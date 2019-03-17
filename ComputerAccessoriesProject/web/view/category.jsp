@@ -22,7 +22,7 @@
         <script src="${contextPath}/script/controller/category.controller.js"></script>
     </head>
     <body onload="new CategoryController()">
-        <h1>Computer Accessories</h1>
+        <div id="divTopBar"></div>
         <div id="navbar">
             
         </div>

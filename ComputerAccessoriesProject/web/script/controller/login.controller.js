@@ -4,14 +4,10 @@
  * and open the template in the editor.
  */
 
-require('StateService');
-require('AjaxService');
-require('XmlService');
+require('AuthService');
 
 var LoginController = function () {
-    var stateService = new StateService();
-    var ajaxService = new AjaxService();
-    var xmlService = new XmlService();
+    var authService = new AuthService();
     
     //Declaration...
     var viewIds = {
@@ -37,47 +33,20 @@ var LoginController = function () {
     //Handler methods
     function onBtnLoginClicked() {
         //handle login
+        app.addClass(viewIds.error.loginFailed, 'hidden');
+        
         var txtUsername = document.getElementById(viewIds.input.username);
         var txtPassword = document.getElementById(viewIds.input.password);
         
-        var data = {
-            username: txtUsername.value,
-            password: txtPassword.value,
-        };
-        
-        ajaxService.post(app.url.api.login, data).then(function(response){
-            var data = {
-                username: txtUsername.value,
-            };
-            
-            ajaxService.get(app.url.api.user, data).then(function(response) {
-                
-                console.log(response);
-                
-                stateService.setCurrentUser(response);
-                window.location.href = app.url.page.adminDashBoard;
-//                console.log('user data', response);
-//                var xmlDoc = xmlService.parseStringToXml(response);
-//                console.log('user xml', xmlDoc);
-//                var userTmp = xmlService.parseXmlToObject(xmlDoc);
-//                console.log('user', userTmp);
-//                
-//                var rootTag = Object.keys(userTmp)[0];
-//                var obj = userTmp[rootTag];
-//                var userXml = xmlService.parseObjectToXml(obj, rootTag);
-//                console.log('user xml', userXml);
-//                
-//                var xmlStr = xmlService.parseXmlToString(xmlDoc);
-//                console.log('user str', xmlStr);
-//                var userXmlStr = xmlService.parseXmlToString(userXml);
-//                console.log('user xml Str', userXmlStr);
-            }).catch(function(error) {
-                console.error('user error', error);
-            });
+        authService.login(txtUsername.value, txtPassword.value).then(function(user) {
+            if(user.isAdmin == 'true') {
+                window.location.replace(app.url.page.adminDashBoard);
+            } else {
+                window.location.replace(app.url.page.home);
+            }
         }).catch(function(error) {
-            console.log('error', error);
-            var errorElement = document.getElementById(viewIds.error.loginFailed);
-            errorElement.classList.remove('hidden');
+            console.log(error);
+            app.removeClass(viewIds.error.loginFailed, 'hidden');
         });
     }
     

@@ -22,25 +22,21 @@
         <script src="${contextPath}/script/controller/index.controller.js"></script>
     </head>
     <body onload="new IndexController()">
-        <div>
-            <h1>Computer Accessories</h1>
-            <div class="hidden" id="divLogedIn">
-                <div>Welcome <span id="userFullName"></span></div>
-                <button id="btnLogout">Logout</button>
-            </div>
-            <div class="hidden" id="divAnnonymous">
-                <button id="btnLogin">Login</button>
-                <button id="btnRegister">Register</button>
-            </div>
+        <div id="divTopBar">
+
         </div>
         <div id="divNavbar">
             
         </div>
-        <div id="divTopProducts">
-            
+        <div class="container">
+            <h2>Top Product</h2>
+            <div id="divTopProducts">
+
+            </div>
+            <div id="divTopCategories">
+
+            </div>
         </div>
-        <div id="divTopCategories">
-            
-        </div>
+        
     </body>
 </html>

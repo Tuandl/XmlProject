@@ -23,7 +23,7 @@
                             <img src="{imageUrl}" alt="{name}" class="product-img"/>
                         </div>
                         <div class="product-price">
-                            <xsl:value-of select="price"/>
+                            Price: <xsl:value-of select="format-number(price, '###,###')"/> VND
                         </div>
                         <div class="product-title">
                             <xsl:value-of select="name" disable-output-escaping="yes"/>

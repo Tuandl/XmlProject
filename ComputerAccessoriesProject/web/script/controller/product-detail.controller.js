@@ -6,10 +6,12 @@
 
 require('ProductService');
 require('NavService');
+require('AuthService');
 
 var ProductDetailController = function() {
     var productService = new ProductService();
     var navService = new NavService();
+    var authService = new AuthService();
     
     var viewIds = {
         button: {
@@ -18,15 +20,13 @@ var ProductDetailController = function() {
         div: {
             productDetail: 'divProduct',
             navbar: 'navbar',
+            topBar: 'divTopBar',
         }
     };
     
     var productId = app.getParameter('id');
     
-    var product = null;
-    var productXml = null;
-    var productXsl = null;
-    
+    authService.renderTopBarAuthorize(viewIds.div.topBar);
     navService.renderNavBarCategories(viewIds.div.navbar);
     productService.renderProductDetail(viewIds.div.productDetail, productId);
 }

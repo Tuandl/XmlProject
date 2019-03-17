@@ -16,11 +16,12 @@
     -->
     <xsl:template match="/">
         <xsl:for-each select="categories/category">
+            <hr/>
             <div class="top-category-container">
-                <h3>
+                <h3 class="text-capitalize">
                     <xsl:value-of select="name"/>
                 </h3>
-                <div class="top-category-product-container">
+                <div class="product-container">
                     <xsl:for-each select="product">
                         <div class="product-item">
                             <a class="product-link" href="/ComputerAccessoriesProject/view/product-detail.jsp?id={id}">
@@ -28,7 +29,7 @@
                                     <img src="{imageUrl}" alt="{name}" class="product-img"/>
                                 </div>
                                 <div class="product-price">
-                                    <xsl:value-of select="price"/>
+                                    Price: <xsl:value-of select="format-number(price, '###,###')"/> VND
                                 </div>
                                 <div class="product-title">
                                     <xsl:value-of select="name" disable-output-escaping="yes"/>

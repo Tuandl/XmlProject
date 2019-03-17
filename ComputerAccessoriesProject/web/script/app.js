@@ -35,9 +35,12 @@ var App = function () {
             crawl: 'view/admin/crawl.jsp',
             home: 'view/index.jsp',
             product: 'view/product-detail.jsp',
+            cart: 'view/cart.jsp',
         },
         xsl: {
             user: 'xsl/user.xsl',
+            userTopBarAuthorized: 'xsl/user.topbar.authorized.xsl',
+            userTopBarAnonymous: 'xsl/user.topbar.anonymous.xsl',
             categoryTable: 'xsl/categories.table.xsl',
             categorySelect: 'xsl/categories.select.xsl',
             categoryTop: 'xsl/categories.top.xsl',
@@ -46,6 +49,7 @@ var App = function () {
             productSquare: 'xsl/products.square.xsl',
             productDetail: 'xsl/product.detail.xsl',
             paging: 'xsl/paging.xsl',
+            cart: 'xsl/product.cart.table.xsl',
         }
     };
     
@@ -89,6 +93,14 @@ var App = function () {
         {
             name: 'HtmlService',
             url: 'script/service/html.service.js',
+        },
+        {
+            name: 'AuthService',
+            url: 'script/service/auth.service.js',
+        },
+        {
+            name: 'CartService',
+            url: 'script/service/cart.service.js',
         },
     ];
     
@@ -141,6 +153,14 @@ var App = function () {
         if(element.classList.contains(className)) {
             element.classList.remove(className);
         }
+    }
+    
+    function show(id){
+        removeClass(id, 'hidden');
+    }
+    
+    function hide(id) {
+        addClass(id, 'hidden');
     }
     
     function resetForm(errorIdsObj) {
@@ -252,6 +272,8 @@ var App = function () {
     this.makeUrlWithParam = makeUrlWithParam;
     this.getParameter = getParameter;
     this.require = require;
+    this.showElement = show;
+    this.hideElement = hide;
 };
 
 var app = new App();

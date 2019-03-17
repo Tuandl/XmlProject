@@ -28,10 +28,10 @@
                     </h3>
                 </div>
                 <div class="product-detail-price">
-                    Price: <xsl:value-of select="price"/>
+                    Price: <xsl:value-of select="format-number(price, '###,###')"/> VND
                 </div>
                 <div class="product-detail-button">
-                    <button id="btnAddCart">Add to Cart</button>
+                    <button class="button button-outter-green" id="btnAddCart" data-id="{id}">Add to Cart</button>
                 </div>
             </div>
             <hr/>

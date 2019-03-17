@@ -22,13 +22,19 @@
         <script src="${contextPath}/script/controller/login.controller.js"></script>
     </head>
     <body onload="new LoginController()">
-        <h1>Login</h1>
-        <form name="formLogin">
-            <input type="text" id="txtUsername" name="txtUsername" value="" /> <br/>
-            <input type="password" id="txtPassword" name="txtPassword" value="" /> <br/>
-            <input type="button" id="btnLogin" value="Login" name="btnLogin" />
-            <input type="button" id="btnRegister" value="register" name="btnRegister" />
-            <span id="error-login" class="error hidden">Invalid Username or Password.</span>
-        </form>
+        <div class="container-small">
+            <h1>Login</h1>
+            <form name="formLogin">
+                <label>Username:</label>
+                <input type="text" id="txtUsername" name="txtUsername" value="" /> <br/>
+                
+                <label>Password</label>
+                <input type="password" id="txtPassword" name="txtPassword" value="" /> <br/>
+                <span id="error-login" class="error hidden">Invalid Username or Password.</span><br/>
+                
+                <input class="button button-outter-green" type="button" id="btnLogin" value="Login" name="btnLogin" />
+                <input class="button button-outter-green" type="button" id="btnRegister" value="Register" name="btnRegister" />
+            </form>
+        </div>
     </body>
 </html>

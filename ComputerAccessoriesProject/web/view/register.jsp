@@ -22,22 +22,30 @@
         <script src="${contextPath}/script/controller/register.controller.js"></script>
     </head>
     <body onload="new RegisterController()">
-        <h1>Register</h1>
-        <form name="formLogin">
-            <input type="text" id="txtUsername" name="txtUsername" value="" />
-            <span id="error-username" class="error hidden">Please input username.</span>
-            <br/>
-            <input type="password" id="txtPassword" name="txtPassword" value="" /> 
-            <span id="error-password" class="error hidden">Please input password.</span>
-            <br/>
-            <input type="text" id="txtFullName" value=""/> 
-            <span id="error-full-name" class="error hidden">Please input fullname.</span>
-            <br/>
-            
-            <input type="button" id="btnRegister" value="register" name="btnRegister" />
-            <input type="button" id="btnLogin" value="login" name="btnLogin"/>
-            <span id="error-register" class="error hidden">Cannot register.</span>
-            <span id="success-register" class="success hidden">Register Successfully.</span>
-        </form>
+        <div class="container-small">
+            <h1>Register</h1>
+            <form name="formLogin">
+                <label>Username: </label>
+                <input type="text" id="txtUsername" name="txtUsername" value="" />
+                <span id="error-username" class="error hidden">Please input username.</span>
+                <br/>
+                
+                <label>Password</label>
+                <input type="password" id="txtPassword" name="txtPassword" value="" /> 
+                <span id="error-password" class="error hidden">Please input password.</span>
+                <br/>
+                
+                <label>Full Name</label>
+                <input type="text" id="txtFullName" value=""/> 
+                <span id="error-full-name" class="error hidden">Please input fullname.</span>
+                <br/>
+
+                <input class="button button-outter-green" type="button" id="btnRegister" value="Register" name="btnRegister" />
+                <input class="button button-outter-green" type="button" id="btnLogin" value="Login" name="btnLogin"/>
+                <span id="error-register" class="error hidden">Cannot register.</span>
+                <span id="success-register" class="success hidden">Register Successfully.</span>
+            </form>
+        </div>
+        
     </body>
 </html>
