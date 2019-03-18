@@ -165,6 +165,8 @@ create table [Order] (
 	updatedAt datetime,
 	orderCode char(14),
 	amount int,
+	phoneNo varchar(20),
+	[address] nvarchar(max),
 	customerId int references [User](id)
 )
 
@@ -290,3 +292,45 @@ values (20, 2, 10, 1, N'/div/*', getdate(), 0)
 
 
 set identity_insert CrawlDataMappingConfiguration off
+
+
+
+
+--insert category
+GO
+SET IDENTITY_INSERT [dbo].[Category] ON 
+GO
+INSERT [dbo].[Category] ([id], [deleted], [createdAt], [updatedAt], [name]) VALUES (1, 0, CAST(N'2019-03-17T23:43:40.780' AS DateTime), NULL, N'Laptop')
+GO
+INSERT [dbo].[Category] ([id], [deleted], [createdAt], [updatedAt], [name]) VALUES (2, 0, CAST(N'2019-03-17T23:43:56.227' AS DateTime), NULL, N'Máy bàn')
+GO
+INSERT [dbo].[Category] ([id], [deleted], [createdAt], [updatedAt], [name]) VALUES (3, 0, CAST(N'2019-03-17T23:44:04.450' AS DateTime), NULL, N'RAM')
+GO
+INSERT [dbo].[Category] ([id], [deleted], [createdAt], [updatedAt], [name]) VALUES (4, 0, CAST(N'2019-03-17T23:44:09.880' AS DateTime), NULL, N'Màn hình LCD')
+GO
+INSERT [dbo].[Category] ([id], [deleted], [createdAt], [updatedAt], [name]) VALUES (5, 0, CAST(N'2019-03-17T23:44:20.350' AS DateTime), NULL, N'Ổ cứng')
+GO
+INSERT [dbo].[Category] ([id], [deleted], [createdAt], [updatedAt], [name]) VALUES (6, 0, CAST(N'2019-03-17T23:44:32.110' AS DateTime), NULL, N'Bàn phím')
+GO
+INSERT [dbo].[Category] ([id], [deleted], [createdAt], [updatedAt], [name]) VALUES (7, 0, CAST(N'2019-03-17T23:44:46.000' AS DateTime), NULL, N'Card màn hình')
+GO
+INSERT [dbo].[Category] ([id], [deleted], [createdAt], [updatedAt], [name]) VALUES (8, 0, CAST(N'2019-03-17T23:45:07.113' AS DateTime), NULL, N'Thiết bị mạng')
+GO
+INSERT [dbo].[Category] ([id], [deleted], [createdAt], [updatedAt], [name]) VALUES (9, 0, CAST(N'2019-03-17T23:45:18.573' AS DateTime), NULL, N'Chuột máy tính')
+GO
+INSERT [dbo].[Category] ([id], [deleted], [createdAt], [updatedAt], [name]) VALUES (10, 0, CAST(N'2019-03-17T23:45:32.943' AS DateTime), NULL, N'SSD')
+GO
+INSERT [dbo].[Category] ([id], [deleted], [createdAt], [updatedAt], [name]) VALUES (11, 0, CAST(N'2019-03-17T23:45:39.530' AS DateTime), NULL, N'Ổ cứng di động')
+GO
+INSERT [dbo].[Category] ([id], [deleted], [createdAt], [updatedAt], [name]) VALUES (12, 0, CAST(N'2019-03-17T23:45:47.723' AS DateTime), NULL, N'Camera')
+GO
+INSERT [dbo].[Category] ([id], [deleted], [createdAt], [updatedAt], [name]) VALUES (13, 0, CAST(N'2019-03-17T23:46:15.180' AS DateTime), NULL, N'Máy in')
+GO
+INSERT [dbo].[Category] ([id], [deleted], [createdAt], [updatedAt], [name]) VALUES (14, 0, CAST(N'2019-03-17T23:46:43.643' AS DateTime), NULL, N'Thiết bị văn phòng')
+GO
+INSERT [dbo].[Category] ([id], [deleted], [createdAt], [updatedAt], [name]) VALUES (15, 0, CAST(N'2019-03-17T23:47:12.067' AS DateTime), NULL, N'CPU')
+GO
+INSERT [dbo].[Category] ([id], [deleted], [createdAt], [updatedAt], [name]) VALUES (16, 0, CAST(N'2019-03-17T23:47:51.740' AS DateTime), NULL, N'Khác')
+GO
+SET IDENTITY_INSERT [dbo].[Category] OFF
+GO
