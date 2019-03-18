@@ -23,9 +23,9 @@
     </head>
     <body onload="new CrawlController()">
         <h1>Crawl page</h1>
-        <button id="btnCrawlCategory">Crawl Category</button>
-        <button id="btnSyncAll">Sync All</button>
-        <button id="btnBack">Back</button>
+        <button class="button button-outter-green" id="btnCrawlCategory">Crawl Category</button>
+        <button class="button button-outter-green" id="btnSyncAll">Sync All</button>
+        <button class="button button-outter-green" id="btnBack">Back</button>
         <br/>
         <div id="divTotalProduct"></div>
         <div id="divTotalNotSync"></div>

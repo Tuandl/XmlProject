@@ -18,7 +18,7 @@
         <div class="product-detail-container">
             <div class="product-detail-left">
                 <div class="product-detail-img-container">
-                    <img class="product-detail-img" src="{imageUrl}" alt="name"/>
+                    <img class="product-detail-img" src="/ComputerAccessoriesProject/Product/Image?name={imageUrl}" alt="name"/>
                 </div>
             </div>
             <div class="product-detail-right">

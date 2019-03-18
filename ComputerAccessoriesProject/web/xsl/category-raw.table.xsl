@@ -15,7 +15,7 @@
          syntax recommendation http://www.w3.org/TR/xslt 
     -->
     <xsl:template match="/">
-        <table>
+        <table class="table">
             <thread>
                 <tr>
                     <th>#</th>
@@ -56,13 +56,13 @@
                         <td><xsl:value-of select="editedProductRawQuantity"/></td>
                         <td><xsl:value-of select="totalProductRaw"/></td>
                         <td>
-                            <button name="crawlProduct" data-id="{id}">Crawl</button>
+                            <button class="button button-outter-blue" name="crawlProduct" data-id="{id}">Crawl</button>
                         </td>
                         <td>
-                            <button name="syncProduct" data-id="{id}">Sync</button>
+                            <button class="button button-outter-blue" name="syncProduct" data-id="{id}">Sync</button>
                         </td>
                         <td>
-                            <button name="deleteCategoryRaw" data-id="{id}">Delete</button>
+                            <button class="button button-outter-red" name="deleteCategoryRaw" data-id="{id}">Delete</button>
                         </td>
                     </tr>
                 </xsl:for-each>

@@ -15,7 +15,7 @@
          syntax recommendation http://www.w3.org/TR/xslt 
     -->
     <xsl:template match="/">
-        <table border="1">
+        <table class="table" border="1">
             <thead>
                 <tr>
                     <th>#</th>
@@ -29,8 +29,8 @@
                         <td><xsl:number value="position()" format="1"/></td>
                         <td><xsl:value-of select="name"/></td>
                         <td>
-                            <button name="btnEdit" data-id="{id}">Edit</button>
-                            <button name="btnDelete" data-id="{id}">Delete</button>
+                            <button class="button button-outter-green" name="btnEdit" data-id="{id}">Edit</button>
+                            <button class="button button-outter-red" name="btnDelete" data-id="{id}">Delete</button>
                         </td>
                     </tr>
                 </xsl:for-each>

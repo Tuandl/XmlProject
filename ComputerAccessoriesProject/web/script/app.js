@@ -50,7 +50,10 @@ var App = function () {
             productDetail: 'xsl/product.detail.xsl',
             paging: 'xsl/paging.xsl',
             cart: 'xsl/product.cart.table.xsl',
-        }
+        },
+        img: {
+            product: 'http://localhost:8080/ComputerAccessoriesProject/Product/Image?name=',
+        },
     };
     
     /**

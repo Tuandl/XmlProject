@@ -24,6 +24,7 @@ import xml.model.CrawlDomainConfiguration;
 import xml.model.ProductDetailRaw;
 import xml.model.ProductRaw;
 import xml.thread.CrawlProductDetailRawThread;
+import xml.utils.FileUtils;
 import xml.utils.StringUtils;
 
 /**
@@ -150,16 +151,16 @@ public class CrawlService {
                 productRaw.setCategoryRawId(categoryRawId);
                 productRaw.setIsNew(true);
                 
+                String imgUrl = productRaw.getImgUrl();
+                imgUrl = StringUtils.concatUrl(domain.getInitUrl(), imgUrl);
+                productRaw.setImgUrl(imgUrl);
+                
                 String hashContent =
                         productRaw.getName() + 
                         productRaw.getPrice() + 
                         productRaw.getImgUrl();
                 int hashCode = StringUtils.hashString(hashContent);
                 productRaw.setHashCode(hashCode);
-                
-                String imgUrl = productRaw.getImgUrl();
-                imgUrl = StringUtils.concatUrl(domain.getInitUrl(), imgUrl);
-                productRaw.setImgUrl(imgUrl);
                 
                 String detailUrl = productRaw.getDetailUrl();
                 detailUrl = StringUtils.concatUrl(domain.getInitUrl(), detailUrl);
@@ -275,5 +276,12 @@ public class CrawlService {
                 }
             }
         }
+        
+        CrawlProductRawImage(productRaw);
+    }
+    
+    public void CrawlProductRawImage(ProductRaw productRaw) {
+        String newFileName = productRaw.getId() + "." + FileUtils.getFileExtension(productRaw.getImgUrl());
+        FileUtils.saveProductRawImage(productRaw.getImgUrl(), newFileName);
     }
 }

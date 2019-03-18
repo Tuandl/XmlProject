@@ -20,6 +20,7 @@ import xml.model.CategoryRaw;
 import xml.model.Product;
 import xml.model.ProductDetailRaw;
 import xml.model.ProductRaw;
+import xml.utils.FileUtils;
 import xml.utils.ReflectionUtils;
 
 /**
@@ -27,7 +28,6 @@ import xml.utils.ReflectionUtils;
  * @author admin
  */
 public class ProductService {
-    
     private final ProductRawDAO productRawDao;
     private final ProductDetailRawDAO productDetailRawDao;
     private final ProductDAO productDao;
@@ -57,7 +57,8 @@ public class ProductService {
                 //insert
                 Product newProduct = new Product();
                 newProduct.setCategoryId(categoryRaw.getCategoryId());
-                newProduct.setImageUrl(productRaw.getImgUrl());
+                String imgUrl = productRaw.getId() + "." + FileUtils.getFileExtension(productRaw.getImgUrl());
+                newProduct.setImageUrl(imgUrl);
                 newProduct.setName(productRaw.getName());
                 newProduct.setPrice(productRaw.getPrice());
                 newProduct.setProductRawId(productRaw.getId());
@@ -72,7 +73,8 @@ public class ProductService {
             }
             else {
                 //update
-                oldEntity.setImageUrl(productRaw.getImgUrl());
+                String imgUrl = productRaw.getId() + "." + FileUtils.getFileExtension(productRaw.getImgUrl());
+                oldEntity.setImageUrl(imgUrl);
                 oldEntity.setName(productRaw.getName());
                 oldEntity.setPrice(productRaw.getPrice());
                 if(productDetailRaw != null) {

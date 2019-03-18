@@ -27,6 +27,10 @@ var CategoryService = function() {
 //                    stateService.setItem(stateService.stateConst.topCategoriesXml, response);
                     var topCategories = xmlService.unmarshalling(response);
                     
+                    if(!Array.isArray(topCategories.categories.category)) {
+                        var tmp = topCategories.categories.category;
+                        topCategories.categories.category = [tmp,];
+                    }
                     var counter = topCategories.categories.category.length;
                     topCategories.categories.category.forEach(function(category) {
                         productService.getTopProductInCategory(category).finally(function() {

@@ -171,6 +171,18 @@ var XmlService = function() {
         return result;
     }
     
+    var marshallingThenParseToString = function(obj) {
+        var xml = marshallingAuto(obj);
+        var str = parseXmlToString(xml);
+        return str;
+    }
+    
+    var parseToXmlThenUnmarshalling = function(str) {
+        var xml = parseStringToXml(str);
+        var obj = unmarshalling(xml);
+        return obj;
+    }
+    
     this.parseStringToXml = parseStringToXml;
     this.parseXmlToString = parseXmlToString;
     this.unmarshalling = unmarshalling;
@@ -179,4 +191,6 @@ var XmlService = function() {
     this.transformToDocument = transformToDocument;
     this.removeAllChild = removeAllChild;
     this.queryStringXpath = queryStringXpath;
+    this.marshallingThenParseToString = marshallingThenParseToString;
+    this.parseToXmlThenUnmarshalling = parseToXmlThenUnmarshalling;
 }

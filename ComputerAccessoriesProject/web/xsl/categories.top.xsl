@@ -26,7 +26,7 @@
                         <div class="product-item">
                             <a class="product-link" href="/ComputerAccessoriesProject/view/product-detail.jsp?id={id}">
                                 <div class="product-img-wrapper"> 
-                                    <img src="{imageUrl}" alt="{name}" class="product-img"/>
+                                    <img src="/ComputerAccessoriesProject/Product/Image?name={imageUrl}" alt="{name}" class="product-img"/>
                                 </div>
                                 <div class="product-price">
                                     Price: <xsl:value-of select="format-number(price, '###,###')"/> VND

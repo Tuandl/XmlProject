@@ -22,13 +22,16 @@
         <script src="${contextPath}/script/controller/admin/category/categories.controller.js"></script>
     </head>
     <body onload="new CategoriesController()">
-        <h1>Category</h1>
-        
-        <button id="btnInsert">Add</button> 
-        <button id="btnBack">Back</button>
-        
-        <div id="listCategories"> 
-            
+        <div class="container-small">
+            <h1>Category</h1>
+
+            <button class="button button-outter-blue" id="btnInsert">Add</button> 
+            <button class="button button-outter-blue" id="btnBack">Back</button>
+
+            <div id="listCategories"> 
+
+            </div>    
         </div>
+        
     </body>
 </html>

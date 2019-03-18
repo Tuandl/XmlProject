@@ -91,6 +91,7 @@ and open the template in the editor.
 .product-item {
     display: inline-block;
     width: 325px;
+    margin-bottom: 16px;
 }
 
 .product-link {
@@ -129,9 +130,9 @@ and open the template in the editor.
 }
 
 .pagination a.active {
-    background-color: #4CAF50;
+    background-color: #116466;
     color: white;
-    border: 1px solid #4CAF50;
+    border: 1px solid #116466;
 }
 
 .pagination a:hover:not(.active) {
@@ -210,6 +211,12 @@ and open the template in the editor.
     cursor: pointer;
 }
 
+button:disabled,
+button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .button-outter-blue {
   background-color: white; 
   color: black; 
@@ -278,9 +285,19 @@ and open the template in the editor.
     float: right;
 }
 
-input[type=text], input[type=password], select {
+input[type=text], input[type=password] {
   width: 100%;
   padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+select {
+  width: 100%;
+  padding: 4px 12px;
   margin: 8px 0;
   display: inline-block;
   border: 1px solid #ccc;

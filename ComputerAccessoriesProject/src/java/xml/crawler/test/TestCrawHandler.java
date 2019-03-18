@@ -15,7 +15,10 @@ import xml.formater.XMLFormater;
 import xml.model.CategoryRaw;
 import xml.model.ProductDetailRaw;
 import xml.model.ProductRaw;
+import xml.service.CrawlService;
 import xml.utils.FileUtils;
+import static xml.utils.FileUtils.PRODUCT_IMG_FOLDER;
+import xml.utils.StringUtils;
 import xml.utils.XMLUtils;
 
 /**
@@ -31,7 +34,10 @@ public class TestCrawHandler {
 //        testCrawlDataProductNamTruongThinhLaptop();
 
 //        testCrawlDataProductDetailDalatLaptop();
-        testCrawlDataProductDetailNamTruongThinhLaptop();
+//        testCrawlDataProductDetailNamTruongThinhLaptop();
+
+//        testCurrentPath();
+        testCrawlImg();
     }
         
     public static void testCrawlDalatLaptopCategories() {
@@ -176,5 +182,18 @@ public class TestCrawHandler {
         for(ProductDetailRaw data : datas) {
             System.out.println("description = " + data.getDescription());
         }
+    }
+    
+    public static void testCurrentPath() {
+        String tmp = System.getProperty("user.dir");
+        System.out.println(tmp);
+        String imgPath = StringUtils.concatUrl(tmp, "/" + PRODUCT_IMG_FOLDER);
+        System.out.println(imgPath);
+    }
+    
+    public static void testCrawlImg() {
+        String url = "https://dalatlaptop.com/uploads/18/08/dell-inspiron-5570-m5i5238w-office365-dai-dien-450x300-600x600.jpg";
+        FileUtils.saveProductRawImage(url, "test");
+        System.out.println("Done");
     }
 }

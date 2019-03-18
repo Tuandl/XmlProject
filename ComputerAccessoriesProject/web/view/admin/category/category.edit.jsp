@@ -22,14 +22,18 @@
         <script src="${contextPath}/script/controller/admin/category/category.edit.controller.js"></script>
     </head>
     <body onload="new CategoryEditController()">
-        <h1>Update category</h1>
-        <form>
-            <input type="text" id="txtName"/>
-            <span id="error-name-required" class="error hidden">Please input name</span>
-            <br/>
-            <button type="button" id="btnUpdate">Update</button>
-            <button type="button" id="btnBack">Back</button>
-            <span id="error-server" class="error hidden"></span>
-        </form>
+        <div class="container-small">
+            <h1>Update category</h1>
+            <form>
+                <label>Category Name</label>
+                <input type="text" id="txtName"/>
+                <span id="error-name-required" class="error hidden">Please input name</span>
+                <br/>
+                <button class="button button-outter-green" type="button" id="btnUpdate">Update</button>
+                <button class="button button-outter-green" type="button" id="btnBack">Back</button>
+                <span id="error-server" class="error hidden"></span>
+            </form>
+        </div>
+        
     </body>
 </html>

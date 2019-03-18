@@ -12,6 +12,8 @@ package xml.model;
 public class Order extends ModelBase{
     private String orderCode;
     private int amount;
+    private String phoneNo;
+    private String address;
     private int customerId;
 
     public String getOrderCode() {
@@ -36,6 +38,22 @@ public class Order extends ModelBase{
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
     
     

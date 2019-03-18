@@ -46,6 +46,27 @@ var ProductService = function() {
             }
         });
     }
+//    
+//    function fixImgUrlProductsXmlStr(productsXmlStr) {
+//        var productsXml = xmlService.parseStringToXml(productsXmlStr);
+//        var products = xmlService.unmarshalling(productsXml);
+//        if(products.products == null || products.products.product) {
+//            return productsXmlStr;
+//        }
+//        
+//        products.products.product.forEach(function(product) {
+//            product.imageUrl = app.url.img.product + product.imageUrl;
+//        });
+//        
+//        productsXml = xmlService.marshallingAuto(products);
+//        return xmlService.parseXmlToString(productsXml);
+//    }
+//    
+//    function fixImgUrlProductXmlStr(productsXmlStr) {
+//        var product = xmlService.parseToXmlThenUnmarshalling(productsXmlStr);
+//        product.product.imageUrl = app.url.img.product + product.product.imageUrl;
+//        return xmlService.marshallingThenParseToString(product);
+//    }
     
     function getProductXsl() {
         return new Promise(function(resolve, reject) {
@@ -106,8 +127,9 @@ var ProductService = function() {
             var data = {
                 param: paramsStr,
             };
-            ajaxService.getXml(app.url.api.product, data).then(function(response) {
-                var obj = xmlService.unmarshalling(response);
+            ajaxService.get(app.url.api.product, data).then(function(response) {
+                var productsXml = xmlService.parseStringToXml(response);
+                var obj = xmlService.unmarshalling(productsXml);
                 category.product = obj.products.product;
                 resolve();
             }).catch(function(error) {
@@ -160,9 +182,10 @@ var ProductService = function() {
             var products = {
                 products: {
                     product: productTable.datatable.data,
-                }
+                },
             };
             var total = parseInt(productTable.datatable.total);
+            if(total == 0) return;
             var productsXml = xmlService.marshallingAuto(products);
             
             getProductXsl().then(function(productXsl) {
