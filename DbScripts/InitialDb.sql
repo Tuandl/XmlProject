@@ -181,7 +181,7 @@ create table OrderDetail (
 	deleted bit,
 	createdAt datetime,
 	updatedAt datetime,
-	productName nvarchar(100),
+	productName nvarchar(max),
 	orderId int references [Order](id),
 	productId int references Product(id),
 	price int,

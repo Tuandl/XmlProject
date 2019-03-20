@@ -52,6 +52,7 @@ public class UserService {
         if(users != null && users.size() > 0) {
             User user = users.get(0);
             result = new UserDTO();
+            result.setId(user.getId());
             result.setUsername(user.getUsername());
             result.setFullname(user.getFullName());
             result.setIsAdmin(user.isIsAdmin());

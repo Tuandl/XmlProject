@@ -7,12 +7,14 @@
 require('XmlService');
 require('AjaxService');
 require('StateService');
+require('HtmlService');
 
 var CartService = function(divCartTableId) {
     var divCartTableId = divCartTableId;
     var xmlService = new XmlService();
     var ajaxService = new AjaxService();
     var stateService = new StateService();
+    var htmlService = new HtmlService();
     
     function getCartXmlStr() {
         var result = stateService.getItem(stateService.stateConst.cartXml);
@@ -21,6 +23,10 @@ var CartService = function(divCartTableId) {
     
     function saveCartXmlStr(cartXmlStr) {
         stateService.setItem(stateService.stateConst.cartXml, cartXmlStr);
+    }
+    
+    function clearCartXmlStr() {
+        stateService.removeItem(stateService.stateConst.cartXml);
     }
     
     function addToCart(product) {
@@ -144,7 +150,75 @@ var CartService = function(divCartTableId) {
         saveCartXmlStr(cartXmlStr);
     }
     
-    function sendOrder() {
+    function sendOrder(phoneNo, address) {
+        var data = {
+            order: {
+                phoneNo: phoneNo,
+                address: address,
+            }
+        };
+        
+        var userStr = stateService.getCurrentUser();
+        var user = xmlService.parseToXmlThenUnmarshalling(userStr);
+        data.order.customerId = user.user.id;
+        
+        var cartStr = getCartXmlStr();
+        var cart = xmlService.parseToXmlThenUnmarshalling(cartStr);
+        data.order.amount = cart.products.totalAmount;
+        data.order.orderDetail = [];
+        if(!Array.isArray(cart.products.product)) {
+            var tmp = cart.products.product;
+            cart.products.product = [tmp];
+        }
+        
+        cart.products.product.forEach(function(product) {
+            var orderDetailDto = {
+                productId: product.id,
+                price: product.price,
+                quantity: product.quantity,
+                amount: product.amount,
+                productName: product.name,
+            };
+            data.order.orderDetail.push(orderDetailDto);
+        });
+        
+        var dataStr = xmlService.marshallingThenParseToString(data);
+        console.log(dataStr);
+        dataStr = htmlService.decodeHtml(dataStr);
+        console.log(dataStr);
+        dataStr = htmlService.decodeHtml(dataStr);
+        console.log(dataStr);
+        var apiData = {
+            data: dataStr,
+        };
+//        console.log(apiData.data);
+        ajaxService.post(app.url.api.order, apiData).then(function(response) {
+            console.log(response);
+//            alert('Send Order Successful');
+            clearCartXmlStr();
+            getReceipt(response).then(function() {
+                window.location.replace(app.url.page.home);
+            });
+        }).catch(function(error) {
+            alert('Send Order Failed');
+            console.log(error);
+        });
+    }
+    
+    function getReceipt(orderCode) {
+        if(orderCode == null) return;
+        return new Promise(function(resolve, reject) {
+            var data = {
+                orderCode: orderCode,
+            };
+            var fileName = 'Invoice ' + orderCode;
+            ajaxService.getPdf(app.url.api.orderReceipt, data, fileName).then(function(response) {
+                resolve(response);
+            }).catch(function(error) {
+                console.log(error);
+                reject(error);
+            })
+        });
         
     }
     

@@ -5,6 +5,8 @@
  */
 package xml.model;
 
+import xml.dto.OrderDTO;
+
 /**
  *
  * @author admin
@@ -15,7 +17,17 @@ public class Order extends ModelBase{
     private String phoneNo;
     private String address;
     private int customerId;
+    
+    public Order() {}
 
+    public Order(OrderDTO orderDto) {
+        this.orderCode = orderDto.getOrderCode();
+        this.amount = orderDto.getAmount();
+        this.phoneNo = orderDto.getPhoneNo();
+        this.address = orderDto.getAddress();
+        this.customerId = orderDto.getCustomerId();
+    }
+    
     public String getOrderCode() {
         return orderCode;
     }
@@ -55,6 +67,4 @@ public class Order extends ModelBase{
     public void setAddress(String address) {
         this.address = address;
     }
-    
-    
 }

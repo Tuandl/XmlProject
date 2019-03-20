@@ -17,4 +17,9 @@ public class OrderDAO extends DAOBase<Order> implements IDAO<Order>{
         super(Order.class);
     }
     
+    public Order getOrderByOrderCode(String orderCode) {
+        String fitler = "orderCode = ?";
+        Order order = getSingle(fitler, orderCode);
+        return order;
+    }
 }

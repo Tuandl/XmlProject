@@ -93,6 +93,58 @@ var AjaxService = function() {
     }
     
     /**
+     * Create Get XHttp Request
+     * @param {type} url
+     * @param {type} params
+     * @returns {Promise}
+     */
+    this.getPdf = function(url, params, fileName) {
+        return new Promise(function(resolve, reject) {
+            var xhttp = getXmlHttpObject();
+            xhttp.onreadystatechange = function(event) {
+                if(this.readyState == 4) {
+                    if(this.status == 200) {
+                        var response = event.target.response;
+                        var file = new Blob([response], {type: 'application/pdf'});
+                        var fileUrl = window.URL.createObjectURL(file);
+                        var win = window.open(fileUrl, '_blank');
+                        if(!win) {
+                            //browser does not support open new tab
+                            var link = document.createElement('a');
+                            link.href = fileUrl;
+                            if(fileName) {
+                                link.download = fileName;
+                            } else {
+                                link.download = 'Download';
+                            }
+                            link.click();
+                        }
+                        resolve(xhttp.response);
+                    }
+                    else {
+                        reject({
+                            status: this.status,
+                            message: xhttp.response,
+                        });
+                    }
+                }
+            }
+            
+            var urlWithParam = url;
+            if(params != null && params != undefined && typeof params == 'object') {
+                urlWithParam += '?' + Object.keys(params).map(function(key) {
+                    var value = params[key];
+                    return key + '=' + value;
+                }).join('&');
+            }
+            
+            xhttp.responseType = 'blob';
+            xhttp.open('GET', urlWithParam, true);
+            xhttp.send();
+        });
+    }
+    
+    /**
      * Create Post XHttp Request
      * @param {type} url
      * @param {type} params
@@ -125,6 +177,7 @@ var AjaxService = function() {
             
             xhttp.open('POST', url, true);
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            console.log(paramsString);  
             xhttp.send(paramsString);
         });
     }

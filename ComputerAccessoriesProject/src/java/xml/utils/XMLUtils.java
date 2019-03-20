@@ -75,6 +75,20 @@ public class XMLUtils {
         }
     }
     
+    public static Document marshallToDom(Object object){
+        Document document = createDocument();
+        if(document == null) return null;
+        try {
+            JAXBContext context = JAXBContext.newInstance(object.getClass());
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+            marshaller.marshal(object, document);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return document;
+    }
+    
     public static Object unmarshallFromString(Class objectClass, String xmlData) {
         Object result = null;
         try {
@@ -132,5 +146,18 @@ public class XMLUtils {
         }
         
         return result;
+    }
+    
+    private static Document createDocument(){
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document document = db.newDocument();
+
+            return document;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

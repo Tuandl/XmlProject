@@ -3,28 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xml.model;
+package xml.dto;
 
-import xml.dto.OrderDetailDTO;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import xml.model.OrderDetail;
 
 /**
  *
  * @author admin
  */
-public class OrderDetail extends ModelBase{
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "orderDetail")
+public class OrderDetailDTO {
     private int orderId;
     private int productId;
     private int price;
     private int quantity;
+    private int amount;
     private String productName;
     
-    public OrderDetail(){}
+    public OrderDetailDTO() {};
     
-    public OrderDetail(OrderDetailDTO orderDetailDto) {
-        this.productId = orderDetailDto.getProductId();
-        this.price = orderDetailDto.getPrice();
-        this.quantity = orderDetailDto.getQuantity();
-        this.productName = orderDetailDto.getProductName();
+    public OrderDetailDTO(OrderDetail orderDetail) {
+        orderId = orderDetail.getOrderId();
+        productId = orderDetail.getProductId();
+        price = orderDetail.getPrice();
+        quantity = orderDetail.getQuantity();
+        amount = orderDetail.getPrice() * orderDetail.getQuantity();
+        productName = orderDetail.getProductName();
     }
 
     public int getOrderId() {
@@ -42,7 +51,15 @@ public class OrderDetail extends ModelBase{
     public void setProductId(int productId) {
         this.productId = productId;
     }
-    
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public int getQuantity() {
         return quantity;
     }
@@ -59,12 +76,12 @@ public class OrderDetail extends ModelBase{
         this.productName = productName;
     }
 
-    public int getPrice() {
-        return price;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
     
     

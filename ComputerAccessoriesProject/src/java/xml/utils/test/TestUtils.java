@@ -5,9 +5,17 @@
  */
 package xml.utils.test;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import org.w3c.dom.Document;
+import xml.dto.OrderDTO;
 import xml.dto.UserDTO;
 import xml.formater.SyntaxChecker;
 import xml.formater.XMLFormater;
+import xml.service.OrderService;
+import xml.utils.FopUtils;
 import xml.utils.StringUtils;
 import xml.utils.XMLUtils;
 
@@ -18,7 +26,8 @@ import xml.utils.XMLUtils;
 public class TestUtils {
     public static void main(String[] args) {
 //        testUnmarshaller();
-        testRemovePredefined();
+//        testRemovePredefined();
+        testPdf();
     }
     
     public static void testUnmarshaller() {
@@ -48,5 +57,25 @@ public class TestUtils {
         String data = "\"&quot;&media<>&gt;&lt;'&apos;";
         
         System.out.println(SyntaxChecker.removePredefinedEntities(data));
+    }
+    
+    public static void testPdf() {
+        OrderService orderService = new OrderService();
+        OrderDTO orderDto = orderService.getOrder("20190318135255");
+        String domStr = XMLUtils.marshallToString(orderDto);
+        Document dom = XMLUtils.parseDomFromString(domStr);
+        try {
+            OutputStream out = new BufferedOutputStream(new FileOutputStream(new File("order.test.pdf")));
+            
+            System.out.println(System.getProperty("user.dir"));
+            FopUtils.transformDomToPdf(dom, "web/xsl/order.receipt.xsl", out, ".", "111");
+            
+            out.flush();
+            out.close();
+            
+            System.out.println("FINISH");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

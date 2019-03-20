@@ -23,6 +23,8 @@ var App = function () {
             crawlCategory: 'Crawl/Category',
             crawlProduct: 'Crawl/Product',
             product: 'Product',
+            order: 'Order',
+            orderReceipt: 'Order/Receipt',
         },
         page: {
             login: 'view/login.jsp',

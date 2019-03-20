@@ -5,6 +5,7 @@
  */
 package xml.dao;
 
+import java.util.List;
 import xml.model.OrderDetail;
 
 /**
@@ -16,6 +17,13 @@ public class OrderDetailDAO extends DAOBase<OrderDetail>
     
     public OrderDetailDAO() {
         super(OrderDetail.class);
+    }
+    
+    public List<OrderDetail> getByOrderId(int orderId) {
+        String filter = "orderId = ?";
+        List<OrderDetail> orderDetails = getAll(filter, orderId);
+        
+        return orderDetails;
     }
     
 }
