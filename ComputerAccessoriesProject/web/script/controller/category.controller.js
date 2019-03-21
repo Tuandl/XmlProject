@@ -9,12 +9,14 @@ require('NavService');
 require('CategoryService');
 require('ProductService');
 require('AuthService');
+require('ProductSearchService');
 
 var CategoryController = function() {
     var navService = new NavService();
     var categoryService = new CategoryService();
     var productService = new ProductService();
     var authService = new AuthService();
+    var productSearchService = new ProductSearchService();
     
     var viewIds = {
         div: {
@@ -23,6 +25,7 @@ var CategoryController = function() {
             products: 'divProducts',
             paging: 'pagination',
             topBar: 'divTopBar',
+            search: 'divSearch',
         },
     };
     
@@ -36,5 +39,5 @@ var CategoryController = function() {
     categoryService.renderCategoryName(viewIds.div.categoryName, categoryId);
     productService.renderProductInCategory(viewIds.div.products, 
             viewIds.div.paging, categoryId, page, pageSize);
-    
+    productSearchService.renderSearchTopBar(viewIds.div.search);
 }

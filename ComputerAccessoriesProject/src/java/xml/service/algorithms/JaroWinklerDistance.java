@@ -20,15 +20,17 @@ public class JaroWinklerDistance {
     private int[] parent = null;
     
     public double calculateSimilarity(String string1, String string2) {
-        String s1 = StringUtils.normalize(string1).toUpperCase();
-        String s2 = StringUtils.normalize(string2).toUpperCase();
-//        
-//        System.out.println("S1 = " + s1);
-//        System.out.println("S2 = " + s2);
+        String unescapeS1 = StringUtils.unescapeHtmlEntities(string1);
+        String unescapeS2 = StringUtils.unescapeHtmlEntities(string2);
+        
+        String s1 = StringUtils.normalize(unescapeS1).toUpperCase().trim();
+        String s2 = StringUtils.normalize(unescapeS2).toUpperCase().trim();
+        
         
         double jaroSim = calculateJaroSimilarity(s1, s2);
         double result = calculateWinklerSimilarity(jaroSim, s1, s2);
         
+//        System.out.println("S1 = " + s1 + " S2 = " + s2 + " result: " + result);
         return result;
     }
     

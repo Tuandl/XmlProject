@@ -55,4 +55,12 @@ public class ProductDAO extends DAOBase<Product>
         
         return result;
     }
+    
+    public List<Product> getAllLite() {
+        String queryString = "select id, name, imageUrl, price "
+                + "from Product";
+        
+        List<Product> result = getAllCustom(queryString);
+        return result;
+    }
 }

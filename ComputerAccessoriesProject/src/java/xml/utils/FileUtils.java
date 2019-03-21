@@ -80,7 +80,7 @@ public class FileUtils {
             BufferedImage bufferedImage = ImageIO.read(file);
             ImageIO.write(bufferedImage, extension.toUpperCase(), outputStream);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
     

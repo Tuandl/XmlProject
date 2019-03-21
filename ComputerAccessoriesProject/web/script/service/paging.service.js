@@ -102,5 +102,11 @@ var PagingService = function() {
         renderPagination(divId, rootUrl, currentPage, total, pageSize);
     }
     
+    function renderSearchPagination(divId, searchValue, searchType, currentPage, total, pageSize) {
+        var rootUrl = app.url.page.search + "?searchValue=" + searchValue + "&type=" + searchType;
+        renderPagination(divId, rootUrl, currentPage, total, pageSize);
+    }
+    
+    this.renderSearchPagination = renderSearchPagination;
     this.renderCategoryPagination = renderCategoryPagination;
 }

@@ -27,7 +27,8 @@ public class TestUtils {
     public static void main(String[] args) {
 //        testUnmarshaller();
 //        testRemovePredefined();
-        testPdf();
+//        testPdf();
+        testUnescape();
     }
     
     public static void testUnmarshaller() {
@@ -77,5 +78,10 @@ public class TestUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public static void testUnescape(){
+        String test = "Ram m&#225;y b&#224;n 1GB DDR3 bus 1333";
+        System.out.println(StringUtils.unescapeHtmlEntities(test));
     }
 }

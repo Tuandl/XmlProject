@@ -8,6 +8,7 @@ require('NavService');
 require('ProductService');
 require('CategoryService');
 require('AuthService');
+require('ProductSearchService');
 
 var IndexController = function() {
     //inject param
@@ -15,6 +16,7 @@ var IndexController = function() {
     var productService = new ProductService();
     var categoryService = new CategoryService();
     var authService = new AuthService();
+    var productSearchService = new ProductSearchService();
     
     //declaration
     var viewIds = {
@@ -24,6 +26,7 @@ var IndexController = function() {
             navBar: 'divNavbar',
             topProducts: 'divTopProducts',
             topCategories: 'divTopCategories',
+            search: 'divSearch',
         },
         button: {
             logout: 'btnLogout',
@@ -36,5 +39,5 @@ var IndexController = function() {
     navService.renderNavBarCategories(viewIds.div.navBar);
     productService.renderTopProducts(viewIds.div.topProducts);
     categoryService.renderTopCategories(viewIds.div.topCategories);
-    
+    productSearchService.renderSearchTopBar(viewIds.div.search);
 }

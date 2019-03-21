@@ -8,10 +8,13 @@ package xml.utils;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.URI;
 import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.regex.Pattern;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
 
 /**
  *
@@ -115,5 +118,15 @@ public class StringUtils {
         result = result.replace('đ', 'd');
         result = result.replace('Đ', 'D');
         return result;
+    }
+    
+    public static String unescapeHtmlEntities(String s) {
+        try {
+            HTMLDocument doc = new HTMLDocument();
+            new HTMLEditorKit().read( new StringReader( "<html><body>" + s ), doc, 0 );
+            return doc.getText( 1, doc.getLength() );
+        } catch( Exception ex ) {
+            return s;
+        }
     }
 }

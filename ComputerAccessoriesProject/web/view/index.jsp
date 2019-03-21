@@ -25,6 +25,9 @@
         <div id="divTopBar">
 
         </div>
+        
+        <div id="divSearch"></div>
+        
         <div id="divNavbar">
             
         </div>

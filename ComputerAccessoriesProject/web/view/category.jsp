@@ -23,6 +23,7 @@
     </head>
     <body onload="new CategoryController()">
         <div id="divTopBar"></div>
+        <div id="divSearch"></div>
         <div id="navbar">
             
         </div>

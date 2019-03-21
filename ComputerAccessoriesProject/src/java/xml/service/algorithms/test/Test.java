@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xml.sevice.algorithms.test;
+package xml.service.algorithms.test;
 
 /**
  *

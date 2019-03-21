@@ -97,7 +97,7 @@ var AuthService = function() {
             var xsl = stateService.getItem(stateService.stateConst.userTopBarAnonymousXsl);
             if(xsl == null) {
                 ajaxService.get(app.url.xsl.userTopBarAnonymous).then(function(response) {
-                    stateService.setItem(stateService.stateConst.userTopBarAnonymousXsl);
+                    stateService.setItem(stateService.stateConst.userTopBarAnonymousXsl, response);
                     resolve(response);
                 }).catch(function(error) {
                     console.log(error);
@@ -114,7 +114,7 @@ var AuthService = function() {
             var xsl = stateService.getItem(stateService.stateConst.userTopBarAuthorizedXsl);
             if(xsl == null) {
                 ajaxService.get(app.url.xsl.userTopBarAuthorized).then(function(response) {
-                    stateService.setItem(stateService.stateConst.userTopBarAuthorizedXsl);
+                    stateService.setItem(stateService.stateConst.userTopBarAuthorizedXsl, response);
                     resolve(response);
                 }).catch(function(error) {
                     console.log(error);

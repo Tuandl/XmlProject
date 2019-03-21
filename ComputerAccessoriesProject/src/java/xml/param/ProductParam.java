@@ -23,6 +23,7 @@ public class ProductParam {
     private Integer page;
     private Integer pageSize;
     private String search;
+    private Boolean isSmartSearch;
 
     public Integer getProductId() {
         return productId;
@@ -70,6 +71,14 @@ public class ProductParam {
 
     public void setSearch(String search) {
         this.search = search;
+    }
+
+    public Boolean getIsSmartSearch() {
+        return isSmartSearch;
+    }
+
+    public void setIsSmartSearch(Boolean isSmartSearch) {
+        this.isSmartSearch = isSmartSearch;
     }
     
     

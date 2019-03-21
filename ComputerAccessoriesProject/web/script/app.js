@@ -32,6 +32,7 @@ var App = function () {
             register: 'view/register.jsp',
             adminDashBoard: 'view/admin/dashboard.jsp',
             category: 'view/category.jsp',
+            search: 'view/search.jsp',
             categoryList: 'view/admin/category/categories.jsp',
             categoryInsert: 'view/admin/category/category.add.jsp',
             categoryUpdate: 'view/admin/category/category.edit.jsp',
@@ -58,6 +59,7 @@ var App = function () {
             cart: 'xsl/product.cart.table.xsl',
             domainTable: 'xsl/domain.table.xsl',
             dataMappingTableForm: 'xsl/data.mapping.form.xsl',
+            searchTopbar: 'xsl/search.topbar.xsl',
         },
         img: {
             product: 'http://localhost:8080/ComputerAccessoriesProject/Product/Image?name=',
@@ -116,7 +118,15 @@ var App = function () {
         {
             name: 'DomainService',
             url: 'script/service/domain.service.js',
-        }
+        },
+        {
+            name: 'ProductStateService',
+            url: 'script/service/product.state.service.js',
+        },
+        {
+            name: 'ProductSearchService',
+            url: 'script/service/product.search.service.js',
+        },
     ];
     
     function getRealUrl(url) {

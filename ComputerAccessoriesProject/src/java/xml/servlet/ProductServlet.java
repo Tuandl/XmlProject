@@ -84,6 +84,20 @@ public class ProductServlet extends HttpServlet {
                 }
                 
             }
+            else if(param.getIsSmartSearch() != null && param.getIsSmartSearch() == true) {
+                //check paging params
+                if(param.getPage() == null || param.getPage() <= 0 ||
+                        param.getPageSize() == null || param.getPageSize() <= 0) {
+                    resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    return;
+                }  
+                ProductDataTable dto = productService.searchJarowinkler(
+                        param.getPage(), param.getPageSize(), 
+                        param.getSearch());
+                
+                resp.setStatus(HttpServletResponse.SC_OK);
+                XMLUtils.marshallToOutputStream(dto, resp.getOutputStream());
+            }
             else if(param.getCategoryId() == null || param.getCategoryId() > 0) {
                 //check paging params
                 if(param.getPage() == null || param.getPage() <= 0 ||

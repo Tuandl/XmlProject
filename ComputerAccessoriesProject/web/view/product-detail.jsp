@@ -23,6 +23,7 @@
     </head>
     <body onload="new ProductDetailController()">
         <div id="divTopBar"></div>
+        <div id="divSearch"></div>
         <div id="navbar">
             
         </div>

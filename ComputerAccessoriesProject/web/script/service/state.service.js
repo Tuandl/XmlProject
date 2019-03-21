@@ -27,6 +27,8 @@ var StateService = function() {
         cartTableXsl: 'CART_TABLE_XSL',
         domainTable: 'DOMAIN_TABLE',
         dataMappingForm: 'DOMAIN_DATA_MAPPING_FORM',
+        productsLite: 'PRODUCT_LITE',
+        searchTopBarXsl: "SEARCH_TOP_BAR_XSL",
     };
     
     /**

@@ -7,7 +7,9 @@ package xml.dto;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import xml.model.Product;
 
 /**
@@ -24,6 +26,9 @@ public class ProductDTO {
     private String description;
     private String imageUrl;
     private int price;
+    
+    @XmlTransient
+    private double similarityPercent;
 
     public ProductDTO() {
     }
@@ -83,6 +88,14 @@ public class ProductDTO {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public double getSimilarityPercent() {
+        return similarityPercent;
+    }
+
+    public void setSimilarityPercent(double similarityPercent) {
+        this.similarityPercent = similarityPercent;
     }
     
     

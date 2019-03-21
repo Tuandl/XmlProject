@@ -7,7 +7,10 @@ package xml.service;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import xml.dao.CategoryRawDAO;
 import xml.dao.ProductDAO;
@@ -20,6 +23,7 @@ import xml.model.CategoryRaw;
 import xml.model.Product;
 import xml.model.ProductDetailRaw;
 import xml.model.ProductRaw;
+import xml.service.algorithms.JaroWinklerDistance;
 import xml.utils.FileUtils;
 import xml.utils.ReflectionUtils;
 
@@ -147,5 +151,46 @@ public class ProductService {
         result.setTotal(total);
         
         return result;
+    }
+    
+    public ProductDataTable searchJarowinkler(int page, int pageSize, String searchValue) {
+        List<Product> products = productDao.getAllLite();
+        List<ProductDTO> productDtos = new ArrayList<>();
+        
+        JaroWinklerDistance jaroWinklerDistance = new JaroWinklerDistance();
+        for(Product product : products) {
+            double similarity = jaroWinklerDistance.calculateSimilarity(searchValue, product.getName());
+            ProductDTO productDto = new ProductDTO(product);
+            productDto.setSimilarityPercent(similarity);
+            
+            productDtos.add(productDto);
+        }
+        
+        productDtos.sort(new Comparator<ProductDTO>() {
+            @Override
+            public int compare(ProductDTO o1, ProductDTO o2) {
+                if(o1.getSimilarityPercent() == o2.getSimilarityPercent()) {
+                    return 0;
+                }
+                if(o1.getSimilarityPercent() < o2.getSimilarityPercent()) {
+                    return 1;
+                }
+                return -1;
+            }
+        });
+        
+//        productDtos.stream()
+//                .forEach((x) -> {
+//                    System.out.println(x.getSimilarityPercent() + " name = " + x.getName());
+//                });
+        
+        ProductDataTable dataTable = new ProductDataTable();
+        dataTable.setTotal(productDtos.size());
+        dataTable.setData(productDtos.stream()
+                .skip((page - 1) * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList()));
+        
+        return dataTable;
     }
 }

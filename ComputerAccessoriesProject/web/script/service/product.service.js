@@ -9,6 +9,8 @@ require('XmlService');
 require('PagingService');
 require('HtmlService');
 require('CartService');
+require('ProductStateService');
+require('ProductSearchService');
 
 /**
  * Provide service for process product
@@ -21,11 +23,13 @@ var ProductService = function() {
     var pagingService = new PagingService();
     var htmlService = new HtmlService();
     var cartService = new CartService();
+    var productStateService = new ProductStateService();
+    var productSearchService = new ProductSearchService();
     
     function getTopProductXml() {
         return new Promise(function(resolve, reject){
-            var topProductXml = stateService.getItem(stateService.stateConst.topProductXml);
-            if(topProductXml == null) {
+//            var topProductXml = stateService.getItem(stateService.stateConst.topProductXml);
+//            if(topProductXml == null) {
                 var params = {
                     getTopProduct: 'true',
                 };
@@ -35,38 +39,18 @@ var ProductService = function() {
                     param: paramsStr,
                 };
                 ajaxService.get(app.url.api.product, data).then(function(response) {
-                    stateService.setItem(stateService.stateConst.topProductXml, response);
+//                    stateService.setItem(stateService.stateConst.topProductXml, response);
+                    productStateService.addProductsXmlStr(response);
                     resolve(response);
                 }).catch(function(error){
                     console.log(error);
                     reject(error);
                 });
-            } else {
-                resolve(topProductXml);
-            }
+//            } else {
+//                resolve(topProductXml);
+//            }
         });
     }
-//    
-//    function fixImgUrlProductsXmlStr(productsXmlStr) {
-//        var productsXml = xmlService.parseStringToXml(productsXmlStr);
-//        var products = xmlService.unmarshalling(productsXml);
-//        if(products.products == null || products.products.product) {
-//            return productsXmlStr;
-//        }
-//        
-//        products.products.product.forEach(function(product) {
-//            product.imageUrl = app.url.img.product + product.imageUrl;
-//        });
-//        
-//        productsXml = xmlService.marshallingAuto(products);
-//        return xmlService.parseXmlToString(productsXml);
-//    }
-//    
-//    function fixImgUrlProductXmlStr(productsXmlStr) {
-//        var product = xmlService.parseToXmlThenUnmarshalling(productsXmlStr);
-//        product.product.imageUrl = app.url.img.product + product.product.imageUrl;
-//        return xmlService.marshallingThenParseToString(product);
-//    }
     
     function getProductXsl() {
         return new Promise(function(resolve, reject) {
@@ -128,6 +112,7 @@ var ProductService = function() {
                 param: paramsStr,
             };
             ajaxService.get(app.url.api.product, data).then(function(response) {
+                productStateService.addProductsXmlStr(response);
                 var productsXml = xmlService.parseStringToXml(response);
                 var obj = xmlService.unmarshalling(productsXml);
                 category.product = obj.products.product;
@@ -152,6 +137,13 @@ var ProductService = function() {
                 param: paramsStr,
             };
             ajaxService.get(app.url.api.product, data).then(function(response) {
+                var obj = xmlService.parseToXmlThenUnmarshalling(response);
+                var products = {
+                    products: {
+                        product: obj.datatable.data,
+                    }
+                }
+                productStateService.addProducts(products);
                 resolve(response);
             }).catch(function(error) {
                 console.log(error);
@@ -185,7 +177,10 @@ var ProductService = function() {
                 },
             };
             var total = parseInt(productTable.datatable.total);
-            if(total == 0) return;
+            if(total == 0) {
+                divProduct.innerHTML = '<h3 class="center">No Item</h3>';
+                return;
+            }
             var productsXml = xmlService.marshallingAuto(products);
             
             getProductXsl().then(function(productXsl) {
@@ -290,8 +285,50 @@ var ProductService = function() {
         });
     }
     
+    /**
+     * 
+     * @param {type} productDivId
+     * @param {type} pagingDivId
+     * @param {type} searchValue
+     * @param {type} currentPage
+     * @param {type} pageSize
+     * @param {type} type
+     * @returns {undefined}
+     */
+    function renderProductInSearch(productDivId, pagingDivId, searchValue, searchType, currentPage, pageSize) {
+        var divProduct = document.getElementById(productDivId);
+        
+        if(!divProduct) {
+            return;
+        }
+        
+        productSearchService.searchProduct(searchValue, currentPage, pageSize, searchType).then(function(productTableXmlStr){
+            var productTableXml = xmlService.parseStringToXml(productTableXmlStr);
+            var productTable = xmlService.unmarshalling(productTableXml);
+            var products = {
+                products: {
+                    product: productTable.datatable.data,
+                },
+            };
+            var total = parseInt(productTable.datatable.total);
+            if(total == 0) {
+                divProduct.innerHTML = '<h3 class="center">Not found.</h3>';
+                return;
+            }
+            var productsXml = xmlService.marshallingAuto(products);
+            
+            getProductXsl().then(function(productXsl) {
+                var html = xmlService.transformToDocument(productsXml, productXsl);
+                xmlService.removeAllChild(divProduct);
+                divProduct.appendChild(html);
+            });
+            pagingService.renderSearchPagination(pagingDivId, searchValue, searchType, currentPage, total, pageSize);
+        });
+    }
+    
     this.renderTopProducts = renderTopProducts;
     this.getTopProductInCategory = getTopProductInCategory;
     this.renderProductInCategory = renderProductInCategory;
     this.renderProductDetail = renderProductDetail;
+    this.renderProductInSearch = renderProductInSearch;
 }
