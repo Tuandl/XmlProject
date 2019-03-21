@@ -9,7 +9,9 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.text.Normalizer;
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -102,6 +104,16 @@ public class StringUtils {
             //cannot parse;
         }
         
+        return result;
+    }
+    
+    public static String normalize(String s) {
+        String tmp = Normalizer.normalize(s, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        String result = pattern.matcher(tmp).replaceAll("");
+        
+        result = result.replace('đ', 'd');
+        result = result.replace('Đ', 'D');
         return result;
     }
 }
