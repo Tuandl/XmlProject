@@ -5,6 +5,7 @@
  */
 package xml.dao;
 
+import java.util.List;
 import xml.model.CrawlDataMappingConfiguration;
 
 /**
@@ -18,4 +19,11 @@ public class CrawlDataMappingConfigurationDAO extends DAOBase<CrawlDataMappingCo
         super(CrawlDataMappingConfiguration.class);
     }
     
+    public List<CrawlDataMappingConfiguration> getByDomainId(int domainId) {
+        String filter = "domainId = ? and deleted = ?";
+        List<CrawlDataMappingConfiguration> result = 
+                getAll(filter, domainId, false);
+        
+        return result;
+    }
 }

@@ -133,7 +133,7 @@ public class CategoryServlet extends HttpServlet {
         CategoryService categoryService = new CategoryService();
 
         try {
-            String data = StringUtils.readInputStringStream(req.getInputStream());
+            String data = StringUtils.readStringFromInputStream(req.getInputStream());
             
             CategoryDTO dto = (CategoryDTO) XMLUtils.unmarshallFromString(CategoryDTO.class, data);
             if(dto == null) {

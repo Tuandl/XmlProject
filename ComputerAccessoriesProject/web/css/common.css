@@ -16,6 +16,10 @@ and open the template in the editor.
     margin: 16px 550px;
 }
 
+.container-medium {
+    margin: 16px 350px;
+}
+
 .error {
     color: #9E1010;
 }

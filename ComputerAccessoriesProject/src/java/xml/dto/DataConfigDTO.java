@@ -3,17 +3,45 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xml.model;
+package xml.dto;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import xml.model.CrawlDataConfiguration;
 
 /**
  *
  * @author admin
  */
-public class CrawlDataConfiguration extends ModelBase {
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "dataConfig")
+public class DataConfigDTO {
+    private int id;
     private String className;
     private String propertyName;
     private String name;
     
+    public DataConfigDTO() {
+        
+    }
+    
+    public DataConfigDTO(CrawlDataConfiguration data) {
+        this.id = data.getId();
+        this.className = data.getClassName();
+        this.propertyName = data.getPropertyName();
+        this.name = data.getName();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getClassName() {
         return className;
     }
@@ -37,6 +65,6 @@ public class CrawlDataConfiguration extends ModelBase {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     
 }

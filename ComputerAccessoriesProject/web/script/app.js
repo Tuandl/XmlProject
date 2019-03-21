@@ -25,6 +25,7 @@ var App = function () {
             product: 'Product',
             order: 'Order',
             orderReceipt: 'Order/Receipt',
+            domain: 'Domain',
         },
         page: {
             login: 'view/login.jsp',
@@ -38,6 +39,9 @@ var App = function () {
             home: 'view/index.jsp',
             product: 'view/product-detail.jsp',
             cart: 'view/cart.jsp',
+            domainList: 'view/admin/domain/domains.jsp',
+            domainInsert: 'view/admin/domain/domain-add.jsp',
+            domainUpdate: 'view/admin/domain/domain-edit.jsp',
         },
         xsl: {
             user: 'xsl/user.xsl',
@@ -52,6 +56,8 @@ var App = function () {
             productDetail: 'xsl/product.detail.xsl',
             paging: 'xsl/paging.xsl',
             cart: 'xsl/product.cart.table.xsl',
+            domainTable: 'xsl/domain.table.xsl',
+            dataMappingTableForm: 'xsl/data.mapping.form.xsl',
         },
         img: {
             product: 'http://localhost:8080/ComputerAccessoriesProject/Product/Image?name=',
@@ -107,6 +113,10 @@ var App = function () {
             name: 'CartService',
             url: 'script/service/cart.service.js',
         },
+        {
+            name: 'DomainService',
+            url: 'script/service/domain.service.js',
+        }
     ];
     
     function getRealUrl(url) {
@@ -279,6 +289,7 @@ var App = function () {
     this.require = require;
     this.showElement = show;
     this.hideElement = hide;
+    this.getAttributeValue = getAttributeValue;
 };
 
 var app = new App();

@@ -5,6 +5,8 @@
  */
 package xml.model;
 
+import xml.dto.DataMappingDTO;
+
 /**
  *
  * @author admin
@@ -14,6 +16,16 @@ public class CrawlDataMappingConfiguration extends ModelBase{
     private int dataId;
     private String xPathQuery;
     private boolean isNodeResult;
+    
+    public CrawlDataMappingConfiguration() {}
+    
+    public CrawlDataMappingConfiguration(DataMappingDTO dto) {
+        this.id = dto.getId();
+        this.domainId = dto.getDomainId();
+        this.dataId = dto.getDataId();
+        this.xPathQuery = dto.getxPathQuery();
+        this.isNodeResult = dto.isIsNodeResult();
+    }
 
     public int getDomainId() {
         return domainId;

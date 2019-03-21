@@ -28,6 +28,7 @@
         <ul>
             <li><a href="${contextPath}/view/admin/category/categories.jsp">Config category</a></li>
             <li><a href="${contextPath}/view/admin/crawl.jsp">Crawler</a></li>
+            <li><a href="${contextPath}/view/admin/domain/domains.jsp">Domain</a></li>
         </ul>
     </body>
 </html>

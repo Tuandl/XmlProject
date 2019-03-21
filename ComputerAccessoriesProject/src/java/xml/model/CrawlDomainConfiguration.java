@@ -5,6 +5,8 @@
  */
 package xml.model;
 
+import xml.dto.DomainConfigDTO;
+
 /**
  *
  * @author admin
@@ -13,6 +15,15 @@ public class CrawlDomainConfiguration extends ModelBase{
     private String domainName;
     private String initUrl;
     private String pagingXPathQuery;
+    
+    public CrawlDomainConfiguration() {}
+    
+    public CrawlDomainConfiguration(DomainConfigDTO dto) {
+        this.id = dto.getId();
+        this.initUrl = dto.getInitUrl();
+        this.pagingXPathQuery = dto.getPagingXPathQuery();
+        this.domainName = dto.getDomainName();
+    }
 
     public String getDomainName() {
         return domainName;

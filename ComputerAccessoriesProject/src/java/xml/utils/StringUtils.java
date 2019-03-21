@@ -50,7 +50,7 @@ public class StringUtils {
         return hasValue;
     }
     
-    public static String readInputStringStream(InputStream is) {
+    public static String readStringFromInputStream(InputStream is) {
         StringBuilder builder = new StringBuilder();
         
         try {
@@ -71,7 +71,7 @@ public class StringUtils {
     
     public static String getParamFromInputStream(InputStream is, String paramName){
         String result = null;
-        String datas = readInputStringStream(is);
+        String datas = readStringFromInputStream(is);
         
         result = Arrays.stream(datas.split("&"))
                 .filter((data) -> {

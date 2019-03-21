@@ -17,5 +17,4 @@ public class CrawlDataConfigurationDAO extends DAOBase<CrawlDataConfiguration>
     public CrawlDataConfigurationDAO() {
         super(CrawlDataConfiguration.class);
     }
-    
 }
