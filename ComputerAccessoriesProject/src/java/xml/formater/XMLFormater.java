@@ -99,7 +99,7 @@ public class XMLFormater {
     
     public static String generateXMLWellForm(String htmlString){
         StringBuilder resultBuilder = new StringBuilder();
-        ArrayList<String> tagQueue = new ArrayList<>();
+        ArrayList<String> tagStack = new ArrayList<>();
         
         char[] chars = htmlString.toCharArray();
         StringBuilder currentTag = new StringBuilder();
@@ -332,7 +332,7 @@ public class XMLFormater {
                     //end read a tag -> validate tag and save tag
                     switch(tagType){
                         case OPEN_TAG:
-                            enQueue(tagQueue, currentTag.toString());
+                            pushStack(tagStack, currentTag.toString());
                             
                             resultBuilder.append(
                                     generateOpenTag(currentTag.toString(), attributes));
@@ -344,13 +344,13 @@ public class XMLFormater {
                             break;
                         case CLOSE_TAG:
                             
-                            lastTag = deQueue(tagQueue);
+                            lastTag = popStack(tagStack);
                             if(!lastTag.equals(currentTag.toString())){
-                                if(tagQueue.contains(currentTag.toString())){
+                                if(tagStack.contains(currentTag.toString())){
                                     //Missing close tag 
                                     while(!lastTag.equals(currentTag.toString())){
                                         resultBuilder.append(generateCloseTag(lastTag));
-                                        lastTag = deQueue(tagQueue);
+                                        lastTag = popStack(tagStack);
                                     }
                                 }
                                 else {
@@ -388,8 +388,8 @@ public class XMLFormater {
             resultBuilder.append(currentContent);
         }
         
-        while(tagQueue.size() > 0){
-            lastTag = deQueue(tagQueue);
+        while(tagStack.size() > 0){
+            lastTag = popStack(tagStack);
             resultBuilder.append(generateCloseTag(lastTag));
         }
         
@@ -423,17 +423,17 @@ public class XMLFormater {
         return result;
     }
     
-    private static String deQueue(List<String> queue){
-        if(queue == null || queue.size() == 0){
+    private static String popStack(List<String> stack){
+        if(stack == null || stack.size() == 0){
             return "";
         }
-        String element = queue.get(queue.size() - 1);
-        queue.remove(queue.size() - 1);
+        String element = stack.get(stack.size() - 1);
+        stack.remove(stack.size() - 1);
         return element;
     }
     
-    private static void enQueue(List<String> queue, String value){
-        queue.add(value);
+    private static void pushStack(List<String> stack, String value){
+        stack.add(value);
     }
     
     private static String generateOpenTag(String tagName, 
