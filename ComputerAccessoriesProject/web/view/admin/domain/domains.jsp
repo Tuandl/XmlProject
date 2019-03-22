@@ -18,6 +18,8 @@
         <script src="${contextPath}/script/controller/admin/domain/domains.controller.js"></script>
     </head>
     <body onload="new DomainsController()">
+        <div id="divTopBar"></div>
+        <div id="divNavbar"></div>
         <div class="container-small">
             <h1>Domains</h1>
             <button class="button button-outter-green" id="btnAddDomain">Add</button>

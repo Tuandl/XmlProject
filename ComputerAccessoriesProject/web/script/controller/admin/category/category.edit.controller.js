@@ -6,10 +6,16 @@
 
 require('AjaxService');
 require('XmlService');
+require('AuthService');
+require('NavService');
 
 var CategoryEditController = function() {
     var ajaxService = new AjaxService();
     var xmlService = new XmlService();
+    var authService = new AuthService();
+    var navService = new NavService();
+    
+    authService.checkAdmin();
     
     //declaration
     var viewIds = {
@@ -23,6 +29,10 @@ var CategoryEditController = function() {
         error: {
             nameRequired: 'error-name-required',
             server: 'error-server',
+        }, 
+        div: {
+            topBar: 'divTopBar',
+            navBar: 'divNavbar',
         }
     };
     var categoryId = parseInt(app.getRequestParam('id'));
@@ -33,6 +43,9 @@ var CategoryEditController = function() {
     }
     
     //running flow
+    authService.renderTopBarAuthorize(viewIds.div.topBar);
+    navService.renderNavBarAdmin(viewIds.div.navBar);
+    
     getData();
     var btnUpdate = document.getElementById(viewIds.button.update);
     btnUpdate.addEventListener('click', onBtnUpdateClicked);

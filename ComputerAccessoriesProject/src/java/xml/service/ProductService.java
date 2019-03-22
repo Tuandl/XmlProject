@@ -36,12 +36,15 @@ public class ProductService {
     private final ProductDetailRawDAO productDetailRawDao;
     private final ProductDAO productDao;
     private final CategoryRawDAO categoryRawDao;
+    private final AppSettingService appSettingService;
     
     public ProductService() {
         productRawDao = new ProductRawDAO();
         productDetailRawDao = new ProductDetailRawDAO();
         productDao = new ProductDAO();
         categoryRawDao = new CategoryRawDAO();
+        
+        appSettingService = new AppSettingService();
     }
     
     public boolean updateNewProducts(int categoryRawId) {
@@ -51,6 +54,8 @@ public class ProductService {
         if(newProductRaws == null || newProductRaws.size() == 0) {
             return true;
         }
+        
+        int commission = appSettingService.getCommission();
         
         for(ProductRaw productRaw : newProductRaws) {
             ProductDetailRaw productDetailRaw = 
@@ -64,7 +69,7 @@ public class ProductService {
                 String imgUrl = productRaw.getId() + "." + FileUtils.getFileExtension(productRaw.getImgUrl());
                 newProduct.setImageUrl(imgUrl);
                 newProduct.setName(productRaw.getName());
-                newProduct.setPrice(productRaw.getPrice());
+                newProduct.setPrice(productRaw.getPrice() + commission);
                 newProduct.setProductRawId(productRaw.getId());
                 if(productDetailRaw != null) {
                     newProduct.setDescription(productDetailRaw.getDescription());
@@ -80,7 +85,7 @@ public class ProductService {
                 String imgUrl = productRaw.getId() + "." + FileUtils.getFileExtension(productRaw.getImgUrl());
                 oldEntity.setImageUrl(imgUrl);
                 oldEntity.setName(productRaw.getName());
-                oldEntity.setPrice(productRaw.getPrice());
+                oldEntity.setPrice(productRaw.getPrice() + commission);
                 if(productDetailRaw != null) {
                     oldEntity.setDescription(productDetailRaw.getDescription());
                 }

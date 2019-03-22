@@ -22,6 +22,8 @@
         <script src="${contextPath}/script/controller/admin/category/category.edit.controller.js"></script>
     </head>
     <body onload="new CategoryEditController()">
+        <div id="divTopBar"></div>
+        <div id="divNavbar"></div>
         <div class="container-small">
             <h1>Update category</h1>
             <form>

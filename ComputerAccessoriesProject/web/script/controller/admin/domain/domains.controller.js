@@ -5,16 +5,24 @@
  */
 
 require('DomainService');
+require('AuthService');
+require('NavService');
 
 var DomainsController = function() {
     var domainService = new DomainService();
     
+    var authService = new AuthService();
+    var navService = new NavService();
+    
+    authService.checkAdmin();
     var viewIds = {
         button: {
             addDomain: 'btnAddDomain',
         },
         div: {
             table: 'divDomainTable',
+            topBar: 'divTopBar',
+            navBar: 'divNavbar',
         },
     };
     
@@ -26,6 +34,9 @@ var DomainsController = function() {
     };
     
     //flow
+    authService.renderTopBarAuthorize(viewIds.div.topBar);
+    navService.renderNavBarAdmin(viewIds.div.navBar);
+    
     domainService.renderDomainTable(viewIds.div.table).then(function() {
         bindEventToButtons();
     });

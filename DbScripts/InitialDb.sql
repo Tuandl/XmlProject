@@ -190,6 +190,20 @@ create table OrderDetail (
 
 go
 
+IF OBJECT_ID(N'dbo.AppSetting', N'U') IS NOT NULL
+BEGIN
+    drop table AppSetting
+END
+create table AppSetting (
+	id int identity(1,1) primary key,
+	deleted bit,
+	createdAt datetime,
+	updatedAt datetime,
+	commission int,
+)
+
+go
+
 --insert xpath expression
 insert into [User](username, password, fullName, isAdmin, createdAt, deleted) 
 values ('admin', '123123', N'Dương Anh Tuấn', 1, GETDATE(), 0)

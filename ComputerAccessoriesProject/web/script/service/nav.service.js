@@ -51,6 +51,23 @@ var NavService = function() {
         });
     }
     
+    function getNavBarAdminXSL() {
+        return new Promise(function(resolve, reject) {
+            var xsl = stateService.getItem(stateService.stateConst.navBarAdminXsl);
+            
+            if(xsl == null) {
+                ajaxService.get(app.url.xsl.navbarAdmin).then(function(response) {
+                    stateService.setItem(stateService.stateConst.navBarAdminXsl, response);
+                    resolve(response);
+                }).catch(function(error) {
+                    console.log(error);
+                });
+            } else {
+                resolve(xsl);
+            }
+        });
+    }
+    
     /**
      * render navbar and append into element has id equal with id param
      * @param {type} id
@@ -71,5 +88,20 @@ var NavService = function() {
         })
     }
     
+    function renderNavBarAdmin(id) {
+        var div = document.getElementById(id);
+        if(div == null || div == undefined) return;
+        
+        getNavBarAdminXSL().then(function(xsl) {
+            var obj = {tmp:{}};
+            var xml = xmlService.marshallingAuto(obj);
+            var html = xmlService.transformToDocument(xml, xsl);
+
+            xmlService.removeAllChild(div);
+            div.appendChild(html);
+        });
+    }
+    
     this.renderNavBarCategories = renderNavBarCategories;
+    this.renderNavBarAdmin = renderNavBarAdmin;
 }

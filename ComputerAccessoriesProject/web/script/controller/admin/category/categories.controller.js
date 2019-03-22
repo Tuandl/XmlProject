@@ -6,17 +6,25 @@
 
 require('AjaxService');
 require('XmlService');
+require('AuthService');
+require('NavService')
 
 var CategoriesController = function() {
     var ajaxService = new AjaxService();
     var xmlService = new XmlService();
+    var authService = new AuthService();
+    var navService = new NavService();
+    
+    authService.checkAdmin();
     
     //Declaration
     var viewIds = {
         input: {
         },
         div: {
-           table: 'listCategories', 
+            table: 'listCategories', 
+            topBar: 'divTopBar',
+            navBar: 'divNavbar',
         },
         button: {
             insert: 'btnInsert',
@@ -32,9 +40,12 @@ var CategoriesController = function() {
             delete: 'btnDelete',
             edit: 'btnEdit',
         }
-    }
+    };
     
     //run
+    authService.renderTopBarAuthorize(viewIds.div.topBar);
+    navService.renderNavBarAdmin(viewIds.div.navBar);
+    
     var categoriesDom = null;
     var xsl = null;
     initData();

@@ -7,8 +7,15 @@
 
 
 require('DomainService');
+require('AuthService');
+require('NavService');
 
 var DomainEditController = function() {
+    
+    var authService = new AuthService();
+    var navService = new NavService();
+    
+    authService.checkAdmin();
     
     var domainId = app.getParameter('id');
     if(!domainId) {
@@ -29,6 +36,8 @@ var DomainEditController = function() {
         },
         div: {
             detail: 'detailTable',
+            topBar: 'divTopBar',
+            navBar: 'divNavbar',
         },
         error: {
             domainName: 'errorRequireDomainName',
@@ -48,6 +57,9 @@ var DomainEditController = function() {
     };
     
     //init
+    authService.renderTopBarAuthorize(viewIds.div.topBar);
+    navService.renderNavBarAdmin(viewIds.div.navBar);
+    
     domainService.getDomainDetail().then(function() {
         domainService.renderDataMappingForm(viewIds.div.detail).then(function() {
             domainService.getDomainDetail().then(function(data) {

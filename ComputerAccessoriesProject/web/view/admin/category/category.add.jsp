@@ -22,6 +22,8 @@
         <script src="${contextPath}/script/controller/admin/category/category.add.controller.js"></script>
     </head>
     <body onload="new CategoryAddController()">
+        <div id="divTopBar"></div>
+        <div id="divNavbar"></div>
         <div class="container-small">
             <h1>Insert category</h1>
             <form>

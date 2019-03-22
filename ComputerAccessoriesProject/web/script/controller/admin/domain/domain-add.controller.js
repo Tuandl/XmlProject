@@ -5,9 +5,15 @@
  */
 
 require('DomainService');
+require('AuthService');
+require('NavService');
 
 var DomainAddController = function() {
     var domainService = new DomainService(-1);
+    var authService = new AuthService();
+    var navService = new NavService();
+    
+    authService.checkAdmin();
     
     var viewIds = {
         button: {
@@ -21,6 +27,8 @@ var DomainAddController = function() {
         },
         div: {
             detail: 'detailTable',
+            topBar: 'divTopBar',
+            navBar: 'divNavbar',
         },
         error: {
             domainName: 'errorRequireDomainName',
@@ -40,6 +48,9 @@ var DomainAddController = function() {
     };
     
     //init
+    authService.renderTopBarAuthorize(viewIds.div.topBar);
+    navService.renderNavBarAdmin(viewIds.div.navBar);
+    
     domainService.getDomainDetail().then(function() {
         domainService.renderDataMappingForm(viewIds.div.detail);
     });

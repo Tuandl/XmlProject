@@ -16,6 +16,7 @@ var HtmlService = function() {
      * @returns {.document@call;createElement.value|txt.value}
      */
     function decodeHtml(html) {
+        if(!html) return '';
         var txt = document.createElement('textarea');
         txt.innerHTML = html;
         return txt.value;

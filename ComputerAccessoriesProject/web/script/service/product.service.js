@@ -262,7 +262,9 @@ var ProductService = function() {
                 var productXml = xmlService.parseStringToXml(productXmlStr);
                 //decode
                 var product = xmlService.unmarshalling(productXml);
-                product.product.description = htmlService.decodeHtml(product.product.description);
+                if(product.product.description != null && Object.keys(product.product.description).length != 0) {
+                    product.product.description = htmlService.decodeHtml(product.product.description);
+                }
                 productXml = xmlService.marshallingAuto(product);
                 
                 var html = xmlService.transformToDocument(productXml, xsl);

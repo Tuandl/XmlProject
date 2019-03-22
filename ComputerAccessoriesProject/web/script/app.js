@@ -26,6 +26,7 @@ var App = function () {
             order: 'Order',
             orderReceipt: 'Order/Receipt',
             domain: 'Domain',
+            commission: 'AppSetting/Commission',
         },
         page: {
             login: 'view/login.jsp',
@@ -60,6 +61,7 @@ var App = function () {
             domainTable: 'xsl/domain.table.xsl',
             dataMappingTableForm: 'xsl/data.mapping.form.xsl',
             searchTopbar: 'xsl/search.topbar.xsl',
+            navbarAdmin: 'xsl/navbar.admin.xsl',
         },
         img: {
             product: 'http://localhost:8080/ComputerAccessoriesProject/Product/Image?name=',

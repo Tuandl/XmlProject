@@ -17,6 +17,7 @@ var StateService = function() {
         userTopBarAuthorizedXsl: 'USER_TOP_BAR_AUTHORIZED_XSL',
         categoriesXml: 'CATEGORIES_XML',
         navBarCategoriesXsl: 'NAVBAR_CATEGORIES_XSL',
+        navBarAdminXsl: 'NAVBAR_ADMIN_XSL',
         topProductXml: 'TOP_PRODUCT_XML',
         productListXsl: 'PRODUCT_LIST_XSL',
         productDetailXsl: 'PRODUCT_DETAIL_XSL',

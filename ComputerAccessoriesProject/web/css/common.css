@@ -118,7 +118,10 @@ and open the template in the editor.
 }
 
 .product-price {
-    
+    font-size: 1.2em;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    font-weight: 600;
 }
 
 .pagination {

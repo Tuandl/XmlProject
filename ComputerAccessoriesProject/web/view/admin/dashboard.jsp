@@ -22,13 +22,13 @@
         <script src="${contextPath}/script/controller/admin/dashboard.controller.js"></script>
     </head>
     <body onload="new DashBoardController()">
-        <h1>DashBoard</h1>
-        <h3>Welcome <span id="adminName"></span></h3>
-        
-        <ul>
-            <li><a href="${contextPath}/view/admin/category/categories.jsp">Config category</a></li>
-            <li><a href="${contextPath}/view/admin/crawl.jsp">Crawler</a></li>
-            <li><a href="${contextPath}/view/admin/domain/domains.jsp">Domain</a></li>
-        </ul>
+        <div id="divTopBar"></div>
+        <div id="divNavbar"></div>
+        <div class="container-small">
+            <h1>Setting</h1>
+            <label>Commission (VND)</label>
+            <input type="text" id="txtCommission"/>
+            <button class="button button-outter-green" id="btnCommission">Save</button>
+        </div>
     </body>
 </html>

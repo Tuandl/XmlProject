@@ -22,6 +22,8 @@
         <script src="${contextPath}/script/controller/admin/category/categories.controller.js"></script>
     </head>
     <body onload="new CategoriesController()">
+        <div id="divTopBar"></div>
+        <div id="divNavbar"></div>
         <div class="container-small">
             <h1>Category</h1>
 

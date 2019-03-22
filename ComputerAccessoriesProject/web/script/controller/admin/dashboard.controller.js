@@ -4,63 +4,65 @@
  * and open the template in the editor.
  */
 
-require('StateService');
+require('AuthService');
+require('NavService');
 require('AjaxService');
-require('XmlService');
 
 var DashBoardController = function () {
-    var stateService = new StateService();
+    var authService = new AuthService();
+    var navService = new NavService();
     var ajaxService = new AjaxService();
-    var xmlService = new XmlService();
+    
+    authService.checkAdmin();
     
     //Declaration...
     var viewIds = {
-        input: {
-        },
-        text: {
-            currentUserName: 'adminName',
-            test: 'testSection',
+        div: {
+            topBar: 'divTopBar',
+            navBar: 'divNavbar',
         },
         button: {
-            triggerCrawl: 'btnTriggerCrawl',
+            save: 'btnCommission',
         },
-        error: {
-        }
+        text: {
+            commission: 'txtCommission',
+        },
     };
     
     //Running Flow  
-    setCurrentUserName();
-//    testTransform();
+    authService.renderTopBarAuthorize(viewIds.div.topBar);
+    navService.renderNavBarAdmin(viewIds.div.navBar);
+    getCommission();
     
-    //Handler methods
-    function setCurrentUserName() {
-        var txtAdminName = document.getElementById(viewIds.text.currentUserName);
-        
-        var currentUserXmlText = stateService.getCurrentUser();
-        if(currentUserXmlText == undefined) {
-            txtAdminName.innerHTML = 'not found user';
-        } else {
-            var currentUserXml = xmlService.parseStringToXml(currentUserXmlText);
-            var currentUser = xmlService.unmarshalling(currentUserXml);
-            txtAdminName.innerHTML = currentUser.user.fullname;
-        }
+    var btn = document.getElementById(viewIds.button.save);
+    btn.addEventListener('click', onBtnSaveClicked);
+    
+    
+    function onBtnSaveClicked() {
+        saveCommission();
     }
     
-//    function testTransform() {
-//        ajaxService.get(app.url.xsl.user).then(function(response) {
-//            console.log('xsl response', response);
-//            var xslFile = response;
-//            
-//            var currentUserXmlText = stateService.getCurrentUser();
-//            var currentUserXml = xmlService.parseStringToXml(currentUserXmlText);
-//            var transformResult = xmlService.transformToDocument(currentUserXml, xslFile);
-//            console.log(transformResult);
-//            
-//            var div = document.getElementById(viewIds.text.test);
-//            div.appendChild(transformResult);
-//
-//        }).catch(function(error) {
-//            console.error(error);
-//        });
-//    }
+    function getCommission() {
+        ajaxService.get(app.url.api.commission).then(function(response) {
+            var div = document.getElementById(viewIds.text.commission);
+            div.value = response;
+        });
+    }
+    
+    function saveCommission() {
+        var div = document.getElementById(viewIds.text.commission);
+        var commission = div.value;
+        if(commission == null) {
+            return;
+        }
+        var data = {
+            commission: commission,
+        };
+        ajaxService.post(app.url.api.commission, data).then(function(response) {
+            alert('Update Success');
+        }).catch(function(error) {
+            alert('Update Failed');
+            console.log(error);
+        })
+    }
 }

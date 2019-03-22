@@ -22,6 +22,8 @@
         <script src="${contextPath}/script/controller/admin/crawl.controller.js"></script>
     </head>
     <body onload="new CrawlController()">
+        <div id="divTopBar"></div>
+        <div id="divNavbar"></div>
         <h1>Crawl page</h1>
         <button class="button button-outter-green" id="btnCrawlCategory">Crawl Category</button>
         <button class="button button-outter-green" id="btnSyncAll">Sync All</button>

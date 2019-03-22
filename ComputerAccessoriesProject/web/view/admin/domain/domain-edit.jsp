@@ -18,6 +18,8 @@
         <script src="${contextPath}/script/controller/admin/domain/domain-edit.controller.js"></script>
     </head>
     <body onload="new DomainEditController()">
+        <div id="divTopBar"></div>
+        <div id="divNavbar"></div>
         <div>
             <div class="container-small">
                 <h1>Update Domain</h1>

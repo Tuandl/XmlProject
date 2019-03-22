@@ -6,10 +6,16 @@
 
 require('AjaxService');
 require('XmlService');
+require('AuthService');
+require('NavService');
 
 var CrawlController = function() {
     var ajaxService = new AjaxService();
     var xmlService = new XmlService();
+    var authService = new AuthService();
+    var navService = new NavService();
+    
+    authService.checkAdmin();
     
     //declaration 
     var viewIds = {
@@ -22,6 +28,8 @@ var CrawlController = function() {
             categoryRaw: 'divCategoryRaws',
             totalProduct: 'divTotalProduct',
             notSync: 'divTotalNotSync',
+            topBar: 'divTopBar',
+            navBar: 'divNavbar',
         }, 
     };
     var viewNames = {
@@ -46,6 +54,9 @@ var CrawlController = function() {
     var pendingUpdateCount = 0;
     
     //running flow
+    authService.renderTopBarAuthorize(viewIds.div.topBar);
+    navService.renderNavBarAdmin(viewIds.div.navBar);
+    
     var btnCrawlCategory = document.getElementById(viewIds.button.crawlCategory);
     btnCrawlCategory.addEventListener('click', onBtnCrawlCategoyClicked);
     

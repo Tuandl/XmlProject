@@ -22,8 +22,15 @@
             <div class="top-bar-fullname">
                 <xsl:value-of select="user/fullname"/>
             </div>
-            <button class="button button-outter-blue" id="btnViewCart">Cart</button>
-            <button class="button button-outter-blue" id="btnLogout">Logout</button>
+            <xsl:choose>
+                <xsl:when test="user/isAdmin = 'true'">
+                    <button class="button button-outter-blue" id="btnLogout">Logout</button>
+                </xsl:when>
+                <xsl:otherwise>
+                    <button class="button button-outter-blue" id="btnViewCart">Cart</button>
+                    <button class="button button-outter-blue" id="btnLogout">Logout</button>
+                </xsl:otherwise>
+            </xsl:choose>
         </div>
     </xsl:template>
     
